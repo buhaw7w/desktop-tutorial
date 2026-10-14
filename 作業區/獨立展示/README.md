@@ -2,6 +2,8 @@
 
 下載儲存庫 ZIP、解壓縮，開啟 `index.html`，即可查看畫面。
 
+**[程式碼流程圖與對照](flow.html)**：開啟後查看；`程式碼流程圖.puml` 是可編輯原稿，`CodeFlow.svg` 是圖檔。
+
 - `index.html`：聊天輸入區與商品列表。
 - `detail.html`：商品詳情、出發日期及聯絡入口。
 - `style.css`：桌面與手機樣式。

@@ -1,0 +1,52 @@
+@startuml CodeFlow
+' 中文說明：依目前 app.js 繪製首次載入與事件處理；沒有後端或 AI 呼叫。
+title 展示網頁程式碼流程
+skinparam defaultFontName Microsoft JhengHei
+skinparam defaultFontSize 15
+skinparam shadowing false
+skinparam backgroundColor #FAF9F5
+skinparam activityBackgroundColor #EEF4EE
+skinparam activityBorderColor #245B50
+skinparam activityFontColor #173B37
+skinparam ArrowColor #245B50
+skinparam noteBackgroundColor #FFF5E5
+skinparam noteBorderColor #B3613E
+start
+:開啟 index.html 或 detail.html;
+:先載入 sample-tours.js，再執行 app.js\n50 筆套裝行程轉為商品與報價物件\n另保留機加酒與機票各一筆;
+note right
+  TravelProduct 擁有 DepartureQuote。
+  資料只在瀏覽器記憶體中使用。
+end note
+if (body.data-page 是 catalog？) then (首頁)
+  :new CatalogController().bind()\n綁定分類、更多、標籤與輸入按鈕;
+  :CatalogController.render()\n按類型篩選 → 按價格排序 → 先取六筆;
+  :ProductCardView.render(product)\n產生商品卡並加入列表;
+  note right
+    切換分類：清空列表，再顯示六筆。
+    顯示更多：上限增加六筆，再 render()。
+    已全部顯示：隱藏更多按鈕。
+    標籤：只把文字加進輸入框。
+    看看商品呈現：提示固定範例，捲到列表。
+  end note
+  :點查看詳情\n開啟 detail.html?id=商品編號;
+  note right
+    新頁重新載入資料，進入右側詳情流程。
+    輸入框尚未執行自然語言或 AI 搜尋。
+  end note
+else (詳情頁)
+  :renderDetail()\n讀取網址 id，以 find() 查商品;
+  if (找到商品？) then (有)
+    :顯示行程、住宿、餐點及日期選單;
+    :updateQuote()\nquoteAt(index) 取同一筆梯次\n更新價格、出回程與費用原文;
+    note right
+      切換日期：再次執行 updateQuote()。
+      聯絡旅行社：切換提示的顯示狀態。
+      目前不開啟真實網站或 LINE 窗口。
+    end note
+  else (沒有)
+    :顯示找不到商品\n提供返回列表入口;
+  endif
+endif
+stop
+@enduml
