@@ -4,7 +4,7 @@
   <!-- 中文說明：獨立的畫面提案，僅讀取本資料夾範例資料，不連接商品系統或外部 AI。 -->
   <meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
   <title>旅伴｜旅遊媒合畫面提案</title>
-  <link rel="stylesheet" href="style.css"><script src="app.js" defer></script>
+  <link rel="stylesheet" href="style.css"><script src="sample-tours.js" defer></script><script src="app.js" defer></script>
 </head>
 <body data-page="catalog">
   <header class="site-header"><a class="brand" href="index.html"><span class="brand-mark" aria-hidden="true">↗</span>旅伴<span class="brand-sub">AI 旅遊搜尋平台</span></a><span class="demo-badge">畫面提案</span></header>
@@ -26,8 +26,10 @@
     <section class="catalog" aria-labelledby="results-title">
       <div class="catalog-heading"><div><p class="eyebrow">簡單找到適合的行程</p><h2 id="results-title">先看假期，再看價格。</h2></div><span class="tiny-note">示範資料 · 非販售商品</span></div>
       <div class="category-tabs" role="group" aria-label="商品類型"><button type="button" data-category="tour" aria-pressed="true">套裝行程</button><button type="button" data-category="bundle" aria-pressed="false">機加酒</button><button type="button" data-category="flight" aria-pressed="false">機票</button></div>
-      <div class="result-caption"><span id="result-count"></span><span>依範例出發日價格，由低到高</span></div>
+      <div class="result-caption"><span id="result-count" role="status"></span><span>依範例出發日價格，由低到高</span></div>
       <div id="product-grid" class="product-grid"></div>
+      <!-- 中文說明：每次只增加六張卡片；不把50筆同時塞進畫面。 -->
+      <div class="load-more-wrap"><button id="load-more" class="quiet-button" type="button" aria-controls="product-grid">顯示更多行程</button></div>
       <noscript><p>請啟用 JavaScript，以查看商品配置與詳情。</p></noscript>
       <p class="catalog-foot">商品卡只放必要資訊。飯店、餐點與費用內容，點進詳情再看。</p>
     </section>

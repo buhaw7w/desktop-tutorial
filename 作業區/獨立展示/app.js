@@ -23,9 +23,8 @@ class TravelProduct {
 
 // 固定設計資料：範例業者不對應真實公司，以下不是可販售商品。
 const exampleProducts = [
-  new TravelProduct({id:"DEMO-01", category:"tour", title:"北海道・溫泉與雪景五日", agency:"範例旅行社 A", destination:"北海道", airport:"桃園", days:5, art:"snow", word:"HOKKAIDO", highlight:"一晚溫泉住宿", hotel:"範例市區飯店三晚、範例溫泉飯店一晚", meals:"範例內容：早餐四次，午餐與晚餐安排見每日行程。", itinerary:["桃園出發，抵達新千歲後前往札幌。","小樽運河與市區散步。","溫泉區自由活動，入住溫泉飯店。","札幌市區與在地市場。","前往機場，返回桃園。"], departures:[new DepartureQuote("2026-12-23","2026-12-27",29900,"範例上架內文：含機票、住宿與機場稅；其他費用見行程。"),new DepartureQuote("2026-12-24","2026-12-28",32900,"範例上架內文：含機票、住宿與機場稅；其他費用見行程。")]}),
-  new TravelProduct({id:"DEMO-02", category:"tour", title:"大阪・城市漫遊五日", agency:"範例旅行社 B", destination:"大阪", airport:"桃園", days:5, art:"city", word:"OSAKA", highlight:"城市景點與自由活動", hotel:"範例大阪市區飯店四晚", meals:"範例內容：早餐四次，部分正餐自理。", itinerary:["桃園出發，抵達關西機場。","大阪城與市區散步。","京都街區一日遊。","大阪自由活動。","返回桃園。"], departures:[new DepartureQuote("2026-12-23","2026-12-27",28900,"範例上架內文：含機票與住宿；稅費未註明。"),new DepartureQuote("2026-12-25","2026-12-29",30900,"範例上架內文：含機票與住宿；稅費未註明。")]}),
-  new TravelProduct({id:"DEMO-03", category:"tour", title:"九州・山景與溫泉五日", agency:"範例旅行社 C", destination:"九州", airport:"高雄", days:5, art:"mountain", word:"KYUSHU", highlight:"自然景點與溫泉", hotel:"範例福岡飯店三晚、範例溫泉飯店一晚", meals:"範例內容：早餐四次；餐點內容須查業者內文。", itinerary:["高雄出發，抵達福岡。","九州山景與沿途小鎮。","溫泉區遊覽。","福岡市區自由活動。","返回高雄。"], departures:[new DepartureQuote("2026-12-23","2026-12-27",31900,"範例上架內文：含機票、住宿；稅費及自費項目未註明。")]}),
+  // 將獨立資料檔的純資料轉成商品與報價物件，列表和詳情共用同一份資料。
+  ...SAMPLE_TOURS.map(data => new TravelProduct({...data, departures:data.departures.map(q => new DepartureQuote(q.date,q.returnDate,q.price,q.feeText))})),
   new TravelProduct({id:"DEMO-04", category:"bundle", title:"東京・機票＋四晚住宿", agency:"範例旅行社 D", destination:"東京", airport:"桃園", days:5, art:"city", word:"TOKYO", highlight:"機加酒・自由安排", hotel:"範例東京市區飯店四晚", meals:"範例內容：住宿方案未註明是否含早餐。", itinerary:["搭乘範例航班抵達東京。","自由安排。","自由安排。","自由安排。","搭乘回程航班返回桃園。"], departures:[new DepartureQuote("2026-12-23","2026-12-27",32900,"範例上架內文：來回機票與四晚住宿；稅費未註明。")]}),
   new TravelProduct({id:"DEMO-05", category:"flight", title:"桃園 ⇄ 東京・來回機票", agency:"範例旅行社 E", destination:"東京", airport:"桃園", days:null, art:"snow", word:"TOKYO", highlight:"機票・停留五天", hotel:"此機票範例不提供住宿。", meals:"餐食與行李條件未註明。", itinerary:["12/23 桃園出發，抵達東京。","12/27 東京出發，返回桃園。"], departures:[new DepartureQuote("2026-12-23","2026-12-27",15900,"範例上架內文：來回機票；稅費、行李與餐食未註明。")]}),
 ];
@@ -54,16 +53,32 @@ class ProductCardView {
 
 // Controller：分類與價格排序僅用固定資料；輸入框不假裝具備 AI 搜尋能力。
 class CatalogController {
-  constructor() { this.category = "tour"; }
+  constructor() { this.category = "tour"; this.pageSize = 6; this.visibleLimit = this.pageSize; }
   render() {
     const visible = exampleProducts.filter(p => p.category === this.category)
       .sort((a,b) => (a.selectedQuote.price ?? Infinity) - (b.selectedQuote.price ?? Infinity));
-    document.getElementById("product-grid").innerHTML = visible.map(ProductCardView.render).join("");
-    document.getElementById("result-count").textContent = `${visible.length} 個範例商品 · 12/23 出發`;
+    const shown = visible.slice(0,this.visibleLimit);
+    const grid = document.getElementById("product-grid");
+    // 只補上新卡片，保留原有連結和鍵盤焦點；分類切換時由事件清空列表。
+    const previousCount = grid.childElementCount;
+    grid.insertAdjacentHTML("beforeend", shown.slice(previousCount).map(ProductCardView.render).join(""));
+    document.getElementById("result-count").textContent = `${visible.length} 個範例商品 · 已顯示 ${shown.length} 個 · 12/23 出發`;
+    const moreButton = document.getElementById("load-more");
+    moreButton.hidden = shown.length >= visible.length;
+    moreButton.textContent = `顯示更多行程（還有 ${visible.length-shown.length} 個）`;
     document.querySelectorAll("[data-category]").forEach(button => button.setAttribute("aria-pressed", String(button.dataset.category === this.category)));
   }
   bind() {
-    document.querySelectorAll("[data-category]").forEach(button => button.addEventListener("click", () => {this.category = button.dataset.category; this.render();}));
+    document.querySelectorAll("[data-category]").forEach(button => button.addEventListener("click", () => {
+      this.category = button.dataset.category; this.visibleLimit = this.pageSize;
+      document.getElementById("product-grid").replaceChildren(); this.render();
+    }));
+    document.getElementById("load-more").addEventListener("click", () => {
+      const previousCount = document.getElementById("product-grid").childElementCount;
+      this.visibleLimit += this.pageSize; this.render();
+      // 移至這一批第一張卡片的詳情連結，最後一批隱藏按鈕後仍有明確焦點。
+      document.querySelectorAll(".card-link")[previousCount]?.focus({preventScroll:true});
+    });
     document.querySelectorAll("[data-phrase]").forEach(button => button.addEventListener("click", () => {
       const input = document.getElementById("request");
       if (!input.value.includes(button.dataset.phrase)) input.value = `${input.value.trim()}，${button.dataset.phrase}`.slice(0,500);
