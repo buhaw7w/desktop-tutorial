@@ -1,5 +1,11 @@
-# Welcome to GitHub Desktop!
+# AI 旅遊搜尋平台
 
-This is your README. READMEs are where you can communicate what your project is and how to use it.
+以 AI 對話媒合旅行社商品的物件導向學期專題。
 
-Write your name on line 6, save it, and then head back to GitHub Desktop.
+**[每週作業題目與答案](作業區/作業答案.md)**
+
+[老師原題](作業區/00_老師作業規定_原文.txt) · [可編輯 UML](作業區/UML)
+
+組員可編輯答案與 UML，修改後提交變更。網頁版請下載 ZIP、解壓縮後開啟 `作業區/作業比照表.html`。
+
+目前為需求與設計草案，尚未完成應用程式。

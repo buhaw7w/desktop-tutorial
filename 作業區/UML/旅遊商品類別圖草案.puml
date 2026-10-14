@@ -1,0 +1,44 @@
+@startuml TravelProducts
+title 旅遊商品類別圖草案
+skinparam defaultFontName Microsoft JhengHei
+skinparam defaultFontSize 16
+skinparam classAttributeIconSize 0
+skinparam shadowing false
+skinparam roundcorner 10
+skinparam backgroundColor #FFFFFF
+skinparam classBackgroundColor #EFF6FF
+skinparam classBorderColor #31577C
+skinparam ArrowColor #31577C
+top to bottom direction
+
+class "旅遊商品\nTravelProduct" as TravelProduct {
+  - productId : string
+  - title : string
+  - agencyId : string
+  + getSummary() : string
+}
+class "套裝行程\nPackageTour" as PackageTour {
+  - travelDays : int
+  - itinerary : string
+  + getSummary() : string
+}
+class "機加酒\nFlightHotelPackage" as FlightHotelPackage {
+  - hotelNights : int
+  - hotelName : string
+  + getSummary() : string
+}
+class "機票\nFlightTicket" as FlightTicket {
+  - departureAirport : string
+  - arrivalAirport : string
+  + getSummary() : string
+}
+
+TravelProduct <|-- PackageTour
+TravelProduct <|-- FlightHotelPackage
+TravelProduct <|-- FlightTicket
+
+note top of TravelProduct
+  共用資料：商品編號、名稱、業者編號。
+  所有商品由旅遊業者提供，平台負責媒合。
+end note
+@enduml

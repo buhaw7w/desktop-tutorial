@@ -1,0 +1,143 @@
+物件導向軟體工程 學期專題內容規定 
+ 
+物件導向小組專題作業:  
+ 
+每星期作業包括以下部分 
+每個部分必須包含至少 一個完整的例子  
+ 
+--------------------------------------------------- 
+9/19  
+1)決定分組名單 
+2)決定小組組長 
+ 
+--------------------------------------------------- 
+10/3 
+專題題目 
+1. 系統要大系統 (大系統比較容易找一個作業範例) 
+2. 創新 
+3. 要有吸引力(顧客想要使用) 
+4. 目前的技術可以實做出來 
+ 
+合適專題系統OO的特性: 
+1) 系統容易分析出 很多不同種的 資料(class 類別) 
+2) 系統的資料容易 進一步的分類 
+ 
+例如 學校的 教學務系統: 
+1) 系統可分析出的資料: 教員 職員 學生 課程 院系所 等... 
+2) 學生 可分類為(類別繼承): 大學生 碩士生 博士生 在職生 等... 繼承 
+ 
+--------------------------------------------------- 
+10/3 
+作業使用一個自選的 UML工具 (可以谷歌找 UML線上工具) 
+建議使用功能較完整的UML工具: 
+	可以把UML設計 自動產生程式碼(例如 C++ JAVA C# 等...) 
+	可以把現有的程式碼 自動產生UML設計圖  
+ 
+--------------------------------------------------- 
+10/17 
+Requirements Analysis Document Template 
+	1.	Introduction 目的 動機 
+	2.	Current system  
+		找三個類似系統  
+		並且列表比較四個系統 1) 功能 2) 優缺點 
+	3.	Proposed system 
+		3.1	Overview 
+ 
+--------------------------------------------------- 
+11/7 
+		3.2	Functional requirements 
+		(十個功能以上)功能性需求 
+		3.3	Nonfunctional requirements  
+		非功能性需求 
+		L10_P.52 
+		列出每個問題 並且寫出答案 
+			3.3.1 User interface and human factors 
+			3.3.2 Documentation 
+			3.3.3 Hardware considerations 
+			3.3.4 Performance characteristics 
+			3.3.5 Error handling and extreme conditions 
+--------------------------------------------------- 
+11/7 
+		L10_P.52 
+		列出每個問題 並且寫出答案 
+			3.3.6 System interfacing 
+			3.3.7 Quality issues 
+			3.3.8 System modifications 
+			3.3.9 Physical environment 
+			3.3.10 Security issues 
+			3.3.11 Resources and management issues 
+ 
+--------------------------------------------------- 
+11/14 
+	3.5.1 Scenarios	劇本(情境)讀者是顧客跟使用者 
+		明確定義 功能使用操作的方式 
+		避免 後續的功能修改 跟顧客的紛爭 
+		L10_P.25 
+		選擇一個系統的功能 
+		詳細描述 使用者使用一個系統功能的劇本(情境,流程,方式) 
+		使用者用真實人名 
+		劇本要明確定義 
+			1)情境中 全部相關的資料 (產生,修改,刪除,讀寫資料) 
+			2)使用者 全部的介面操作動作(操作鍵盤,滑鼠,觸控銀幕,攝影機...) 
+			3)系統 全部介面及變化 (包括介面變化:描述使用文字或圖形或錄影) 
+--------------------------------------------------- 
+11/21 
+	選定一個UML工具 (可以谷歌找 線上UML工具) 
+	3.5.2 Use case models (使用案例) 讀者是系統的開發工程師 
+		L11_p8 L11_p19 
+		使用者用職稱 
+		使用案例包括: 
+				Use case name 名字(複合字) 動詞+名詞 ReportEmergency 
+				Participating actors 職稱 (參與演員(人員,其他的系統)) 
+				the entry condition 開始情況 
+				the flow of events  事件流程(正常的情況)(使用者的操作 系統的回應) 
+					*active voice(主動式的句子) 
+				the exit condition  結束情況(結果) 
+				exceptions  例外 (不正常的情況) 
+				nonfunctional requirements 相關的非功能性需求 
+---------------------------------------------------
+11/21	3.5.3 Class identification from use case models 
+		L12_p19 L12_p20 
+		1) 文字分析 
+		使用一個使用案例 使用文字分析找出對應的 類別圖(用UML Tool製作) 
+			名詞(資料) => class 類別 
+			動詞(計算) => function (***屬於受詞的 function) 
+			形容詞(data) => 類別內的資料(變數,物件) 
+-----------------------------
+			3.5.3.1 Data dictionary 
+			3.5.3.2 Class diagrams 
+		2) 類別關聯性 L3_p24 L3_p25 L3_p26 L3_p33 
+			修飾上面3.5.3的類別圖,類別圖必須有範例: 
+			1) 繼承關聯性 2)擁有關聯性 3)類別Qualification(找出資料的key) 
+				a)繼承: 分類 (父類別 分成不同類型的 子類別) L3_p33 
+				b)擁有: 分解 一類別內擁有 另外一個類別的物件(資料) L3_p24 L3_p33 
+				c)類別Qualification (找出資料的 key): 
+				給一個Qualification的範例 L3_p25 L3_p26 
+ 
+---------------------------------------------------
+11/28 
+	3.5.5 Dynamic models 
+		L3_p38 L3_p39 L13_p19 
+		Sequence diagrams 
+		MVC  物件建議分成三種: 
+			Model, View, Controller (MVC) 
+				Model   <-> 資料(資料庫) Entity Object 
+				View  <-> 使用者視窗介面 Boundary Object 
+				Controller  <-> 系統的計算 Control Object 
+		Sequence diagrams 必須包括三種 MVC 物件, 依照順序為:
+		Actor 	View(介面) 	Control(計算) Model(資料庫) 
+ 
+--------------------------------------------------- 
+11/28 
+		Activity Diagrams L3P43 
+			depict the workflow in a system 
+		必須包括 Concurrency 設計 L3P44 L3P45 
+---------------------------------------------------
+12/5 
+StateChart Diagram 
+			relates events and states for one class/system 
+		L13P32 
+------------------------------
+12/5 
+Navigation Path 	L13P36 
+樹狀結構 => 代表系統功能選項.

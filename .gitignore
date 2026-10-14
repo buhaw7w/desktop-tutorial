@@ -1,0 +1,16 @@
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+*.pfx
+*.log
+*.zip
+__pycache__/
+.vscode/
+**/歷史封存/
+**/06_討論與進度/
+**/04_測試與驗證/
+**/04_工具/
+**/驗證紀錄.json
+*.code-workspace

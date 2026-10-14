@@ -1,0 +1,101 @@
+<!doctype html>
+<html lang="zh-Hant"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>每週作業題目與答案</title>
+<!-- 中文備註：依老師日期分類的設計簡答文件，不是已完成的旅遊平台。 -->
+<style>
+/* 中文備註：只用一層details收合週次，題目與答案直接閱讀；單欄排版適合手機。 */
+:root{color-scheme:light}*{box-sizing:border-box}body{margin:0;background:#f7f8f5;color:#24362f;font:16px/1.7 "Microsoft JhengHei",sans-serif}
+main{max-width:850px;margin:auto;padding:30px 22px 50px}h1{font-size:27px;margin:0 0 8px}.intro{margin:0 0 24px;color:#65746d;font-size:14px}
+details{background:#fff;border:1px solid #dce4dd;border-radius:10px;margin:10px 0}summary{display:flex;align-items:center;gap:14px;cursor:pointer;padding:16px;list-style:none}
+summary::-webkit-details-marker{display:none}.date{width:56px;flex-shrink:0;color:#33644f}.title{font-weight:700}.status{margin-left:auto;color:#65746d;font-size:12px}.arrow{margin-left:4px;font-size:19px}details[open] .arrow{transform:rotate(180deg)}
+.answers{padding:0 20px 12px}.qa{border-top:1px solid #e7ece7;padding:16px 0}.qa h2{font-size:16px;margin:0 0 7px}.qa p{margin:0;color:#40534a}
+a{color:#285e86;text-underline-offset:3px}summary:focus-visible,a:focus-visible{outline:3px solid #b96b21;outline-offset:3px}footer{font-size:13px;margin-top:24px;color:#65746d}
+@media(max-width:600px){main{padding:24px 14px}h1{font-size:23px}summary{display:grid;grid-template-columns:52px 1fr 18px;gap:6px;padding:14px}.status{grid-column:2;grid-row:2;margin-left:0}.arrow{grid-column:3;grid-row:1/3}.answers{padding:0 14px 8px}}
+/* 中文備註：列印事件會暫時打開週次，列印後恢復原狀。 */
+@media print{@page{size:A4;margin:14mm}body{background:#fff}main{padding:0}details{border:0;border-radius:0}.qa{break-inside:avoid}summary{padding:12px 0}.answers{padding:0}.arrow,footer{display:none}}
+
+/* 中文備註：桌面以兩欄對照題目與答案，手機改為題目在上、答案在下。 */
+table{width:100%;border-collapse:collapse;table-layout:fixed;font-size:14px}th,td{padding:14px 10px;vertical-align:top;text-align:left;border-top:1px solid #e1e7e1;overflow-wrap:anywhere}thead th{font-size:13px;color:#65746d}thead th:first-child{width:32%}tbody th{font-weight:700}
+.comparison{margin-top:18px}.comparison thead th:first-child{width:20%}.comparison caption{text-align:left;font-size:14px;font-weight:700;padding:8px 10px}.footnote{font-size:12px;color:#65746d;margin:8px 10px}
+@media(max-width:600px){table:not(.comparison) thead{display:none}table:not(.comparison),table:not(.comparison) tbody,table:not(.comparison) tr,table:not(.comparison) th,table:not(.comparison) td{display:block;width:100%}table:not(.comparison) tbody th{padding-bottom:4px}table:not(.comparison) tbody td{padding-top:0;border-top:0}}
+/* 中文備註：手機把四欄比較表改為單一系統一張文字卡，避免欄位過窄。 */
+@media(max-width:600px){.comparison,.comparison tbody,.comparison tr,.comparison tbody th,.comparison tbody td{display:block;width:100%}.comparison thead{display:none}.comparison tbody th{background:#eef3ee;border-radius:6px;margin-top:10px}.comparison tbody td{border-top:0;padding:8px 10px}.comparison td:before{content:attr(data-label);display:block;font-weight:700;font-size:12px;color:#65746d}}
+</style></head><body><main><h1>每週作業題目與答案</h1><p class="intro">AI 對話媒合旅行社商品；無官網業者也能上架。</p>
+<details id="section-1"><summary><span class="date">9/19</span><span class="title">分組</span><span class="arrow" aria-hidden="true">⌄</span></summary><div class="answers"><table><thead><tr><th scope="col">老師題目</th><th scope="col">我們的答案</th></tr></thead><tbody><tr><th scope="row">分組名單</th><td>陳威任 4144W006、陳宏傑 4144W007、賴叔佑 4144W009、李慶寶 4144W010、劉宥伸 4144W013、林柏諭 4144W014。</td></tr>
+<tr><th scope="row">小組組長</th><td>林柏諭（4144W014）。</td></tr></tbody></table></div></details>
+<details id="section-2"><summary><span class="date">10/3</span><span class="title">專題題目與 UML 工具</span><span class="arrow" aria-hidden="true">⌄</span></summary><div class="answers"><table><thead><tr><th scope="col">老師題目</th><th scope="col">我們的答案</th></tr></thead><tbody><tr><th scope="row">專題題目</th><td>AI 旅遊搜尋平台：以 AI 對話媒合旅行社的套裝行程、機加酒與機票。平台沒有自有商品，無官網業者也能上架。</td></tr>
+<tr><th scope="row">大系統</th><td>涵蓋旅客搜尋、業者商品管理與管理員審核，包含帳號、商品、梯次、報價和對話等資料。</td></tr>
+<tr><th scope="row">創新</th><td>用聊天或語音表達需求，帶出旅遊商品卡；需要靈感時提供目的地與影片建議。</td></tr>
+<tr><th scope="row">吸引力</th><td>旅客不用逐家整理搜尋條件；業者多一個展示商品、接觸旅客的入口。</td></tr>
+<tr><th scope="row">技術可行</th><td>規劃以網頁、資料庫及外部 AI API 實作；AI 整理需求，商品日期與價格由後端查詢。</td></tr>
+<tr><th scope="row">多種類別</th><td>可分析 User、Agency、TravelProduct、Departure、PriceQuote、Conversation 等類別。</td></tr>
+<tr><th scope="row">資料分類／繼承</th><td>TravelProduct 可分成 PackageTour、FlightHotelPackage、FlightTicket。例如日本五天團、機票加四晚住宿、單獨機票。</td></tr>
+<tr><th scope="row">UML 工具</th><td>使用 PlantUML 繪圖，可輸出 PNG、SVG；例：描述旅遊商品及三個子類別，產生繼承類別圖。</td></tr>
+<tr><th scope="row">工具能力（老師建議）</th><td>目前用於繪圖，尚未建立 UML 自動產生應用程式碼或程式碼反向產圖的流程。</td></tr></tbody></table></div></details>
+<details id="section-3"><summary><span class="date">10/17</span><span class="title">需求分析</span><span class="arrow" aria-hidden="true">⌄</span></summary><div class="answers"><table><thead><tr><th scope="col">老師題目</th><th scope="col">我們的答案</th></tr></thead><tbody><tr><th scope="row">1. Introduction：目的、動機</th><td>協助旅客快速找到符合日期與預算的商品，並讓旅行社有共同的上架與媒合入口。</td></tr>
+<tr><th scope="row">2. Current system：比較四個系統</th><td>保留原四個系統，另加入易遊網與三個國外平台，共八個參考系統。老師原要求仍是三個類似系統加本系統。</td></tr>
+<tr><th scope="row">3. Proposed system：提出的系統</th><td>旅客以對話找商品，業者提交自己的商品，管理員審核後發布；平台負責展示與媒合。</td></tr>
+<tr><th scope="row">3.1 Overview：系統概述</th><td>輸入需求 → AI 整理條件 → 查商品 → 顯示旅遊卡 → 看詳情 → 聯絡業者。例：輸入「12月23日，日本五天，三萬元內」，查看符合條件的行程。</td></tr></tbody></table><table class="comparison"><caption>原四個系統＋四個新增參考</caption><thead><tr><th scope="col">系統</th><th scope="col">功能與優點</th><th scope="col">限制／分析</th><th scope="col">我們可參考的地方</th></tr></thead><tbody><tr><th scope="row"><a href="https://travel.liontravel.com/order/choose?groupid=26JH927TRH-ZP&amp;normgroupid=ef86e3b8-5dc2-43d1-8e0c-6ab2e3173d20">雄獅旅遊</a></th><td data-label="功能與優點">呈現行程、出發日期與價格。</td><td data-label="限制／分析">起價不等於所選日期及人數的最終價格。</td><td data-label="我們可參考的地方">分開顯示梯次日期與對應報價。</td></tr>
+<tr><th scope="row"><a href="https://www.colatour.com.tw/webDM/Portal/intro/ordertour.html">可樂旅遊</a></th><td data-label="功能與優點">可先選行程，也可先選日期。</td><td data-label="限制／分析">旅客仍需自行設定條件；操作負擔待測。</td><td data-label="我們可參考的地方">保留日期與目的地兩種查找入口。</td></tr>
+<tr><th scope="row"><a href="https://www.pktravel.com.tw/japan/hokkaido">品冠旅遊</a></th><td data-label="功能與優點">字卡呈現特色、日期與起價。</td><td data-label="限制／分析">指定日期的實際費用須查商品。</td><td data-label="我們可參考的地方">用短文字突出行程特色。</td></tr>
+<tr><th scope="row"><a href="https://www.eztravel.com.tw/">易遊網</a></th><td data-label="功能與優點">團體旅遊、機加酒、機票及日期篩選。</td><td data-label="限制／分析">商品類別與優惠多；找團步驟待測。</td><td data-label="我們可參考的地方">標示供應業者，初期聚焦三種商品。</td></tr>
+<tr><th scope="row"><a href="https://www.tourradar.com/">TourRadar</a></th><td data-label="功能與優點">整合多家業者的多天行程、價格與評價。</td><td data-label="限制／分析">國際機票一般不包含，須查各商品。</td><td data-label="我們可參考的地方">清楚呈現天數、價格、業者與包含項目。</td></tr>
+<tr><th scope="row"><a href="https://www.travelstride.com/">Travelstride</a></th><td data-label="功能與優點">比較行程與業者，展示 AI 客製規劃入口。</td><td data-label="限制／分析">AI 客製方案與現成商品須分開比較。</td><td data-label="我們可參考的地方">區分靈感建議與真實業者商品。</td></tr>
+<tr><th scope="row"><a href="https://www.travelsupermarket.com/">TravelSupermarket</a></th><td data-label="功能與優點">比較套裝假期，轉往業者網站完成訂購。</td><td data-label="限制／分析">價格可能變動，稅費與附加項目需確認。</td><td data-label="我們可參考的地方">清楚標來源與前往業者的入口。</td></tr>
+<tr><th scope="row">本平台（規劃）</th><td data-label="功能與優點">對話搜尋、日期與價格優先、業者上架。</td><td data-label="限制／分析">依賴商品更新，AI 理解與成效待驗證。</td><td data-label="我們可參考的地方">先做好日期、報價及商品來源。</td></tr></tbody></table><p class="footnote">我們的設計重點：以出發日期與價格找真實業者商品，支援無官網業者上架，並用簡單對話減少操作。Travelstride 已展示 AI 功能，因此不把「有 AI」說成獨有優勢。</p><p class="footnote">官方資料查閱：2026/10/14。限制與參考方向含設計分析，未做操作優劣實測。<a href="https://www.tourradar.com/contact">TourRadar 機票說明</a>；Travelstride 依官方搜尋索引查閱，未實測 AI。</p></div></details>
+<details id="section-4"><summary><span class="date">11/7</span><span class="title">功能與非功能需求</span><span class="arrow" aria-hidden="true">⌄</span></summary><div class="answers"><table><thead><tr><th scope="col">老師題目</th><th scope="col">我們的答案</th></tr></thead><tbody><tr><th scope="row">3.2 功能性需求（十項以上）</th><td>18 項草案：AI／語音搜尋、修改條件、標籤、篩選排序、商品卡、詳情、比較、收藏追蹤、價格紀錄、降價出清提醒、註冊驗證、登入登出、忘記密碼、業者草稿、送審、審核發布、管理總覽、影片推薦。例：輸入日本五天需求 → 查看商品卡 → 收藏行程。</td></tr>
+<tr><th scope="row">3.3 非功能性需求</th><td>以下依 11 個分類整理簡答；完整 L10 P.52 尚未提供，未取得的原題仍待核對。</td></tr>
+<tr><th scope="row">3.3.1 使用者類型</th><td>旅客、旅行社人員、管理員。例如業者只管理自己的商品，管理員負責審核。</td></tr>
+<tr><th scope="row">3.3.1 是否有多種類型的使用者？</th><td>有，三種角色有不同入口與權限。</td></tr>
+<tr><th scope="row">3.3.1 使用者需要哪些教學？</th><td>旅客看搜尋範例，業者看上架與送審教學，管理員看審核教學。</td></tr>
+<tr><th scope="row">3.3.1 容易學會是否重要？</th><td>重要。旅客可直接說「日本五天，三萬元內」，系統整理條件後找商品。</td></tr>
+<tr><th scope="row">3.3.1 是否防止使用者出錯？</th><td>是。例如回程早於出發日，提示修正並保留其他欄位。</td></tr>
+<tr><th scope="row">3.3.1 輸入／輸出設備</th><td>鍵盤、滑鼠、觸控與麥克風輸入；螢幕、喇叭或耳機輸出。例：手機語音輸入需求，螢幕顯示商品卡。</td></tr>
+<tr><th scope="row">3.3.2 Documentation：文件</th><td>提供旅客使用說明、業者與管理員手冊、技術文件。例：業者依手冊填商品並送審，工程師依 UML 找到負責的類別。</td></tr>
+<tr><th scope="row">3.3.2 文件讀者（問題摘要）</th><td>使用說明給旅客，操作手冊給業者與管理員，技術文件給工程師及維運人員；此題完整原文待補。</td></tr>
+<tr><th scope="row">3.3.3 Hardware considerations：硬體</th><td>使用者以電腦、手機或平板上網；平台使用伺服器、資料庫與外部 AI。例：手機送出需求，後端查商品並回傳結果。</td></tr>
+<tr><th scope="row">3.3.4 Performance characteristics：效能</th><td>處理時顯示狀態，失敗保留輸入並可重試。例：AI 回應較慢時顯示處理中；速度與容量目標另待測。</td></tr>
+<tr><th scope="row">3.3.5 Error handling：錯誤與極端情況</th><td>區分輸入錯誤、查無結果與服務失敗。例：沒有符合商品時詢問是否調整，不能編造行程或零元價格。</td></tr>
+<tr><th scope="row">3.3.6 System interfacing：串接</th><td>以獨立介面串接 AI、語音及郵件。例：語音轉文字 → AI 整理 → 後端驗證 → 查商品。</td></tr>
+<tr><th scope="row">3.3.7 Quality issues：品質</th><td>日期、價格及可售資訊依業者來源。例：滑雪需求須有滑雪證據，不能只因商品在北海道就推薦。</td></tr>
+<tr><th scope="row">3.3.8 System modifications：修改</th><td>按功能分模組，修改時更新文件與測試。例：換 AI 供應商時透過 AI 介面替換，核對搜尋條件契約。</td></tr>
+<tr><th scope="row">3.3.9 Physical environment：使用環境</th><td>瀏覽器隨時可輸入需求，語音與文字可切換。例：吵雜場所改打字，斷線時盡量保留輸入。</td></tr>
+<tr><th scope="row">3.3.10 Security issues：安全</th><td>保護帳號、個資、權限及 AI 金鑰。例：A 旅行社不能修改 B 旅行社的商品。</td></tr>
+<tr><th scope="row">3.3.11 Resources and management：資源管理</th><td>業者維護商品，管理員審核，工程師維運。例：AI 達用量上限時停止新 AI 請求，一般搜尋仍可用。</td></tr></tbody></table></div></details>
+<details id="section-5"><summary><span class="date">11/14</span><span class="title">使用者情境</span><span class="arrow" aria-hidden="true">⌄</span></summary><div class="answers"><table><thead><tr><th scope="col">老師題目</th><th scope="col">我們的答案</th></tr></thead><tbody><tr><th scope="row">3.5.1 Scenarios：功能與真實姓名</th><td>林柏諭使用「對話搜尋旅行社商品」功能。</td></tr>
+<tr><th scope="row">完整使用流程</th><td>林柏諭用鍵盤輸入「2026年12月23日，日本五天，每人三萬元內」並按搜尋；確認條件，點商品卡看完整詳情，再按聯絡旅行社。</td></tr>
+<tr><th scope="row">相關資料：產生、修改、刪除、讀寫</th><td>建立對話及搜尋條件；修改需求時更新條件；讀取商品、梯次、報價及業者窗口。本流程不刪商品、不建立付款紀錄。</td></tr>
+<tr><th scope="row">介面操作與畫面變化</th><td>打字、點搜尋 → 顯示條件與結果；點商品卡 → 獨立詳情頁；點聯絡 → 開啟業者網站或已確認的 LINE 窗口。</td></tr>
+<tr><th scope="row">完整資料例子</th><td>設計例：商品 T001、日本五天；梯次 D001、12/23 出發；每人 NT$29,900。符合三萬元內時顯示；查無結果則說明並詢問是否改條件。</td></tr></tbody></table></div></details>
+<details id="section-6"><summary><span class="date">11/21</span><span class="title">使用案例與類別分析</span><span class="arrow" aria-hidden="true">⌄</span></summary><div class="answers"><table><thead><tr><th scope="col">老師題目</th><th scope="col">我們的答案</th></tr></thead><tbody><tr><th scope="row">3.5.2 Use case name</th><td>SearchTravelProducts（搜尋旅遊商品）。</td></tr>
+<tr><th scope="row">Participating actors：職稱</th><td>旅客、外部 AI 服務；使用職稱，不使用林柏諭等人名。</td></tr>
+<tr><th scope="row">Entry condition：開始情況</th><td>旅客開啟搜尋介面；系統可讀取業者已發布的商品資料。</td></tr>
+<tr><th scope="row">Flow of events：主動句流程</th><td>旅客輸入需求 → 系統整理並顯示條件 → 旅客補充或確認 → 系統驗證、查商品並顯示卡片 → 旅客查看詳情。</td></tr>
+<tr><th scope="row">Exit condition：結束情況</th><td>顯示符合條件的商品，或說明沒有符合結果。</td></tr>
+<tr><th scope="row">Exceptions：例外</th><td>日期不合理請修正；需求不清楚先追問；AI 失敗保留輸入並提供一般搜尋。</td></tr>
+<tr><th scope="row">相關非功能性需求</th><td>易學、防錯、來源正確、角色權限與 AI 用量上限。</td></tr>
+<tr><th scope="row">3.5.3 文字分析：名詞 → 類別</th><td>旅客 → User；旅行社 → Agency；商品 → TravelProduct；梯次 → Departure；報價 → PriceQuote；條件 → SearchCriteria。</td></tr>
+<tr><th scope="row">文字分析：動詞 → 受詞的方法</th><td>驗證搜尋條件 → SearchCriteria.validate()；判斷梯次日期是否符合 → Departure.matchesDate()。</td></tr>
+<tr><th scope="row">文字分析：形容詞 → 屬性</th><td>已發布 → publicationStatus；可售席次 → availableSeats；例如未知席次保留空值。</td></tr>
+<tr><th scope="row">3.5.3.1 Data dictionary：資料字典</th><td>例：productId（字串，T001）、departureId（字串，D001）、departureDate（日期，2026-12-23）、price（可空小數，29900.00）。</td></tr>
+<tr><th scope="row">3.5.3.2 Class diagrams：類別圖</th><td>以商品、梯次、報價、業者及搜尋條件為核心，依下列繼承、擁有與限定鍵關係製圖。</td></tr>
+<tr><th scope="row">繼承關聯性</th><td>TravelProduct → PackageTour、FlightHotelPackage、FlightTicket。例：日本五天團是一種 PackageTour。</td></tr>
+<tr><th scope="row">擁有關聯性</th><td>一個旅遊商品擁有多個梯次。例：T001 包含 12/23 的 D001 與另一日期的 D002。</td></tr>
+<tr><th scope="row">Qualification：限定鍵</th><td>在同一旅行社的商品集合，以業者商品編號取得唯一商品（0..1）。例：Agency A001 中的 JP005 對應 T001；編號須在該旅行社內唯一。</td></tr></tbody></table></div></details>
+<details id="section-7"><summary><span class="date">11/28</span><span class="title">動態模型</span><span class="arrow" aria-hidden="true">⌄</span></summary><div class="answers"><table><thead><tr><th scope="col">老師題目</th><th scope="col">我們的答案</th></tr></thead><tbody><tr><th scope="row">3.5.5 Sequence diagrams：MVC 循序圖</th><td>旅客 Actor → ChatView（介面）→ SearchController（控制）→ 商品資料 Model → 回傳商品卡。例：輸入日本五天條件，控制器查符合的商品後回到聊天畫面。</td></tr>
+<tr><th scope="row">MVC 三種物件</th><td>View 顯示對話與卡片；Controller 驗證條件及安排查詢；Model 保存商品、梯次及報價。</td></tr>
+<tr><th scope="row">Activity Diagrams：活動圖</th><td>輸入 → AI 整理 → 驗證 → 查候選商品 → 取得相關資料 → 篩選排序 → 顯示結果；無符合商品時進入調整條件分支。</td></tr>
+<tr><th scope="row">Concurrency：並行設計</th><td>取得候選商品 ID 後，並行讀取梯次報價與業者資訊，再匯合、篩選並組卡片。例：同批 T001 同時讀 D001 報價及 A001 窗口資料。</td></tr></tbody></table></div></details>
+<details id="section-8"><summary><span class="date">12/5</span><span class="title">狀態圖與功能導覽</span><span class="arrow" aria-hidden="true">⌄</span></summary><div class="answers"><table><thead><tr><th scope="col">老師題目</th><th scope="col">我們的答案</th></tr></thead><tbody><tr><th scope="row">StateChart Diagram：單一類別狀態</th><td>以商品草稿為例：草稿 → 送審 → 已發布；審核退回 → 修正草稿 → 再送審。業者送審，管理員核准或退回。</td></tr>
+<tr><th scope="row">Navigation Path：樹狀功能選項</th><td>首頁 → 對話搜尋 → 商品詳情 → 聯絡業者；旅客帳號 → 收藏；業者帳號 → 商品草稿／送審；管理員 → 審核。例：業者從登入入口進入自己的商品管理。</td></tr></tbody></table></div></details>
+<footer>設計簡答與設計例子；正式 UML 圖及程式尚未完成。<a href="00_老師作業規定_原文.txt">老師原文</a></footer>
+</main><script>
+// 中文備註：輸入為網址片段或列印事件，輸出只改變週次的開合狀態，不讀寫商品或帳號資料。
+(function(){let saved=[];
+function openSection(){const node=document.getElementById(location.hash.slice(1));if(node&&node.tagName==="DETAILS")node.open=true;}
+openSection();window.addEventListener("hashchange",openSection);
+window.addEventListener("beforeprint",function(){saved=Array.from(document.querySelectorAll("details")).map(function(node){const open=node.open;node.open=true;return{node:node,open:open};});});
+window.addEventListener("afterprint",function(){saved.forEach(function(entry){entry.node.open=entry.open;});saved=[];});
+})();
+</script></body></html>
+
