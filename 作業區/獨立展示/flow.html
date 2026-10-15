@@ -18,13 +18,13 @@
     <div class="diagram-scroll"><img src="CodeFlow.svg" alt="開啟頁面後先讀取範例並建立商品報價物件；首頁篩選排序顯示六筆，可展開更多；詳情頁依商品編號查資料，切換日期時更新同一梯次報價，查無商品則提供返回入口。"></div>
     <div class="code-map">
       <div><strong>sample-tours.js</strong><p>50 筆套裝行程純資料，每筆包含三個梯次。</p></div>
-      <div><strong>TravelProduct / DepartureQuote</strong><p>商品物件擁有報價物件；日期和價格一起保存。</p></div>
+      <div><strong>TravelProduct / Departure / PriceQuote</strong><p>商品擁有梯次，梯次擁有報價；日期與價格一起取得。</p></div>
       <div><strong>CatalogController</strong><p>處理分類、低價排序與每批六筆的顯示上限。</p></div>
       <div><strong>ProductCardView.render()</strong><p>把商品物件轉成卡片 HTML，放進畫面。</p></div>
       <div><strong>renderDetail() / updateQuote()</strong><p>查商品、顯示詳情；切換日期時一起更新報價與回程。</p></div>
       <div><strong>輸入框與聯絡入口</strong><p>輸入只留在此頁，聯絡只顯示提示；外部 AI、後端與真實窗口尚未串接。</p></div>
     </div>
-    <p class="small muted">所有資料目前都在瀏覽器記憶體中運作。<a href="程式碼流程圖.puml">可編輯 UML 原稿</a> · <a href="app.js">對照 app.js</a></p>
+    <p class="small muted">所有資料目前都在瀏覽器記憶體中運作。<a href="程式碼流程圖.puml">可編輯 UML 原稿</a> · <a href="app.js">對照 app.js</a> · <a href="objects.html">類別圖與程式</a></p>
   </main>
 </body>
 </html>

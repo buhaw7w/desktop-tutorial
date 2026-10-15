@@ -1,0 +1,63 @@
+@startuml ProductObjects
+' 中文說明：只畫目前 models.js 的商品資料物件；控制器與畫面見程式流程圖。
+title 商品類別與程式對照
+left to right direction
+skinparam defaultFontName Microsoft JhengHei
+skinparam defaultFontSize 14
+skinparam classAttributeIconSize 0
+skinparam shadowing false
+skinparam backgroundColor #FBF7F1
+skinparam classBackgroundColor #FFFFFF
+skinparam classBorderColor #315F51
+skinparam ArrowColor #315F51
+skinparam noteBackgroundColor #FFF0E9
+skinparam noteBorderColor #C85638
+
+class "旅行社\nAgency" as Agency {
+  + id : string
+  + name : string
+  - products : Map
+  + addProduct(product)
+  + findProduct(productId)
+}
+class "商品\nTravelProduct" as TravelProduct {
+  + id : string
+  + title : string
+  + agencyId : string
+  - departures : Departure[]
+  + quoteAt(index)
+  + getSummary()
+}
+class "出發梯次\nDeparture" as Departure {
+  + date : string
+  + returnDate : string
+  + quote : PriceQuote
+  + priceLabel : string
+}
+class "報價\nPriceQuote" as PriceQuote {
+  - amount : number 或 null
+  - feeText : string
+  + label : string
+}
+together {
+  class "套裝行程\nPackageTour" as PackageTour {
+    + getSummary()
+  }
+  class "機加酒\nFlightHotelPackage" as FlightHotelPackage {
+    + getSummary()
+  }
+  class "機票\nFlightTicket" as FlightTicket {
+    + getSummary()
+  }
+}
+Agency "1" o-- "0..*" TravelProduct : 擁有商品
+TravelProduct "1" o-- "1..*" Departure : 擁有梯次
+Departure "1" *-- "1" PriceQuote : 建立並擁有報價
+TravelProduct <|-- PackageTour
+TravelProduct <|-- FlightHotelPackage
+TravelProduct <|-- FlightTicket
+note top of Agency
+  限定鍵 productId：
+  在該旅行社的 Map 中查到一筆商品或 null。
+end note
+@enduml

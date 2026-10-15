@@ -1,33 +1,19 @@
 /* 中文說明：本檔只有範例資料、畫面渲染與本機互動。
  * 沒有 AI 回覆、自然語言解析、登入、付款、真實旅行社資料或網路 API。
- * 商品日期與價格屬於同一個 DepartureQuote 物件，避免錯配不同梯次的價格。
+ * 商品類別由 models.js 提供；日期與報價透過 Departure 物件綁在一起。
  */
 "use strict";
-
-// 資料物件：一筆梯次報價保存出發日期、回程、每人價格及來源文字。
-class DepartureQuote {
-  constructor(date, returnDate, price, feeText) {
-    this.date = date; this.returnDate = returnDate;
-    this.price = price; this.feeText = feeText;
-  }
-  get dateLabel() { return this.date.slice(5).replace("-", "/"); }
-  get priceLabel() { return this.price == null ? "洽詢業者" : `NT$${this.price.toLocaleString("zh-TW")}`; }
-}
-
-// 資料物件：商品擁有多個梯次；選定梯次後，一起取得日期與報價。
-class TravelProduct {
-  constructor(data) { Object.assign(this, data); }
-  get selectedQuote() { return this.departures[0]; }
-  quoteAt(index) { return this.departures[index] || this.selectedQuote; }
-}
 
 // 固定設計資料：範例業者不對應真實公司，以下不是可販售商品。
 const exampleProducts = [
   // 將獨立資料檔的純資料轉成商品與報價物件，列表和詳情共用同一份資料。
-  ...SAMPLE_TOURS.map(data => new TravelProduct({...data, departures:data.departures.map(q => new DepartureQuote(q.date,q.returnDate,q.price,q.feeText))})),
-  new TravelProduct({id:"DEMO-04", category:"bundle", title:"東京・機票＋四晚住宿", agency:"範例旅行社 D", destination:"東京", airport:"桃園", days:5, art:"city", word:"TOKYO", highlight:"機加酒・自由安排", hotel:"範例東京市區飯店四晚", meals:"範例內容：住宿方案未註明是否含早餐。", itinerary:["搭乘範例航班抵達東京。","自由安排。","自由安排。","自由安排。","搭乘回程航班返回桃園。"], departures:[new DepartureQuote("2026-12-23","2026-12-27",32900,"範例上架內文：來回機票與四晚住宿；稅費未註明。")]}),
-  new TravelProduct({id:"DEMO-05", category:"flight", title:"桃園 ⇄ 東京・來回機票", agency:"範例旅行社 E", destination:"東京", airport:"桃園", days:null, art:"snow", word:"TOKYO", highlight:"機票・停留五天", hotel:"此機票範例不提供住宿。", meals:"餐食與行李條件未註明。", itinerary:["12/23 桃園出發，抵達東京。","12/27 東京出發，返回桃園。"], departures:[new DepartureQuote("2026-12-23","2026-12-27",15900,"範例上架內文：來回機票；稅費、行李與餐食未註明。")]}),
+  ...SAMPLE_TOURS.map(createProduct),
+  createProduct({id:"DEMO-04", category:"bundle", title:"東京・機票＋四晚住宿", agency:"範例旅行社 D", destination:"東京", airport:"桃園", days:5, art:"city", word:"TOKYO", highlight:"機加酒・自由安排", hotel:"範例東京市區飯店四晚", meals:"範例內容：住宿方案未註明是否含早餐。", itinerary:["搭乘範例航班抵達東京。","自由安排。","自由安排。","自由安排。","搭乘回程航班返回桃園。"], departures:[new Departure("2026-12-23","2026-12-27",32900,"範例上架內文：來回機票與四晚住宿；稅費未註明。")]}),
+  createProduct({id:"DEMO-05", category:"flight", title:"桃園 ⇄ 東京・來回機票", agency:"範例旅行社 E", destination:"東京", airport:"桃園", days:null, art:"snow", word:"TOKYO", highlight:"機票・停留五天", hotel:"此機票範例不提供住宿。", meals:"餐食與行李條件未註明。", itinerary:["12/23 桃園出發，抵達東京。","12/27 東京出發，返回桃園。"], departures:[new Departure("2026-12-23","2026-12-27",15900,"範例上架內文：來回機票；稅費、行李與餐食未註明。")]}),
 ];
+
+// 旅行社擁有這批商品，詳情頁以旅行社和商品編號查找。
+const exampleAgencies = buildAgencies(exampleProducts);
 
 // 畫面輸出前跳脫文字，網址參數及輸入內容不會直接變成 HTML。
 const escapeText = value => String(value).replace(/[&<>"']/g, char => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[char]));
@@ -46,8 +32,9 @@ function coverMarkup(product) {
 class ProductCardView {
   static render(product) {
     const quote = product.selectedQuote;
-    const duration = product.days == null ? "來回機票" : `${product.days} 天`;
-    return `<article class="product-card">${coverMarkup(product)}<div class="card-body"><div class="date-price"><div class="date-block"><strong>${quote.dateLabel} 出發</strong>${quote.returnDate.slice(5).replace("-", "/")} 返回</div><div class="price">${quote.priceLabel}<small>每人・範例報價</small></div></div><h3>${escapeText(product.title)}</h3><p class="meta">${duration} · ${escapeText(product.airport)}出發 · ${escapeText(product.agency)}</p><span class="highlight">${escapeText(product.highlight)}</span><div class="card-bottom"><span class="other-dates">${product.departures.length > 1 ? `另有 ${product.departures.length - 1} 個出發日` : "費用內容見詳情"}</span><a class="card-link" href="detail.html?id=${product.id}" aria-label="查看${escapeText(product.title)}詳情">查看詳情 →</a></div></div></article>`;
+    // 多型：畫面呼叫同一個方法，由商品子類別回傳自己的摘要。
+    const duration = product.getSummary();
+    return `<article class="product-card">${coverMarkup(product)}<div class="card-body"><div class="date-price"><div class="date-block"><strong>${quote.dateLabel} 出發</strong>${quote.returnDate.slice(5).replace("-", "/")} 返回</div><div class="price">${quote.priceLabel}<small>每人・範例報價</small></div></div><h3>${escapeText(product.title)}</h3><p class="meta">${duration} · ${escapeText(product.airport)}出發 · ${escapeText(product.agency)}</p><span class="highlight">${escapeText(product.highlight)}</span><div class="card-bottom"><span class="other-dates">${product.departures.length > 1 ? `另有 ${product.departures.length - 1} 個出發日` : "費用內容見詳情"}</span><a class="card-link" href="detail.html?agency=${encodeURIComponent(product.agencyId)}&amp;id=${encodeURIComponent(product.id)}" aria-label="查看${escapeText(product.title)}詳情">查看詳情 →</a></div></div></article>`;
   }
 }
 
@@ -96,7 +83,14 @@ class CatalogController {
 
 // 詳情控制器：按 ID 查商品，切換梯次時同時更新日期、價格與費用原文。
 function renderDetail() {
-  const product = exampleProducts.find(p => p.id === new URLSearchParams(location.search).get("id"));
+  const params = new URLSearchParams(location.search);
+  const productId = params.get("id");
+  const agencyId = params.get("agency");
+  // 限定鍵：先找到旅行社，再以商品編號查其集合；舊的只有 id 的連結仍可使用。
+  const agency = agencyId
+    ? exampleAgencies.find(item => item.id === agencyId)
+    : exampleAgencies.find(item => item.findProduct(productId));
+  const product = agency?.findProduct(productId);
   const host = document.getElementById("product-detail");
   if (!product) {
     host.innerHTML = '<section class="invalid-product"><h1>找不到這個範例商品</h1><p>請返回列表，選擇商品查看。</p><a class="primary" href="index.html">返回列表</a></section>';

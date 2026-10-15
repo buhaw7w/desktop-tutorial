@@ -78,7 +78,7 @@ table{width:100%;border-collapse:collapse;table-layout:fixed;font-size:14px}th,t
 <tr><th scope="row">文字分析：動詞 → 受詞的方法</th><td>驗證搜尋條件 → SearchCriteria.validate()；判斷梯次日期是否符合 → Departure.matchesDate()。</td></tr>
 <tr><th scope="row">文字分析：形容詞 → 屬性</th><td>已發布 → publicationStatus；可售席次 → availableSeats；例如未知席次保留空值。</td></tr>
 <tr><th scope="row">3.5.3.1 Data dictionary：資料字典</th><td>例：productId（字串，T001）、departureId（字串，D001）、departureDate（日期，2026-12-23）、price（可空小數，29900.00）。</td></tr>
-<tr><th scope="row">3.5.3.2 Class diagrams：類別圖</th><td>以商品、梯次、報價、業者及搜尋條件為核心，依下列繼承、擁有與限定鍵關係製圖。</td></tr>
+<tr><th scope="row">3.5.3.2 Class diagrams：類別圖</th><td><a href="獨立展示/objects.html">商品類別圖與程式</a>：業者 → 商品 → 梯次 → 報價，搭配三種商品子類別及可執行範例；搜尋條件等完整系統類別仍待補。</td></tr>
 <tr><th scope="row">繼承關聯性</th><td>TravelProduct → PackageTour、FlightHotelPackage、FlightTicket。例：日本五天團是一種 PackageTour。</td></tr>
 <tr><th scope="row">擁有關聯性</th><td>一個旅遊商品擁有多個梯次。例：T001 包含 12/23 的 D001 與另一日期的 D002。</td></tr>
 <tr><th scope="row">Qualification：限定鍵</th><td>在同一旅行社的商品集合，以業者商品編號取得唯一商品（0..1）。例：Agency A001 中的 JP005 對應 T001；編號須在該旅行社內唯一。</td></tr></tbody></table></div></details>
@@ -88,7 +88,7 @@ table{width:100%;border-collapse:collapse;table-layout:fixed;font-size:14px}th,t
 <tr><th scope="row">Concurrency：並行設計</th><td>取得候選商品 ID 後，並行讀取梯次報價與業者資訊，再匯合、篩選並組卡片。例：同批 T001 同時讀 D001 報價及 A001 窗口資料。</td></tr></tbody></table></div></details>
 <details id="section-8"><summary><span class="date">12/5</span><span class="title">狀態圖與功能導覽</span><span class="arrow" aria-hidden="true">⌄</span></summary><div class="answers"><table><thead><tr><th scope="col">老師題目</th><th scope="col">我們的答案</th></tr></thead><tbody><tr><th scope="row">StateChart Diagram：單一類別狀態</th><td>以商品草稿為例：草稿 → 送審 → 已發布；審核退回 → 修正草稿 → 再送審。業者送審，管理員核准或退回。</td></tr>
 <tr><th scope="row">Navigation Path：樹狀功能選項</th><td>首頁 → 對話搜尋 → 商品詳情 → 聯絡業者；旅客帳號 → 收藏；業者帳號 → 商品草稿／送審；管理員 → 審核。例：業者從登入入口進入自己的商品管理。</td></tr></tbody></table></div></details>
-<footer>設計簡答與設計例子；正式 UML 圖及程式尚未完成。<a href="00_老師作業規定_原文.txt">老師原文</a></footer>
+<footer>系統設計簡答；獨立展示已有商品類別圖與部分程式，完整平台及 AI 串接尚未完成。<a href="00_老師作業規定_原文.txt">老師原文</a></footer>
 </main><script>
 // 中文備註：輸入為網址片段或列印事件，輸出只改變週次的開合狀態，不讀寫商品或帳號資料。
 (function(){let saved=[];

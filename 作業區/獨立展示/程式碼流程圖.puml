@@ -13,9 +13,9 @@ skinparam noteBackgroundColor #FFF5E5
 skinparam noteBorderColor #B3613E
 start
 :開啟 index.html 或 detail.html;
-:先載入 sample-tours.js，再執行 app.js\n50 筆套裝行程轉為商品與報價物件\n另保留機加酒與機票各一筆;
+:依序載入 models.js、sample-tours.js、app.js\n50 筆套裝行程轉為商品與報價物件\n另保留機加酒與機票各一筆;
 note right
-  TravelProduct 擁有 DepartureQuote。
+  TravelProduct 擁有 Departure，梯次擁有 PriceQuote。
   資料只在瀏覽器記憶體中使用。
 end note
 if (body.data-page 是 catalog？) then (首頁)
@@ -29,16 +29,16 @@ if (body.data-page 是 catalog？) then (首頁)
     標籤：只把文字加進輸入框。
     看看商品呈現：提示固定範例，捲到列表。
   end note
-  :點查看詳情\n開啟 detail.html?id=商品編號;
+  :點查看詳情\n開啟 detail.html?agency=業者編號&id=商品編號;
   note right
     新頁重新載入資料，進入右側詳情流程。
     輸入框尚未執行自然語言或 AI 搜尋。
   end note
 else (詳情頁)
-  :renderDetail()\n讀取網址 id，以 find() 查商品;
+  :renderDetail()\n讀取網址 agency 與 id，向旅行社查商品;
   if (找到商品？) then (有)
     :顯示行程、住宿、餐點及日期選單;
-    :updateQuote()\nquoteAt(index) 取同一筆梯次\n更新價格、出回程與費用原文;
+    :updateQuote()\nquoteAt(index) 取梯次及其 PriceQuote\n更新價格、出回程與費用原文;
     note right
       切換日期：再次執行 updateQuote()。
       聯絡旅行社：切換提示的顯示狀態。
