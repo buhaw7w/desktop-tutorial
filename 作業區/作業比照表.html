@@ -64,6 +64,21 @@ table{width:100%;border-collapse:collapse;table-layout:fixed;font-size:14px}th,t
 <tr><th scope="row">FR-16 審核與發布</th><td><p><strong>做法：</strong>管理員核對來源、商品內容、日期、報價與業者窗口，選擇核准發布或附原因退回；發布時商品、梯次及報價要一起完成。</p><p><strong>例子：</strong>管理員核准資料完整的商品 → 平台建立公開商品頁 → 旅客搜尋得到；費用不清楚的商品退回後仍不公開。寫入失敗不能留下半套已發布資料。</p></td></tr>
 <tr><th scope="row">FR-17 管理總覽</th><td><p><strong>做法：</strong>管理員查看待審商品、處理狀態與必要統計，再進入對應項目處理；查看總覽不會自動核准或改價。</p><p><strong>例子：</strong>總覽有兩份待審 → 打開第一份並退回 → 回總覽時該份顯示需修改。查詢失敗顯示重試提示，不能把錯誤當成零筆待審。</p></td></tr>
 <tr><th scope="row">FR-18 旅遊靈感與影片</th><td><p><strong>做法：</strong>旅客目的地未定時，AI提供少量旅遊建議及理由；旅客確認後才改搜尋條件。規劃每5張商品卡搭配1張相關影片卡，影片與可購買商品分開，來源及授權方式仍待確認。</p><p><strong>例子：</strong>旅客說「12月想玩雪，地點不限」→ 看建議後選日本 → 系統查日本商品。影片只補充介紹，不能當作價格或可售證據；沒有可信來源時不編造影片或商品。</p></td></tr></tbody></table>
+<h2 id="oo-explanation" style="font-size:18px">物件導向（OO）對照</h2>
+<p>上述需求適合用物件導向設計。需求表說明系統要做什麼，再透過類別、資料與方法分配責任；目前已有前端示例，完整平台仍待逐步完成。</p>
+<table><thead><tr><th scope="col">需求</th><th scope="col">對應物件與方法</th></tr></thead><tbody>
+<tr><th scope="row">旅行社管理商品</th><td>Agency：透過 addProduct() 加入商品、findProduct() 查找自己的商品集合。</td></tr>
+<tr><th scope="row">商品有不同出發日期</th><td>TravelProduct、Departure：透過 quoteAt(index) 取得指定梯次。</td></tr>
+<tr><th scope="row">每個日期有對應價格</th><td>PriceQuote：保存金額與費用說明，透過 label 等 getter 提供讀取。</td></tr>
+</tbody></table>
+<ul>
+<li><strong>封裝：</strong>PriceQuote 用私有欄位 #amount 保存金額，建立時檢查價格，外部透過 getter 讀取。</li>
+<li><strong>繼承：</strong>PackageTour（套裝行程）、FlightHotelPackage（機加酒）、FlightTicket（機票）繼承 TravelProduct（旅遊商品）。</li>
+<li><strong>多型：</strong>商品卡統一呼叫 getSummary()，不同商品子類別回傳自己的摘要。</li>
+<li><strong>擁有關係：</strong>旅行社有商品，商品有出發梯次，每個梯次有對應報價。</li>
+</ul>
+<p><strong>上台說法：</strong>「我們把旅行社、商品、梯次與報價設計成不同物件，讓每個物件管理自己的資料，並透過方法合作完成需求。」</p>
+<p class="footnote">這些例子對應目前的前端示範；商品集合查找不等於後端權限驗證，也不表示完整AI系統已完成。</p>
 <h2 style="font-size:18px">3.3 非功能性需求</h2>
 <p class="footnote">3.3.1六題與文件需求依已提供照片整理；其餘是依老師11個分類補充的設計答案。完整L10 P.52仍待提供核對，不把補充設計當成老師原題。效能數值為暫訂驗收目標，尚未實測。</p>
 <table><thead><tr><th scope="col">老師題目／需求分類</th><th scope="col">詳細答案與例子</th></tr></thead><tbody><tr><th scope="row">3.3.1 哪些使用者會使用？</th><td><p><strong>答案：</strong>包含旅客、旅行社人員及管理員。旅客搜尋、看詳情和收藏；旅行社管理自己的商品；管理員審核與發布。公開搜尋不要求先登入。</p><p><strong>例子：</strong>無官網旅行社準備商品，管理員核准後，未登入旅客也能搜尋並查看詳情。</p><p><strong>檢查：</strong>核對三種角色的入口與操作權限，旅客不得取得上架、改價或審核權限。</p></td></tr>
