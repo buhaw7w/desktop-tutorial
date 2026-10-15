@@ -4,16 +4,16 @@
   <!-- 中文說明：以真正在展示頁使用的 models.js 說明類別；此頁不連後端或 AI。 -->
   <meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
   <title>類別圖與程式｜旅遊展示網頁</title>
-  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="../../02_前端程式碼/style.css">
   <!-- 中文說明：小例子會在按鈕事件才使用資料；先依序讀取模型及範例。 -->
-  <script src="models.js"></script><script src="sample-tours.js"></script>
+  <script src="../../02_前端程式碼/models.js"></script><script src="../../03_範例資料/sample-tours.js"></script>
   <style>
     .objects-main{max-width:1100px;margin:auto;padding:30px 24px}.objects-main h1{font-size:27px}.object-summary{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px;margin:22px 0}.object-summary div,.object-example{border:1px solid var(--line);background:white;border-radius:16px;padding:16px}.object-summary strong{display:block}.object-summary span{font-size:12px;color:var(--muted)}.object-diagram{overflow:auto;background:var(--paper);border:1px solid var(--line);border-radius:16px;margin:20px 0}.object-diagram img{display:block;width:100%;min-width:900px;height:auto}.object-example h2{font-size:18px}.object-example pre{white-space:pre-wrap;overflow-wrap:anywhere;font-size:13px;padding:16px;border-radius:12px;background:#fffdf9;border:1px solid var(--line)}.object-example output{display:block;white-space:pre-line;margin-top:16px;color:var(--green);font-size:14px}.object-details{margin-top:22px}.object-details summary{cursor:pointer;font-weight:700;padding:12px 0}.object-details table{width:100%;border-collapse:collapse;font-size:13px}.object-details th,.object-details td{text-align:left;border-bottom:1px solid var(--line);padding:12px 8px;vertical-align:top;overflow-wrap:anywhere}.object-details th{width:28%}@media(max-width:650px){.object-summary{grid-template-columns:repeat(2,minmax(0,1fr))}}
   </style>
 </head>
 <body>
   <main class="objects-main">
-    <a class="back-link" href="index.html">← 返回展示網頁</a>
+    <a class="back-link" href="../../01_展示網頁/index.html">← 返回展示網頁</a>
     <h1>類別圖與程式</h1>
     <p class="muted">用同一個例子：向旅行社找商品 → 選出發日期 → 取得報價。</p>
     <div class="object-summary"><div><strong>旅行社</strong><span>管理自己的商品</span></div><div><strong>商品</strong><span>保存名稱與出發梯次</span></div><div><strong>出發梯次</strong><span>保存出回程日期</span></div><div><strong>報價</strong><span>保存金額與費用說明</span></div></div>
@@ -46,7 +46,7 @@ departure.priceLabel;</code></pre>
       <tr><th>Departure</th><td>date、returnDate：YYYY-MM-DD 字串；quote：PriceQuote 物件。</td></tr>
       <tr><th>PriceQuote</th><td>amount：非負數字或 null；feeText：費用說明字串。null 表示未知價格。</td></tr>
     </tbody></table></details>
-    <p class="small muted" style="margin-top:25px"><a href="models.js">查看類別程式 models.js</a> · <a href="商品類別圖.puml">可編輯 UML 原稿</a> · <a href="flow.html">程式流程圖</a> · <a href="sequence.html">MVC 循序圖</a></p>
+    <p class="small muted" style="margin-top:25px"><a href="../../02_前端程式碼/models.js">查看類別程式 models.js</a> · <a href="商品類別圖.puml">可編輯 UML 原稿</a> · <a href="../01_程式流程/flow.html">程式流程圖</a> · <a href="../03_MVC循序/sequence.html">MVC 循序圖</a></p>
   </main>
   <script>
     // 中文說明：按下後使用真正的類別運算，把結果寫入文字區，不建立帳號或交易。

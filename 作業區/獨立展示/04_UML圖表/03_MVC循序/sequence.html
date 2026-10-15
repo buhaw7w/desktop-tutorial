@@ -4,7 +4,7 @@
   <!-- 中文說明：將老師要求的 Actor、View、Control、Model 對上實際展示程式。 -->
   <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
   <title>MVC 循序圖｜旅遊展示網頁</title>
-  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="../../02_前端程式碼/style.css">
   <style>
     /* 中文說明：先看三個責任與一張圖；程式對照收合，圖太寬時只在圖區捲動。 */
     .sequence-main{max-width:1200px;margin:auto;padding:30px 24px}.sequence-main h1{font-size:27px}.mvc-roles{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px;margin:22px 0}.mvc-roles div,.sequence-example{background:#fff;border:1px solid var(--line);border-radius:16px;padding:16px}.mvc-roles strong{display:block}.mvc-roles p{font-size:13px;color:var(--muted);margin:6px 0 0}.sequence-diagram{overflow:auto;background:var(--paper);border:1px solid var(--line);border-radius:16px;margin:22px 0}.sequence-diagram img{display:block;width:100%;min-width:1060px;height:auto}.sequence-example h2{font-size:18px}.sequence-code{margin-top:20px}.sequence-code summary{padding:14px 0;cursor:pointer;font-weight:700}.sequence-code pre{font-size:13px;white-space:pre-wrap;overflow-wrap:anywhere;background:#fffdf9;border:1px solid var(--line);border-radius:12px;padding:16px}.sequence-links{margin-top:24px;font-size:13px}@media(max-width:650px){.mvc-roles{grid-template-columns:1fr}}@media print{.sequence-diagram{overflow:visible}.sequence-diagram img{min-width:0}}
@@ -12,7 +12,7 @@
 </head>
 <body>
   <main class="sequence-main">
-    <a class="back-link" href="index.html">← 返回展示網頁</a>
+    <a class="back-link" href="../../01_展示網頁/index.html">← 返回展示網頁</a>
     <h1>MVC 循序圖</h1>
     <p class="muted">例子：旅客把出發日改成 12/24，畫面更新為該日期的價格。</p>
     <div class="mvc-roles">
@@ -24,7 +24,7 @@
     <section class="sequence-example">
       <h2>上台可以這樣說</h2>
       <p>「旅客選日期後，View 把操作交給 Controller；Controller 向 Model 取得該梯次，再讓 View 顯示對應報價。」</p>
-      <a class="primary" href="detail.html?agency=AGENCY-01&amp;id=TOUR-001">打開行程，試著換日期 →</a>
+      <a class="primary" href="../../01_展示網頁/detail.html?agency=AGENCY-01&amp;id=TOUR-001">打開行程，試著換日期 →</a>
       <p class="small muted">範例：第一個日期 12/23 是 NT$27,900，第二個日期 12/24 是 NT$29,100。皆為虛構資料。</p>
     </section>
     <details class="sequence-code">
@@ -40,7 +40,7 @@ updateQuote() {
   this.view.showQuote(departure);
 }</code></pre>
     </details>
-    <p class="sequence-links"><a href="MVC循序圖.puml">可編輯 UML 原稿</a> · <a href="app.js">畫面與控制程式</a> · <a href="models.js">資料模型</a> · <a href="objects.html">類別圖</a> · <a href="flow.html">整體流程圖</a></p>
+    <p class="sequence-links"><a href="MVC循序圖.puml">可編輯 UML 原稿</a> · <a href="../../02_前端程式碼/app.js">畫面與控制程式</a> · <a href="../../02_前端程式碼/models.js">資料模型</a> · <a href="../02_商品類別/objects.html">類別圖</a> · <a href="../01_程式流程/flow.html">整體流程圖</a></p>
     <p class="small muted">此圖對照目前的前端展示；資料在瀏覽器記憶體，尚未串接資料庫或外部 AI。</p>
   </main>
 </body>

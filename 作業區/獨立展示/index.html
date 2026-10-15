@@ -1,39 +1,28 @@
 <!doctype html>
 <html lang="zh-Hant">
 <head>
-  <!-- 中文說明：獨立的畫面提案，僅讀取本資料夾範例資料，不連接商品系統或外部 AI。 -->
-  <meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>旅伴｜旅遊媒合畫面提案</title>
-  <link rel="stylesheet" href="style.css"><script src="models.js" defer></script><script src="sample-tours.js" defer></script><script src="app.js" defer></script>
+  <!-- 中文說明：組員入口只提供資料夾導覽，不在這裡放商品或複製應用程式。 -->
+  <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>先看這裡｜獨立展示資料夾導覽</title>
+  <link rel="stylesheet" href="02_前端程式碼/style.css">
+  <style>
+    /* 中文說明：四類工作分成四張卡，手機單欄；詳細副檔名說明預設收起。 */
+    .folder-main{max-width:1000px;margin:auto;padding:45px 24px}.folder-main h1{font-size:30px;margin:10px 0}.folder-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:18px;margin:28px 0}.folder-card{background:#fff;border:1px solid var(--line);border-radius:22px;padding:25px}.folder-card h2{font-size:20px;margin:0 0 10px}.folder-card p{font-size:14px;color:var(--muted)}.folder-path{display:block;font-size:13px;color:var(--green);margin:14px 0;overflow-wrap:anywhere}.folder-card a{display:inline-block;margin:5px 12px 5px 0}.folder-help{border-top:1px solid var(--line);padding:16px 0;font-size:14px}.folder-help summary{cursor:pointer;font-weight:700}.folder-help p{line-height:1.9}.folder-note{font-size:13px;color:var(--muted)}@media(max-width:650px){.folder-grid{grid-template-columns:1fr}.folder-main{padding:28px 18px}}
+  </style>
 </head>
-<body data-page="catalog">
-  <header class="site-header"><a class="brand" href="index.html"><span class="brand-mark" aria-hidden="true">↗</span>旅伴<span class="brand-sub">AI 旅遊搜尋平台</span></a><span class="demo-badge">畫面提案</span></header>
-  <main class="workspace">
-    <aside class="search-panel" aria-label="需求輸入">
-      <p class="eyebrow">從你的假期開始</p>
-      <h1>說說你想<br>怎麼旅行。</h1>
-      <p class="muted">先看日期與價格，<br>找到喜歡的，再慢慢看細節。</p>
-      <form id="preview-form">
-        <label for="request">這次想去哪裡？</label>
-        <textarea id="request" maxlength="500" rows="4" placeholder="12月23日出發，日本5天左右，便宜就好">12月23日出發，日本5天左右，便宜就好</textarea>
-        <div class="quick-tags" aria-label="填入需求文字"><button type="button" data-phrase="想泡溫泉">溫泉</button><button type="button" data-phrase="想逛街與看城市景點">城市漫遊</button><button type="button" data-phrase="還沒決定目的地，想聽旅遊建議">給我靈感</button></div>
-        <button class="primary full" type="submit">看看商品呈現 <span aria-hidden="true">→</span></button>
-        <p id="preview-status" class="small muted" role="status">此版僅展示畫面；下方為固定範例，尚未連接 AI 搜尋。</p>
-      </form>
-      <details class="inspiration"><summary>還沒決定去哪裡？</summary><p><span class="small-label">旅遊建議</span>想泡湯，可以先了解北海道；想逛街，可以先了解東京或大阪。建議不是可購買商品，日期與價格仍須看旅行社商品。</p></details>
-      <div class="panel-foot"><span aria-hidden="true">◎</span> 商品由旅行社提供，平台負責媒合。</div>
-    </aside>
-    <section class="catalog" aria-labelledby="results-title">
-      <div class="catalog-heading"><div><p class="eyebrow">簡單找到適合的行程</p><h2 id="results-title">先看假期，再看價格。</h2></div><span class="tiny-note">示範資料 · 非販售商品</span></div>
-      <div class="category-tabs" role="group" aria-label="商品類型"><button type="button" data-category="tour" aria-pressed="true">套裝行程</button><button type="button" data-category="bundle" aria-pressed="false">機加酒</button><button type="button" data-category="flight" aria-pressed="false">機票</button></div>
-      <div class="result-caption"><span id="result-count" role="status"></span><span>依範例出發日價格，由低到高</span></div>
-      <div id="product-grid" class="product-grid"></div>
-      <!-- 中文說明：每次只增加六張卡片；不把50筆同時塞進畫面。 -->
-      <div class="load-more-wrap"><button id="load-more" class="quiet-button" type="button" aria-controls="product-grid">顯示更多行程</button></div>
-      <noscript><p>請啟用 JavaScript，以查看商品配置與詳情。</p></noscript>
-      <p class="catalog-foot">商品卡只放必要資訊。飯店、餐點與費用內容，點進詳情再看。</p>
-    </section>
+<body>
+  <main class="folder-main">
+    <p class="eyebrow">組員共用入口</p>
+    <h1>先看這裡</h1>
+    <p class="muted">看網站、改程式、改資料、看圖表，分開找。</p>
+    <div class="folder-grid">
+      <section class="folder-card"><h2>01 看展示網頁</h2><p>查看首頁、商品卡與商品詳情。</p><code class="folder-path">01_展示網頁/</code><a class="primary" href="01_展示網頁/index.html">打開展示網站 →</a></section>
+      <section class="folder-card"><h2>02 找前端程式</h2><p>models.js：物件<br>app.js：操作流程<br>style.css：配色與排版</p><code class="folder-path">02_前端程式碼/</code><a href="02_前端程式碼/README.md">看檔案分工</a></section>
+      <section class="folder-card"><h2>03 修改範例行程</h2><p>50 筆虛構套裝行程、10 家範例旅行社、150 筆日期報價。</p><code class="folder-path">03_範例資料/</code><a href="03_範例資料/sample-tours.js">查看行程資料</a></section>
+      <section class="folder-card"><h2>04 看 UML 與上台說明</h2><p>每一種圖的說明頁、圖片與原稿放在同一個資料夾。</p><code class="folder-path">04_UML圖表/</code><a href="04_UML圖表/01_程式流程/flow.html">程式流程</a><a href="04_UML圖表/02_商品類別/objects.html">商品類別</a><a href="04_UML圖表/03_MVC循序/sequence.html">MVC 循序</a></section>
+    </div>
+    <details class="folder-help"><summary>這些副檔名是什麼？</summary><p><strong>.html</strong> 是網頁；<strong>.js</strong> 是程式或資料；<strong>.css</strong> 是配色與排版。<br><strong>.puml</strong> 是可修改的 UML 原稿；<strong>.svg</strong> 是產生後的圖片；<strong>README.md</strong> 是資料夾說明。</p></details>
+    <p class="folder-note">目前是前端展示與課堂用圖表；後端及外部 AI 尚未接入。</p>
   </main>
-  <footer class="site-footer">獨立畫面提案 · 尚未整合正式平台 · <a href="objects.html">類別圖與程式</a> · <a href="flow.html">程式流程圖</a> · <a href="sequence.html">MVC 循序圖</a></footer>
 </body>
 </html>

@@ -1,0 +1,39 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+  <!-- 中文說明：獨立的畫面提案，僅讀取本資料夾範例資料，不連接商品系統或外部 AI。 -->
+  <meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>旅伴｜旅遊媒合畫面提案</title>
+  <link rel="stylesheet" href="../02_前端程式碼/style.css"><script src="../02_前端程式碼/models.js" defer></script><script src="../03_範例資料/sample-tours.js" defer></script><script src="../02_前端程式碼/app.js" defer></script>
+</head>
+<body data-page="catalog">
+  <header class="site-header"><a class="brand" href="index.html"><span class="brand-mark" aria-hidden="true">↗</span>旅伴<span class="brand-sub">AI 旅遊搜尋平台</span></a><span class="demo-badge">畫面提案</span></header>
+  <main class="workspace">
+    <aside class="search-panel" aria-label="需求輸入">
+      <p class="eyebrow">從你的假期開始</p>
+      <h1>說說你想<br>怎麼旅行。</h1>
+      <p class="muted">先看日期與價格，<br>找到喜歡的，再慢慢看細節。</p>
+      <form id="preview-form">
+        <label for="request">這次想去哪裡？</label>
+        <textarea id="request" maxlength="500" rows="4" placeholder="12月23日出發，日本5天左右，便宜就好">12月23日出發，日本5天左右，便宜就好</textarea>
+        <div class="quick-tags" aria-label="填入需求文字"><button type="button" data-phrase="想泡溫泉">溫泉</button><button type="button" data-phrase="想逛街與看城市景點">城市漫遊</button><button type="button" data-phrase="還沒決定目的地，想聽旅遊建議">給我靈感</button></div>
+        <button class="primary full" type="submit">看看商品呈現 <span aria-hidden="true">→</span></button>
+        <p id="preview-status" class="small muted" role="status">此版僅展示畫面；下方為固定範例，尚未連接 AI 搜尋。</p>
+      </form>
+      <details class="inspiration"><summary>還沒決定去哪裡？</summary><p><span class="small-label">旅遊建議</span>想泡湯，可以先了解北海道；想逛街，可以先了解東京或大阪。建議不是可購買商品，日期與價格仍須看旅行社商品。</p></details>
+      <div class="panel-foot"><span aria-hidden="true">◎</span> 商品由旅行社提供，平台負責媒合。</div>
+    </aside>
+    <section class="catalog" aria-labelledby="results-title">
+      <div class="catalog-heading"><div><p class="eyebrow">簡單找到適合的行程</p><h2 id="results-title">先看假期，再看價格。</h2></div><span class="tiny-note">示範資料 · 非販售商品</span></div>
+      <div class="category-tabs" role="group" aria-label="商品類型"><button type="button" data-category="tour" aria-pressed="true">套裝行程</button><button type="button" data-category="bundle" aria-pressed="false">機加酒</button><button type="button" data-category="flight" aria-pressed="false">機票</button></div>
+      <div class="result-caption"><span id="result-count" role="status"></span><span>依範例出發日價格，由低到高</span></div>
+      <div id="product-grid" class="product-grid"></div>
+      <!-- 中文說明：每次只增加六張卡片；不把50筆同時塞進畫面。 -->
+      <div class="load-more-wrap"><button id="load-more" class="quiet-button" type="button" aria-controls="product-grid">顯示更多行程</button></div>
+      <noscript><p>請啟用 JavaScript，以查看商品配置與詳情。</p></noscript>
+      <p class="catalog-foot">商品卡只放必要資訊。飯店、餐點與費用內容，點進詳情再看。</p>
+    </section>
+  </main>
+  <footer class="site-footer">獨立畫面提案 · <a href="../index.html">資料夾導覽</a> · <a href="../04_UML圖表/02_商品類別/objects.html">類別圖與程式</a> · <a href="../04_UML圖表/01_程式流程/flow.html">程式流程圖</a> · <a href="../04_UML圖表/03_MVC循序/sequence.html">MVC 循序圖</a></footer>
+</body>
+</html>
