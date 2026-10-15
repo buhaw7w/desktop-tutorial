@@ -35,17 +35,17 @@ if (body.data-page 是 catalog？) then (首頁)
     輸入框尚未執行自然語言或 AI 搜尋。
   end note
 else (詳情頁)
-  :renderDetail()\n讀取網址 agency 與 id，向旅行社查商品;
+  :renderDetail() 建立 View 與 Controller\nController.show() 讀取網址並向旅行社查商品;
   if (找到商品？) then (有)
-    :顯示行程、住宿、餐點及日期選單;
-    :updateQuote()\nquoteAt(index) 取梯次及其 PriceQuote\n更新價格、出回程與費用原文;
+    :View.render(product)\n顯示行程、住宿、餐點及日期選單;
+    :Controller.updateQuote()\nquoteAt(index) 取梯次\nView.showQuote() 顯示價格、出回程與費用原文;
     note right
       切換日期：再次執行 updateQuote()。
       聯絡旅行社：切換提示的顯示狀態。
       目前不開啟真實網站或 LINE 窗口。
     end note
   else (沒有)
-    :顯示找不到商品\n提供返回列表入口;
+    :View.showMissing()\n顯示找不到商品並提供返回列表入口;
   endif
 endif
 stop

@@ -1,0 +1,45 @@
+@startuml MvcSequence
+' 中文說明：對照 app.js 和 models.js 的真實日期切換流程；進入時商品已找到。
+' 邊界、控制、資料依老師順序排列；沒有畫成未實作的資料庫或外部 AI。
+title 切換出發日期與報價（MVC 循序圖）
+skinparam defaultFontName Microsoft JhengHei
+skinparam defaultFontSize 14
+skinparam shadowing false
+skinparam backgroundColor #FBF7F1
+skinparam sequenceArrowColor #315F51
+skinparam sequenceLifeLineBorderColor #315F51
+skinparam sequenceParticipantBackgroundColor #FFFFFF
+skinparam sequenceParticipantBorderColor #315F51
+skinparam noteBackgroundColor #FFF0E9
+skinparam noteBorderColor #C85638
+hide footbox
+autonumber
+actor "旅客" as Traveler
+boundary "view :\nProductDetailView\n介面 View" as View
+control "controller :\nProductDetailController\n控制 Controller" as Controller
+entity "product :\nTravelProduct\n資料 Model" as Product
+entity "departure :\nDeparture" as Departure
+entity "quote :\nPriceQuote" as Quote
+
+note over View, Product
+  開始條件：已開啟 TOUR-001 詳情，預設第一個梯次。
+  Model 目前在瀏覽器記憶體；尚未連資料庫。
+end note
+Traveler -> View : 選 12/24，觸發 change
+View -> Controller : 已綁定的事件呼叫 updateQuote()
+Controller -> View : 讀取 selectedIndex
+View --> Controller : 1（第二個選項）
+Controller -> Product : quoteAt(1)
+Product --> Controller : 第二個 Departure 物件
+Controller -> View : showQuote(departure)
+View -> Departure : 讀取日期、priceLabel、feeText
+Departure -> Quote : 讀取 label 與 feeText
+Quote --> Departure : NT$29,100、費用說明
+Departure --> View : 日期、價格文字、費用說明
+View -> View : 更新價格、出回程與費用欄位
+View --> Traveler : 顯示 12/24–12/28、NT$29,100
+note over View, Controller
+  再選另一日期，就重複這段流程。
+  這是讀取既有報價，不是 AI 產生價格。
+end note
+@enduml

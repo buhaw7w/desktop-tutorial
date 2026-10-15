@@ -6,6 +6,8 @@
 
 **[類別圖與對應程式](objects.html)**：四種主要物件、一張圖、一個可執行例子；`models.js` 是展示頁實際使用的類別，`商品類別圖.puml` 為原稿。
 
+**[MVC 循序圖](sequence.html)**：切換出發日如何更新價格，對照 View、Controller、Model；`MVC循序圖.puml` 為原稿。
+
 - `index.html`：聊天輸入區與商品列表。
 - `detail.html`：商品詳情、出發日期及聯絡入口。
 - `style.css`：桌面與手機樣式。

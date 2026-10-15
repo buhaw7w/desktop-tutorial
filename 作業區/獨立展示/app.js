@@ -81,36 +81,65 @@ class CatalogController {
   }
 }
 
-// 詳情控制器：按 ID 查商品，切換梯次時同時更新日期、價格與費用原文。
-function renderDetail() {
-  const params = new URLSearchParams(location.search);
-  const productId = params.get("id");
-  const agencyId = params.get("agency");
-  // 限定鍵：先找到旅行社，再以商品編號查其集合；舊的只有 id 的連結仍可使用。
-  const agency = agencyId
-    ? exampleAgencies.find(item => item.id === agencyId)
-    : exampleAgencies.find(item => item.findProduct(productId));
-  const product = agency?.findProduct(productId);
-  const host = document.getElementById("product-detail");
-  if (!product) {
-    host.innerHTML = '<section class="invalid-product"><h1>找不到這個範例商品</h1><p>請返回列表，選擇商品查看。</p><a class="primary" href="index.html">返回列表</a></section>';
-    return;
+// View（介面物件）：只讀取畫面輸入、綁定事件及顯示結果；不搜尋商品或計算價格。
+class ProductDetailView {
+  constructor() { this.host = document.getElementById("product-detail"); }
+  showMissing() {
+    this.host.innerHTML = '<section class="invalid-product"><h1>找不到這個範例商品</h1><p>請返回列表，選擇商品查看。</p><a class="primary" href="index.html">返回列表</a></section>';
   }
-  document.title = `${product.title}｜畫面提案`;
-  host.innerHTML = `<div class="detail-layout"><article class="detail-content">${coverMarkup(product)}<p class="eyebrow">示範資料 · 非販售商品</p><h1>${escapeText(product.title)}</h1><p class="meta">${escapeText(product.agency)} · ${escapeText(product.airport)}出發 · ${product.days == null ? "來回機票" : `${product.days} 天`}</p><section class="detail-section"><h2>行程內容</h2><ol class="itinerary">${product.itinerary.map(text => `<li>${escapeText(text)}</li>`).join("")}</ol></section><section class="detail-section"><h2>住宿與餐點</h2><p>${escapeText(product.hotel)}</p><p>${escapeText(product.meals)}</p></section><section class="detail-section"><h2>費用與來源</h2><p id="fee-text"></p><p class="small muted">此處用範例上架文字展示。正式商品應依業者內文標示，未註明的內容不得自行推定。</p></section></article><aside class="booking-panel"><h2>選擇出發日期</h2><label for="departure-select">同一商品，不同日期</label><select id="departure-select">${product.departures.map((q,i) => `<option value="${i}">${q.date} · ${q.priceLabel}</option>`).join("")}</select><div id="booking-price" class="booking-price"></div><p id="booking-caption" class="booking-caption"></p><p class="contact-note">商品由 ${escapeText(product.agency)} 提供。平台負責展示與媒合。</p><button id="contact-button" class="primary full" type="button" aria-expanded="false" aria-controls="contact-preview">聯絡旅行社 →</button><p id="contact-preview" class="contact-preview" role="status" hidden>正式版將依業者設定，開啟商品網站或 LINE 窗口；本範例沒有真實聯絡連結。</p></aside></div>`;
-  const updateQuote = () => {
-    const quote = product.quoteAt(Number(document.getElementById("departure-select").value));
-    document.getElementById("booking-price").textContent = quote.priceLabel;
-    document.getElementById("booking-caption").textContent = `每人範例報價 · ${quote.date} 出發，${quote.returnDate} 返回`;
-    document.getElementById("fee-text").textContent = quote.feeText;
-  };
-  document.getElementById("departure-select").addEventListener("change", updateQuote);
-  document.getElementById("contact-button").addEventListener("click", event => {
-    const note = document.getElementById("contact-preview");
-    note.hidden = !note.hidden;
-    event.currentTarget.setAttribute("aria-expanded", String(!note.hidden));
-  });
-  updateQuote();
+  render(product) {
+    // 商品內容來自模型；輸出文字沿用 escapeText，避免當成 HTML 執行。
+    document.title = `${product.title}｜畫面提案`;
+    this.host.innerHTML = `<div class="detail-layout"><article class="detail-content">${coverMarkup(product)}<p class="eyebrow">示範資料 · 非販售商品</p><h1>${escapeText(product.title)}</h1><p class="meta">${escapeText(product.agency)} · ${escapeText(product.airport)}出發 · ${product.days == null ? "來回機票" : `${product.days} 天`}</p><section class="detail-section"><h2>行程內容</h2><ol class="itinerary">${product.itinerary.map(text => `<li>${escapeText(text)}</li>`).join("")}</ol></section><section class="detail-section"><h2>住宿與餐點</h2><p>${escapeText(product.hotel)}</p><p>${escapeText(product.meals)}</p></section><section class="detail-section"><h2>費用與來源</h2><p id="fee-text"></p><p class="small muted">此處用範例上架文字展示。正式商品應依業者內文標示，未註明的內容不得自行推定。</p></section></article><aside class="booking-panel"><h2>選擇出發日期</h2><label for="departure-select">同一商品，不同日期</label><select id="departure-select">${product.departures.map((q,i) => `<option value="${i}">${q.date} · ${q.priceLabel}</option>`).join("")}</select><div id="booking-price" class="booking-price"></div><p id="booking-caption" class="booking-caption"></p><p class="contact-note">商品由 ${escapeText(product.agency)} 提供。平台負責展示與媒合。</p><button id="contact-button" class="primary full" type="button" aria-expanded="false" aria-controls="contact-preview">聯絡旅行社 →</button><p id="contact-preview" class="contact-preview" role="status" hidden>正式版將依業者設定，開啟商品網站或 LINE 窗口；本範例沒有真實聯絡連結。</p></aside></div>`;
+    // 此按鈕只切換說明，不呼叫外部窗口；仍是前端展示功能。
+    document.getElementById("contact-button").addEventListener("click", event => {
+      const note = document.getElementById("contact-preview");
+      note.hidden = !note.hidden;
+      event.currentTarget.setAttribute("aria-expanded", String(!note.hidden));
+    });
+  }
+  // 輸入：選單值是從 0 開始的梯次索引；1 表示第二個日期。
+  get selectedIndex() { return Number(document.getElementById("departure-select").value); }
+  onDepartureChange(handler) {
+    document.getElementById("departure-select").addEventListener("change", handler);
+  }
+  // 輸出：同一梯次的日期、價格與費用一起顯示，沒有另一份畫面價格資料。
+  showQuote(departure) {
+    document.getElementById("booking-price").textContent = departure.priceLabel;
+    document.getElementById("booking-caption").textContent = `每人範例報價 · ${departure.date} 出發，${departure.returnDate} 返回`;
+    document.getElementById("fee-text").textContent = departure.feeText;
+  }
+}
+
+// Controller（控制物件）：協調 View 和 Model；從網址找商品，從選單索引找梯次。
+// 沒有查到商品就顯示錯誤入口並停止，避免對空物件呼叫方法。
+class ProductDetailController {
+  constructor(view) { this.view = view; this.product = null; }
+  show(search) {
+    const params = new URLSearchParams(search);
+    const productId = params.get("id");
+    const agencyId = params.get("agency");
+    // 限定鍵：先找到旅行社，再查自己的商品；沿用只有 id 的舊連結。
+    const agency = agencyId
+      ? exampleAgencies.find(item => item.id === agencyId)
+      : exampleAgencies.find(item => item.findProduct(productId));
+    this.product = agency?.findProduct(productId) || null;
+    if (!this.product) { this.view.showMissing(); return; }
+    this.view.render(this.product);
+    this.view.onDepartureChange(() => this.updateQuote());
+    this.updateQuote();
+  }
+  updateQuote() {
+    if (!this.product) return;
+    const departure = this.product.quoteAt(this.view.selectedIndex);
+    this.view.showQuote(departure);
+  }
+}
+
+// 頁面進入點：建立兩個協作物件。Model 類別來自 models.js，不在此處重複定義。
+function renderDetail() {
+  const view = new ProductDetailView();
+  new ProductDetailController(view).show(location.search);
 }
 
 // 進入點：同一份腳本依頁面標記啟動列表或詳情，避免重複範例資料。
