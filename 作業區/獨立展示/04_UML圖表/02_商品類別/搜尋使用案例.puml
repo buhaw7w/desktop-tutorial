@@ -1,0 +1,27 @@
+@startuml SearchUseCase
+' 中文教學：這是11/21的使用案例設計，不代表外部AI已接通。
+title 對話找行程：使用案例圖（設計）
+left to right direction
+skinparam defaultFontName Microsoft JhengHei
+skinparam shadowing false
+skinparam backgroundColor #FBF7F1
+skinparam usecaseBackgroundColor #FFFFFF
+skinparam usecaseBorderColor #315F51
+skinparam ArrowColor #315F51
+actor "旅客\n主要參與者" as Traveler
+rectangle "AI旅遊媒合平台" {
+  usecase "搜尋旅遊商品\nSearchTravelProducts" as Search
+}
+actor "外部AI服務\n協助整理需求" as AI
+Traveler -- Search
+Search -- AI
+note bottom of Search
+  開始：旅客開啟介面，平台可讀取已發布商品。
+  結束：旅客看到結果卡，或看到查無結果／失敗提示。
+  價格、日期、是否含溫泉都依業者資料，不由AI編造。
+end note
+note bottom of Traveler
+  Actor用職稱，不用劇本中的真實姓名。
+  此例不需登入；商品上架與審核是其他使用案例。
+end note
+@enduml

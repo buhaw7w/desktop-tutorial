@@ -128,21 +128,97 @@ table{width:100%;border-collapse:collapse;table-layout:fixed;font-size:14px}th,t
 </details>
 <details id="settings-uml" class="story-gallery"><summary>看設定功能的UML與程式分工</summary><p>劇本說明怎麼操作；UML說明正式流程與物件責任。這張圖對應設定儲存，不是對話搜尋。</p><ul><li>View：SettingsView，顯示設定畫面。</li><li>Controller：SettingsController，檢查及協調儲存。</li><li>Model：PreferenceStore，讀寫本機偏好。</li></ul><a href="獨立展示/04_UML圖表/03_MVC循序/SettingsSequence.svg" target="_blank" rel="noopener"><img src="獨立展示/04_UML圖表/03_MVC循序/SettingsSequence.svg" alt="設定功能MVC循序圖" loading="lazy"></a><p><a href="獨立展示/04_UML圖表/03_MVC循序/設定功能循序圖.puml">可編輯UML原稿</a></p></details>
 </div></details>
-<details id="section-6"><summary><span class="date">11/21</span><span class="title">使用案例與類別分析</span><span class="arrow" aria-hidden="true">⌄</span></summary><div class="answers"><table><thead><tr><th scope="col">老師題目</th><th scope="col">我們的答案</th></tr></thead><tbody><tr><th scope="row">3.5.2 Use case name</th><td>SearchTravelProducts（搜尋旅遊商品）。</td></tr>
-<tr><th scope="row">Participating actors：職稱</th><td>旅客、外部 AI 服務；使用職稱，不使用林柏諭等人名。</td></tr>
-<tr><th scope="row">Entry condition：開始情況</th><td>旅客開啟搜尋介面；系統可讀取業者已發布的商品資料。</td></tr>
-<tr><th scope="row">Flow of events：主動句流程</th><td>旅客輸入需求 → 系統整理並顯示條件 → 旅客補充或確認 → 系統驗證、查商品並顯示卡片 → 旅客查看詳情。</td></tr>
-<tr><th scope="row">Exit condition：結束情況</th><td>顯示符合條件的商品，或說明沒有符合結果。</td></tr>
-<tr><th scope="row">Exceptions：例外</th><td>日期不合理請修正；需求不清楚先追問；AI 失敗保留輸入並提供一般搜尋。</td></tr>
-<tr><th scope="row">相關非功能性需求</th><td>易學、防錯、來源正確、角色權限與 AI 用量上限。</td></tr>
-<tr><th scope="row">3.5.3 文字分析：名詞 → 類別</th><td>旅客 → User；旅行社 → Agency；商品 → TravelProduct；梯次 → Departure；報價 → PriceQuote；條件 → SearchCriteria。</td></tr>
-<tr><th scope="row">文字分析：動詞 → 受詞的方法</th><td>驗證搜尋條件 → SearchCriteria.validate()；判斷梯次日期是否符合 → Departure.matchesDate()。</td></tr>
-<tr><th scope="row">文字分析：形容詞 → 屬性</th><td>已發布 → publicationStatus；可售席次 → availableSeats；例如未知席次保留空值。</td></tr>
-<tr><th scope="row">3.5.3.1 Data dictionary：資料字典</th><td>例：productId（字串，T001）、departureId（字串，D001）、departureDate（日期，2026-12-23）、price（可空小數，29900.00）。</td></tr>
-<tr><th scope="row">3.5.3.2 Class diagrams：類別圖</th><td><a href="獨立展示/04_UML圖表/02_商品類別/objects.html">商品類別圖與程式</a>：業者 → 商品 → 梯次 → 報價，搭配三種商品子類別及可執行範例；搜尋條件等完整系統類別仍待補。</td></tr>
-<tr><th scope="row">繼承關聯性</th><td>TravelProduct → PackageTour、FlightHotelPackage、FlightTicket。例：日本五天團是一種 PackageTour。</td></tr>
-<tr><th scope="row">擁有關聯性</th><td>一個旅遊商品擁有多個梯次。例：T001 包含 12/23 的 D001 與另一日期的 D002。</td></tr>
-<tr><th scope="row">Qualification：限定鍵</th><td>在同一旅行社的商品集合，以業者商品編號取得唯一商品（0..1）。例：Agency A001 中的 JP005 對應 T001；編號須在該旅行社內唯一。</td></tr></tbody></table></div></details>
+<details id="section-6"><summary><span class="date">11/21</span><span class="title">使用案例與類別分析</span><span class="arrow" aria-hidden="true">⌄</span></summary><div class="answers">
+<p class="teacher-requirement">老師要求：選定UML工具；使用案例要有動詞＋名詞的名稱、參與職稱與外部系統、開始情境、正常事件流程、結束結果、例外及相關非功能性需求。流程以主動句寫出使用者操作與系統回應。</p><p class="footnote">沿用11/7的「日本泡溫泉、便宜一點」情境。UML工具採PlantUML，保留可編輯原稿；以下是未來搜尋功能的正式設計，不代表AI與後端已完成。</p><details class="story-gallery" id="teacher-1121-original"><summary>老師原題與講義頁碼（3.5.3）</summary><pre style="white-space:pre-wrap;overflow-wrap:anywhere;font:inherit;font-size:13px;line-height:1.8;tab-size:2">11/21	3.5.3 Class identification from use case models
+		L12_p19 L12_p20
+		1) 文字分析
+		使用一個使用案例 使用文字分析找出對應的 類別圖(用UML Tool製作)
+			名詞(資料) =&gt; class 類別
+			動詞(計算) =&gt; function (***屬於受詞的 function)
+			形容詞(data) =&gt; 類別內的資料(變數,物件)
+-----------------------------
+			3.5.3.1 Data dictionary
+			3.5.3.2 Class diagrams
+		2) 類別關聯性 L3_p24 L3_p25 L3_p26 L3_p33
+			修飾上面3.5.3的類別圖,類別圖必須有範例:
+			1) 繼承關聯性 2)擁有關聯性 3)類別Qualification(找出資料的key)
+				a)繼承: 分類 (父類別 分成不同類型的 子類別) L3_p33
+				b)擁有: 分解 一類別內擁有 另外一個類別的物件(資料) L3_p24 L3_p33
+				c)類別Qualification (找出資料的 key):
+				給一個Qualification的範例 L3_p25 L3_p26</pre></details>
+<h2 style="font-size:18px">3.5.2 使用案例：搜尋旅遊商品</h2>
+<table><thead><tr><th scope="col">老師要求</th><th scope="col">我們的答案</th></tr></thead><tbody>
+<tr><th scope="row">使用案例名稱</th><td>SearchTravelProducts（搜尋旅遊商品）：Search是動詞，TravelProducts是名詞。</td></tr>
+<tr><th scope="row">參與者（職稱＋系統）</th><td>旅客是主要參與者；外部AI服務協助整理需求。這裡用職稱，不用劇本中的林柏諭。旅行社提供既有商品，上架與審核另屬其他使用案例。</td></tr>
+<tr><th scope="row">開始情境</th><td>旅客已開啟搜尋頁；平台可讀取旅行社已發布的商品與梯次。不要求旅客先登入。</td></tr>
+<tr><th scope="row">結束情境（結果）</th><td>旅客看到符合條件的商品卡，並可開啟同一商品與梯次的詳情；沒有結果或服務失敗時，系統顯示對應說明，不編造商品。</td></tr>
+<tr><th scope="row">相關非功能性需求</th><td>系統保留失敗前的輸入、明確顯示處理狀態；後端核對AI整理的條件，價格與內容以業者來源為準；AI用量達上限時提供一般搜尋。</td></tr>
+</tbody></table>
+<details class="story-gallery" id="search-normal-flow"><summary>正常流程：旅客操作與系統回應（5步）</summary><table><thead><tr><th scope="col">使用者操作（主動句）</th><th scope="col">系統回應（主動句）</th></tr></thead><tbody>
+<tr><th scope="row">1. 旅客輸入「日本泡溫泉，便宜一點」，按搜尋。</th><td>系統顯示旅客訊息，請外部AI整理需求，再詢問缺少的出發日與天數。</td></tr>
+<tr><th scope="row">2. 旅客回答「2026/12/23出發，五天」。</th><td>系統顯示日本、溫泉、12/23、5天、低價優先的摘要。系統不把「便宜」自行換成預算上限。</td></tr>
+<tr><th scope="row">3. 旅客核對條件，按確認搜尋。</th><td>系統驗證條件、顯示搜尋中，讀取已發布商品及同一出發日的報價，核對溫泉內容後由低價排列。</td></tr>
+<tr><th scope="row">4. 旅客閱讀結果卡。</th><td>本例假設找到四筆；系統顯示四張卡片，包含商品名稱、出發日、天數、該梯次價格與旅行社。</td></tr>
+<tr><th scope="row">5. 旅客點其中一張卡片。</th><td>系統開啟該商品、該梯次的詳情；旅客可返回原結果。本案例不建立訂單或付款。</td></tr>
+</tbody></table>
+</details>
+<details class="story-gallery" id="search-exceptions"><summary>例外與替代流程</summary><table><thead><tr><th scope="col">情況</th><th scope="col">處理方式</th></tr></thead><tbody>
+<tr><th scope="row">條件不足或日期無效</th><td>系統指出缺少或不合理的欄位，保留其他條件；旅客修正後回到確認步驟。</td></tr>
+<tr><th scope="row">查無符合商品（替代結果）</th><td>系統顯示查無結果，詢問是否調整日期、天數或預算；旅客同意後才修改。</td></tr>
+<tr><th scope="row">AI失敗、斷線或商品服務異常</th><td>系統保留輸入並顯示重試；AI無法使用時提供一般搜尋。系統不把故障顯示成零筆商品。</td></tr>
+</tbody></table>
+</details>
+<details class="story-gallery"><summary>查看使用案例圖</summary><a href="獨立展示/04_UML圖表/02_商品類別/SearchUseCase.svg" target="_blank" rel="noopener"><img src="獨立展示/04_UML圖表/02_商品類別/SearchUseCase.svg" alt="對話找行程的使用案例圖" loading="lazy"></a><p><a href="獨立展示/04_UML圖表/02_商品類別/搜尋使用案例.puml">可編輯UML原稿</a></p></details>
+<details class="story-gallery" id="search-text-analysis"><summary>3.5.3 文字分析與資料字典</summary><p><strong>老師要求：名詞（資料）→候選class；動詞（計算）→受詞所屬的function；形容詞→類別資料（變數或物件）。</strong></p><p>先找候選，再確認責任，不把每個名詞都硬做成類別。本例的旅客是Actor；帳號資料由其他功能處理。</p><h3>① 名詞 → 類別</h3><table><thead><tr><th scope="col">名詞</th><th scope="col">候選類別</th><th scope="col">責任</th></tr></thead><tbody>
+<tr><th scope="row">搜尋條件</th><td>SearchCriteria</td><td>保存目的地、主題、日期、天數、預算與排序。</td></tr>
+<tr><th scope="row">商品目錄</th><td>ProductCatalog</td><td>依條件找出商品與對應梯次的配對。</td></tr>
+<tr><th scope="row">旅行社</th><td>Agency</td><td>保存業者資料及所屬商品集合。</td></tr>
+<tr><th scope="row">旅遊商品</th><td>TravelProduct</td><td>保存名稱、主題與發布狀態。</td></tr>
+<tr><th scope="row">出發梯次</th><td>Departure</td><td>保存同商品某次出發及回程日期。</td></tr>
+<tr><th scope="row">報價</th><td>PriceQuote</td><td>保存該梯次金額、幣別及費用說明。</td></tr>
+</tbody></table>
+<h3>② 動詞 → 受詞的方法</h3><table><thead><tr><th scope="col">動詞與受詞</th><th scope="col">所屬類別的方法</th><th scope="col">作用</th></tr></thead><tbody>
+<tr><th scope="row">驗證「搜尋條件」</th><td>SearchCriteria.validate()</td><td>檢查日期、天數、預算等條件。</td></tr>
+<tr><th scope="row">修改「搜尋條件的天數」</th><td>SearchCriteria.updateDays(4)</td><td>只改成4天，保留其他條件。</td></tr>
+<tr><th scope="row">查詢「商品目錄」</th><td>ProductCatalog.findProducts(criteria)</td><td>取得符合條件的商品與梯次。</td></tr>
+<tr><th scope="row">核對「梯次日期」</th><td>Departure.matchesDate(date)</td><td>判斷這個梯次是否符合指定日期。</td></tr>
+<tr><th scope="row">檢查「報價」是否在預算內</th><td>PriceQuote.isWithinBudget(limit)</td><td>有預算上限才判斷；未知價格不能當作0元。</td></tr>
+</tbody></table>
+<h3>③ 形容詞 → 資料</h3><table><thead><tr><th scope="col">描述</th><th scope="col">所屬欄位</th><th scope="col">例子</th></tr></thead><tbody>
+<tr><th scope="row">已發布的商品</th><td>TravelProduct.publicationStatus</td><td>published，讓旅客能查詢。</td></tr>
+<tr><th scope="row">便宜一點的行程</th><td>SearchCriteria.sortOrder</td><td>price-asc，只表示價格由低到高，不產生預算上限。</td></tr>
+<tr><th scope="row">未知的報價</th><td>PriceQuote.amount</td><td>null，畫面顯示待確認，不能當作免費。</td></tr>
+</tbody></table>
+<details class="story-gallery" id="search-dictionary"><summary>3.5.3.1 資料字典：類別圖的欄位</summary><table><thead><tr><th scope="col">欄位</th><th scope="col">型別</th><th scope="col">意義與例子</th></tr></thead><tbody>
+<tr><th scope="row">SearchCriteria.destination</th><td>字串</td><td>日本；目的地。</td></tr>
+<tr><th scope="row">SearchCriteria.theme</th><td>字串</td><td>溫泉；以業者內容核對。</td></tr>
+<tr><th scope="row">SearchCriteria.departureDate</th><td>日期</td><td>2026-12-23；希望出發日。</td></tr>
+<tr><th scope="row">SearchCriteria.days</th><td>正整數</td><td>5；希望旅遊天數。</td></tr>
+<tr><th scope="row">SearchCriteria.maxBudget</th><td>可空金額</td><td>null；未指定預算上限，不能改成0。</td></tr>
+<tr><th scope="row">SearchCriteria.sortOrder</th><td>列舉值</td><td>price-asc；價格由低到高。</td></tr>
+<tr><th scope="row">Agency.agencyId</th><td>字串</td><td>A001；旅行社識別值。</td></tr>
+<tr><th scope="row">Agency.name</th><td>字串</td><td>範例旅行社A；業者名稱。</td></tr>
+<tr><th scope="row">Agency.products</th><td>Map&lt;商品編號,商品&gt;</td><td>T001對應一件TravelProduct；key在該業者內唯一。</td></tr>
+<tr><th scope="row">TravelProduct.productId</th><td>字串</td><td>T001；該業者的商品編號。</td></tr>
+<tr><th scope="row">TravelProduct.title</th><td>字串</td><td>日本溫泉五天；商品名稱。</td></tr>
+<tr><th scope="row">TravelProduct.days</th><td>可空正整數</td><td>5；機票等不適用時可留空。</td></tr>
+<tr><th scope="row">TravelProduct.publicationStatus</th><td>列舉值</td><td>published；只有已發布商品進入搜尋。</td></tr>
+<tr><th scope="row">TravelProduct.themes</th><td>字串陣列</td><td>[溫泉]；業者內容有依據的主題。</td></tr>
+<tr><th scope="row">Departure.departureId</th><td>字串</td><td>D001；此出發梯次的識別值。</td></tr>
+<tr><th scope="row">Departure.departureDate</th><td>日期</td><td>2026-12-23；實際商品出發日。</td></tr>
+<tr><th scope="row">Departure.returnDate</th><td>日期</td><td>2026-12-27；實際回程日。</td></tr>
+<tr><th scope="row">PriceQuote.amount</th><td>可空金額</td><td>29900；未知時用null，不當作0元。</td></tr>
+<tr><th scope="row">PriceQuote.currency</th><td>字串</td><td>TWD；報價幣別。</td></tr>
+<tr><th scope="row">PriceQuote.feeText</th><td>字串</td><td>業者上架的費用說明，不自行推定含稅。</td></tr>
+</tbody></table><p class="footnote">三種商品子類別繼承共同欄位；ProductCatalog負責查詢，本圖沒有另設它的儲存欄位。</p></details>
+<p class="footnote">搜尋條件、商品目錄及新增搜尋方法為設計；既有展示目前只有部分商品資料類別。</p></details>
+<details class="story-gallery" id="search-relations"><summary>3.5.3.2 類別圖與三種關聯性</summary><table><thead><tr><th scope="col">老師要求</th><th scope="col">例子</th></tr></thead><tbody>
+<tr><th scope="row">繼承：是一種</th><td>TravelProduct是父類別，PackageTour、FlightHotelPackage、FlightTicket是子類別。例：日本五天套裝團是一種PackageTour，共用商品欄位，提供自己的摘要。</td></tr>
+<tr><th scope="row">擁有：裡面包含</th><td>一個商品擁有多個出發梯次，一個梯次擁有一份對應報價。例：T001有12/23的D001和另一日期的D002，兩者價格各自保存。</td></tr>
+<tr><th scope="row">Qualification：用key找資料</th><td>先選旅行社，再用productId查它的商品集合，得到0或1筆。例：Agency A001以T001找到日本五天；找不到就回傳空值，不能取其他業者的商品代替。</td></tr>
+</tbody></table>
+<a href="獨立展示/04_UML圖表/02_商品類別/SearchClasses.svg" target="_blank" rel="noopener"><img src="獨立展示/04_UML圖表/02_商品類別/SearchClasses.svg" alt="搜尋類別的責任、繼承、擁有及限定鍵設計" loading="lazy"></a><p class="footnote">限定鍵在圖上用註記說明；欄位與搜尋方法是設計命名，不等於現有程式。</p><p><a href="獨立展示/04_UML圖表/02_商品類別/搜尋類別設計.puml">可編輯UML原稿</a> · <a href="獨立展示/04_UML圖表/02_商品類別/objects.html">既有商品物件與程式範例</a></p></details>
+</div></details>
 <details id="section-7"><summary><span class="date">11/28</span><span class="title">動態模型</span><span class="arrow" aria-hidden="true">⌄</span></summary><div class="answers"><table><thead><tr><th scope="col">老師題目</th><th scope="col">我們的答案</th></tr></thead><tbody><tr><th scope="row">3.5.5 Sequence diagrams：MVC 循序圖</th><td><a href="獨立展示/04_UML圖表/03_MVC循序/sequence.html">換日期看報價</a>：旅客 → ProductDetailView → ProductDetailController → TravelProduct → 顯示該梯次日期與價格。例：選 12/24，顯示 NT$29,100（虛構資料）；對話搜尋的循序圖仍待補。</td></tr>
 <tr><th scope="row">MVC 三種物件</th><td>本例 View 接收選單操作與顯示結果；Controller 取得選項並找梯次；Model 保存商品、梯次及報價。目前資料位於瀏覽器記憶體，尚未接資料庫。</td></tr>
 <tr><th scope="row">Activity Diagrams：活動圖</th><td>輸入 → AI 整理 → 驗證 → 查候選商品 → 取得相關資料 → 篩選排序 → 顯示結果；無符合商品時進入調整條件分支。</td></tr>

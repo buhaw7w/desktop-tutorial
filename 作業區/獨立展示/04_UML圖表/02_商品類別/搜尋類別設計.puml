@@ -1,0 +1,82 @@
+@startuml SearchClasses
+' 中文教學：從SearchTravelProducts文字分析得到的未來類別設計。
+' SearchCriteria、ProductCatalog及新增搜尋方法尚未實作，不冒充現有models.js。
+title 對話找行程：類別設計（未全部實作）
+left to right direction
+skinparam defaultFontName Microsoft JhengHei
+skinparam defaultFontSize 14
+skinparam classAttributeIconSize 0
+skinparam shadowing false
+skinparam backgroundColor #FBF7F1
+skinparam classBackgroundColor #FFFFFF
+skinparam classBorderColor #315F51
+skinparam ArrowColor #315F51
+skinparam noteBackgroundColor #FFF0E9
+skinparam noteBorderColor #C85638
+class "搜尋條件\nSearchCriteria" as Criteria {
+  + destination : String
+  + theme : String
+  + departureDate : Date
+  + days : Integer
+  + maxBudget : Decimal [0..1]
+  + sortOrder : String
+  + validate() : Boolean
+  + updateDays(days)
+}
+class "商品目錄\nProductCatalog" as Catalog {
+  + findProducts(criteria) : List
+}
+class "旅行社\nAgency" as Agency {
+  + agencyId : String
+  + name : String
+  - products : Map
+  + findProduct(productId) : TravelProduct [0..1]
+}
+abstract class "旅遊商品\nTravelProduct" as Product {
+  + productId : String
+  + title : String
+  + days : Integer [0..1]
+  + publicationStatus : String
+  + themes : String[]
+  + getSummary() : String
+}
+class "出發梯次\nDeparture" as Departure {
+  + departureId : String
+  + departureDate : Date
+  + returnDate : Date
+  + matchesDate(date) : Boolean
+}
+class "報價\nPriceQuote" as Quote {
+  - amount : Decimal [0..1]
+  + currency : String
+  + feeText : String
+  + isWithinBudget(limit) : Boolean
+}
+class "套裝行程\nPackageTour" as Tour
+class "機加酒\nFlightHotelPackage" as Bundle
+class "機票\nFlightTicket" as Flight
+Catalog ..> Criteria : 讀取條件
+Catalog ..> Product : 找已發布商品
+Catalog ..> Departure : 核對出發日
+Catalog ..> Quote : 核對預算並排序
+Agency "1" o-- "0..*" Product : 依productId管理商品
+Product "1" o-- "1..*" Departure : 擁有出發梯次
+Departure "1" *-- "1" Quote : 擁有對應報價
+Product <|-- Tour
+Product <|-- Bundle
+Product <|-- Flight
+note bottom of Agency
+  Qualification限定鍵示例（以註記表達）：
+  在Agency A001的商品集合，用productId=T001
+  查得0或1件商品；不是只憑編號就可跨旅行社取用。
+end note
+note bottom of Criteria
+  日本、溫泉、2026/12/23、5天、價格由低到高。
+  「便宜一點」只決定排序，maxBudget保持空值。
+end note
+note bottom of Catalog
+  回傳符合條件的商品與對應梯次配對。
+  AI只整理條件；主題需有業者內容依據。
+  欄位名稱為設計命名，不宣稱已完成資料庫。
+end note
+@enduml
