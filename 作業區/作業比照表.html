@@ -23,6 +23,7 @@ table{width:100%;border-collapse:collapse;table-layout:fixed;font-size:14px}th,t
 /* 中文教學：截圖按情境順序閱讀，點圖放大；預設收合，不擠占每週答案。 */
 .story-gallery{margin:20px 0;padding:0 14px}.story-gallery>summary{padding:16px 0;font-weight:700}.story-gallery figure{margin:24px 0}.story-gallery img{display:block;width:100%;height:auto;max-height:520px;object-fit:contain;border:1px solid #dce4dd;border-radius:10px;background:#f7f8f5}.story-gallery figcaption p,.story-gallery>p{font-size:14px}.story-gallery h3{font-size:17px}
 .scenario-story{padding-left:26px;font-size:15px}.scenario-story li{padding:7px 0 10px 4px;line-height:1.8}.scenario-story li>strong{display:block;color:#33644f;font-size:14px}.scenario-error{font-size:13px;color:#65746d;padding:12px 0}
+.teacher-requirement{background:#eef3ed;border-left:3px solid #46735b;padding:12px 14px;font-size:14px;line-height:1.8}
 </style></head><body><main><h1>每週作業題目與答案</h1><p class="intro">AI 對話媒合旅行社商品；無官網業者也能上架。</p>
 <details id="section-1"><summary><span class="date">9/19</span><span class="title">分組</span><span class="arrow" aria-hidden="true">⌄</span></summary><div class="answers"><table><thead><tr><th scope="col">老師題目</th><th scope="col">我們的答案</th></tr></thead><tbody><tr><th scope="row">分組名單</th><td>陳威任 4144W006、陳宏傑 4144W007、賴叔佑 4144W009、李慶寶 4144W010、劉宥伸 4144W013、林柏諭 4144W014。</td></tr>
 <tr><th scope="row">小組組長</th><td>林柏諭（4144W014）。</td></tr></tbody></table></div></details>
@@ -103,19 +104,20 @@ table{width:100%;border-collapse:collapse;table-layout:fixed;font-size:14px}th,t
 <tr><th scope="row">3.3.11 資源與管理</th><td>旅行社更新商品，管理員審核，工程師維護系統並備份資料。AI用量設上限；到上限後暫停新的AI請求，但仍可用一般搜尋找行程。</td></tr></tbody></table>
 </div></details>
 <details id="section-5"><summary><span class="date">11/7</span><span class="title">使用者情境</span><span class="arrow" aria-hidden="true">⌄</span></summary><div class="answers">
+<p class="teacher-requirement"><strong>老師補充要求</strong><br>選擇系統的一個功能，用真實姓名寫出完整使用劇本，明確定義情境中的資料、使用者操作與畫面變化，讓使用者能照著操作，避免後續功能修改及與客戶的紛爭。</p>
 <p><strong>功能：對話找行程｜使用者：林柏諭</strong></p><p class="footnote">設計劇本，假設找到四筆商品；目前展示尚未串接AI。</p>
 <ol class="scenario-story">
 <li><strong>開啟網站</strong>林柏諭看到對話框和行程卡，提示文字寫著「從這裡輸入需求，尋找行程」。</li>
-<li><strong>輸入想法</strong>他輸入「日本泡溫泉，便宜一點」，按「找尋行程」。</li>
-<li><strong>補充日期</strong>系統詢問出發日與天數。他回答「2026/12/23，五天」，確認畫面上的搜尋條件。</li>
+<li><strong>輸入想法</strong>他點對話框，輸入「日本泡溫泉，便宜一點」，按「找尋行程」。畫面顯示他的訊息與追問。</li>
+<li><strong>補充日期</strong>系統詢問出發日與天數。他輸入「2026/12/23，五天」，核對條件後按「確認搜尋」，畫面顯示搜尋中。</li>
 <li><strong>挑選行程</strong>搜尋完成後，右側顯示四張符合的旅遊卡，價格由低到高排列，卡上有日期、天數、價格與旅行社。</li>
 <li><strong>查看與聯絡</strong>他點卡片看行程、住宿、餐點和費用；喜歡就按「聯絡旅行社」，開啟業者商品頁或 LINE 窗口。按返回可繼續看原本的卡片。</li>
 </ol>
-<table><thead><tr><th scope="col">老師要求</th><th scope="col">對應說明</th></tr></thead><tbody>
-<tr><th scope="row">1. 資料</th><td>產生對話與條件；讀取業者商品、日期和報價；補充需求時更新條件；確認清除後移除本頁搜尋暫存，不刪商品。</td></tr>
-<tr><th scope="row">2. 操作</th><td>用鍵盤打字、滑鼠點按搜尋、確認、旅遊卡與聯絡按鈕。</td></tr>
-<tr><th scope="row">3. 畫面</th><td>對話框 → 追問與條件摘要 → 搜尋中 → 四張卡片 → 商品詳情 → 業者窗口。</td></tr>
-</tbody></table><p class="scenario-error"><strong>遇到問題：</strong>查無結果時詢問是否調整條件；服務失敗保留輸入，提供重試。</p>
+<table><thead><tr><th scope="col">老師要求（依課堂補充整理）</th><th scope="col">本例如何符合</th></tr></thead><tbody>
+<tr><th scope="row">1. 全部相關資料（產生、修改、刪除、讀寫）</th><td>建立對話及日本、溫泉、出發日、天數、排序等條件；讀取旅行社商品、梯次、報價與詳情；補充需求後更新條件及結果。按清除並確認，只刪本頁搜尋暫存，不刪業者商品。</td></tr>
+<tr><th scope="row">2. 使用者全部介面操作（鍵盤、滑鼠、語音等）</th><td>林柏諭用滑鼠點輸入框、鍵盤打字，點搜尋、確認條件、旅遊卡、返回及聯絡按鈕。若用語音，先點麥克風並授權，說完後核對文字再送出；也可取消改打字。</td></tr>
+<tr><th scope="row">3. 系統全部介面及變化（文字、圖形、設定檔等）</th><td>首頁顯示對話框與卡片；送出後顯示訊息、追問及條件摘要；確認後顯示搜尋中、四張結果卡；點卡片開啟詳情，再前往業者窗口。此搜尋不修改設定檔；設定功能的操作圖另附於下方。</td></tr>
+</tbody></table><p class="scenario-error"><strong>修改與例外：</strong>他可接著輸入「改四天」並確認，只更新天數；點清除並確認可重新開始。查無結果時詢問是否調整條件；服務失敗保留輸入並提供重試。</p>
 <details id="settings-story" class="story-gallery"><summary>看設定功能的操作圖片（6張）</summary><p><a href="獨立展示/01_展示網頁/settings.html">開啟設定頁 →</a></p>
 <figure><figcaption><strong>1. 開啟設定</strong><p>林柏諭點首頁右上角的「設定」。</p></figcaption><a href="獨立展示/畫面截圖/設定情境/01_首頁設定入口.jpg" target="_blank" rel="noopener"><img src="獨立展示/畫面截圖/設定情境/01_首頁設定入口.jpg" alt="開啟設定的網頁截圖" loading="lazy"></a></figure>
 <figure><figcaption><strong>2. 閱讀設定</strong><p>畫面分成帳號、色調、搜尋偏好與通知四區。</p></figcaption><a href="獨立展示/畫面截圖/設定情境/02_設定頁.jpg" target="_blank" rel="noopener"><img src="獨立展示/畫面截圖/設定情境/02_設定頁.jpg" alt="閱讀設定的網頁截圖" loading="lazy"></a></figure>
