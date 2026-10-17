@@ -1,0 +1,57 @@
+@startuml SettingsSequence
+' 中文教學：這是 settings.js 已有前端設定流程的正式設計對照，不包含尚未實作的帳號 API。
+title 儲存旅遊偏好設定（MVC 循序圖）
+skinparam defaultFontName Microsoft JhengHei
+skinparam defaultFontSize 14
+skinparam backgroundColor #FBF7F1
+skinparam shadowing false
+skinparam sequenceParticipantBackgroundColor #FFFFFF
+skinparam sequenceParticipantBorderColor #315F51
+skinparam noteBackgroundColor #FFF0E9
+skinparam noteBorderColor #C85638
+hide footbox
+autonumber
+actor "旅客" as Traveler
+boundary "view : SettingsView\n設定介面 View" as View
+control "controller : SettingsController\n控制 Controller" as Controller
+entity "PreferenceStore\n設定 Model" as Model
+database "瀏覽器 localStorage\n本機儲存（不是伺服器）" as Storage
+note over View, Storage
+  開始條件：已開啟設定頁，原有偏好已載入。
+  旅客不必登入；本流程不讀寫帳號密碼或旅行社商品。
+end note
+Traveler -> View : 選色調、出發地與排列方式
+View -> Controller : change 事件：通知設定修改
+Controller -> View : read()，取得色調
+View --> Controller : 表單設定值
+Controller -> View : SettingsView.applyTheme(theme)
+View --> Traveler : 顯示「有變更尚未儲存」
+Traveler -> View : 按「儲存設定」
+View -> Controller : submit 事件：save()
+Controller -> View : read()
+View --> Controller : 表單中的設定值
+Controller -> Controller : 檢查降價幅度為 1～50 整數
+alt 降價幅度不合法
+  Controller -> View : error(原因)，展開欄位並聚焦
+  View --> Traveler : 顯示錯誤；保留輸入與原已存設定
+else 設定合法
+  Controller -> Model : save(value)
+  Model -> Model : normalize(value)：白名單欄位與值
+  Model -> Storage : setItem(專用設定鍵, JSON)
+  alt 寫入成功
+    Storage --> Model : 完成
+    Model --> Controller : 正規化的設定值
+    Controller -> View : status(已儲存在這台瀏覽器)
+    View --> Traveler : 顯示成功；下次商品頁載入此偏好
+  else 儲存空間或權限問題
+    Storage --> Model : 拋出儲存錯誤
+    Model --> Controller : 傳遞例外
+    Controller -> View : error(無法儲存，僅供預覽)
+    View --> Traveler : 顯示失敗；不宣稱已保存
+  end
+end
+note over Traveler, Storage
+  劇本使用真實姓名林柏諭；UML 改用職稱「旅客」。
+  帳號登入、寄信與通知發送尚未串接，不畫成已執行的服務。
+end note
+@enduml

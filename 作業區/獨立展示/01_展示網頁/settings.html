@@ -1,0 +1,66 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+  <!-- 中文教學：設定是獨立頁面。共用設定物件讀寫本機偏好，不傳送密碼或呼叫外部服務。 -->
+  <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>設定｜旅伴</title>
+  <link rel="stylesheet" href="../02_前端程式碼/style.css?v=20261017-settings">
+  <script src="../02_前端程式碼/settings.js?v=20261017-settings"></script>
+</head>
+<body data-page="settings">
+  <header class="site-header"><a class="brand" href="index.html"><span class="brand-mark" aria-hidden="true">↗</span>旅伴<span class="brand-sub">AI 旅遊搜尋平台</span></a><a class="quiet-button" href="index.html">返回找行程</a></header>
+  <main class="settings-main">
+    <p class="eyebrow">照你的習慣找旅行</p><h1>設定</h1>
+    <p class="muted">不登入也能瀏覽。色調與偏好只保存在這台瀏覽器。</p>
+    <section class="settings-card account-card" aria-labelledby="account-title">
+      <div><h2 id="account-title">我的帳號</h2><p class="muted">目前未登入 · 登入後可規劃同步收藏、追蹤與偏好。</p></div>
+      <button class="primary" type="button" id="open-account">登入 / 建立帳號</button>
+    </section>
+    <form id="settings-form" novalidate>
+      <section class="settings-card" aria-labelledby="appearance-title">
+        <h2 id="appearance-title">畫面色調</h2><p class="muted">選擇後立即預覽，按儲存即可套用到商品頁。</p>
+        <fieldset class="theme-options"><legend class="sr-only">選擇色調</legend>
+          <label class="theme-option"><input type="radio" name="theme" value="warm"><span class="theme-swatch swatch-warm" aria-hidden="true"></span>暖白</label>
+          <label class="theme-option"><input type="radio" name="theme" value="sage"><span class="theme-swatch swatch-sage" aria-hidden="true"></span>森林綠</label>
+          <label class="theme-option"><input type="radio" name="theme" value="night"><span class="theme-swatch swatch-night" aria-hidden="true"></span>深夜</label>
+        </fieldset>
+      </section>
+      <section class="settings-card" aria-labelledby="search-title">
+        <h2 id="search-title">搜尋偏好</h2><p class="muted">旅行計畫隨時可以改，這些只是預設值。</p>
+        <div class="settings-fields">
+          <div><label for="airport">常用出發地</label><select id="airport" name="airport"><option value="any">不限</option><option>桃園</option><option>松山</option><option>台中</option><option>高雄</option></select><p class="field-help">下次開啟首頁時填入需求文字，不會自動排除商品。</p></div>
+          <div><label for="category">預設商品類型</label><select id="category" name="category"><option value="tour">套裝行程</option><option value="bundle">機加酒</option><option value="flight">機票</option></select></div>
+          <div><label for="sort">商品排列</label><select id="sort" name="sort"><option value="price-asc">價格由低到高</option><option value="price-desc">價格由高到低</option><option value="days-asc">天數由少到多</option></select><p class="field-help">目前套用於固定範例商品；AI 搜尋尚未串接。</p></div>
+        </div>
+      </section>
+      <section class="settings-card" aria-labelledby="notifications-title">
+        <h2 id="notifications-title">通知與資料</h2>
+        <details class="settings-details"><summary>降價與出清提醒 <span class="demo-badge">偏好設定</span></summary>
+          <p class="field-help">先記下想收到的提醒。正式通知需登入、追蹤商品並串接通知服務，目前不會發送。</p>
+          <label class="check-row"><input type="checkbox" id="site-reminders">希望在網站收到降價提醒</label>
+          <label for="drop-percent">價格降低多少時提醒（%）</label><input id="drop-percent" type="number" min="1" max="50" step="1" inputmode="numeric" aria-describedby="drop-help settings-error"><p id="drop-help" class="field-help">以追蹤時的同一梯次價格為基準，預設 10%，可填 1～50 的整數。</p>
+          <label class="check-row"><input type="checkbox" id="clearance">也提醒旅行社標示的出清商品</label>
+          <label class="check-row muted"><input type="checkbox" disabled>LINE 提醒（尚未串接）</label>
+          <p class="field-help">僅依旅行社明確標示判斷出清，不能只因價格便宜就自行判定。</p>
+        </details>
+        <details class="settings-details"><summary>隱私與清除設定</summary><p class="field-help">此頁只儲存色調、出發地、商品類型、排序及通知偏好，不保存帳號密碼，也不取得定位或麥克風權限。</p><button class="quiet-button" type="button" id="open-reset">恢復預設設定</button></details>
+      </section>
+      <p id="settings-error" class="form-error" role="alert" hidden></p>
+      <div class="settings-save"><p id="settings-status" role="status">修改後記得儲存。</p><button class="primary" type="submit">儲存設定</button></div>
+    </form>
+  </main>
+  <!-- 中文教學：dialog 是介面物件。表單只驗證格式，不把前端角色選擇視為後端授權。 -->
+  <dialog id="account-dialog" aria-labelledby="login-title"><div class="dialog-heading"><h2 id="login-title">帳號登入</h2><button type="button" class="icon-button" data-close="account-dialog" aria-label="關閉帳號視窗">×</button></div>
+    <p class="field-help">帳號畫面展示，未連接會員服務。請勿填真實密碼。</p>
+    <form id="account-form" novalidate>
+      <label for="account-mode">我想要</label><select id="account-mode"><option value="login">登入</option><option value="register">建立帳號</option><option value="reset">忘記密碼</option></select>
+      <label for="account-role">身分類型</label><select id="account-role"><option value="traveler">旅客</option><option value="agency">旅行社人員</option><option value="admin">管理員</option></select>
+      <p id="role-help" class="field-help">旅客可規劃收藏行程與價格追蹤。</p>
+      <label for="account-email">Email 帳號</label><input id="account-email" type="email" autocomplete="off" maxlength="254" placeholder="例如 demo@example.com" required>
+      <div id="password-field"><label for="account-password">展示用密碼</label><input id="account-password" type="password" autocomplete="off" minlength="8" maxlength="128" required><p class="field-help">至少 8 個字元。此展示不儲存或傳送密碼。</p></div>
+      <p id="account-status" class="field-help" role="status"></p><button class="primary full" type="submit" id="account-submit">確認登入</button>
+    </form>
+  </dialog>
+  <dialog id="reset-dialog" aria-labelledby="reset-title"><h2 id="reset-title">恢復預設設定？</h2><p>只會清除這台瀏覽器的旅伴展示偏好，不影響商品、帳號或其他網站。</p><div class="dialog-actions"><button type="button" class="quiet-button" data-close="reset-dialog">取消</button><button type="button" class="primary" id="confirm-reset">確認恢復</button></div></dialog>
+  <footer class="site-footer">旅伴 · 商品由旅行社提供，平台負責媒合。帳號與通知為未串接的介面展示。</footer>
+</body></html>

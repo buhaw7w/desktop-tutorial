@@ -20,6 +20,9 @@ table{width:100%;border-collapse:collapse;table-layout:fixed;font-size:14px}th,t
 @media(max-width:600px){table:not(.comparison) thead{display:none}table:not(.comparison),table:not(.comparison) tbody,table:not(.comparison) tr,table:not(.comparison) th,table:not(.comparison) td{display:block;width:100%}table:not(.comparison) tbody th{padding-bottom:4px}table:not(.comparison) tbody td{padding-top:0;border-top:0}}
 /* 中文備註：手機把四欄比較表改為單一系統一張文字卡，避免欄位過窄。 */
 @media(max-width:600px){.comparison,.comparison tbody,.comparison tr,.comparison tbody th,.comparison tbody td{display:block;width:100%}.comparison thead{display:none}.comparison tbody th{background:#eef3ee;border-radius:6px;margin-top:10px}.comparison tbody td{border-top:0;padding:8px 10px}.comparison td:before{content:attr(data-label);display:block;font-weight:700;font-size:12px;color:#65746d}}
+/* 中文教學：截圖按情境順序閱讀，點圖放大；預設收合，不擠占每週答案。 */
+.story-gallery{margin:20px 0;padding:0 14px}.story-gallery>summary{padding:16px 0;font-weight:700}.story-gallery figure{margin:24px 0}.story-gallery img{display:block;width:100%;height:auto;max-height:520px;object-fit:contain;border:1px solid #dce4dd;border-radius:10px;background:#f7f8f5}.story-gallery figcaption p,.story-gallery>p{font-size:14px}.story-gallery h3{font-size:17px}
+.scenario-story{padding-left:26px;font-size:15px}.scenario-story li{padding:7px 0 10px 4px;line-height:1.9}
 </style></head><body><main><h1>每週作業題目與答案</h1><p class="intro">AI 對話媒合旅行社商品；無官網業者也能上架。</p>
 <details id="section-1"><summary><span class="date">9/19</span><span class="title">分組</span><span class="arrow" aria-hidden="true">⌄</span></summary><div class="answers"><table><thead><tr><th scope="col">老師題目</th><th scope="col">我們的答案</th></tr></thead><tbody><tr><th scope="row">分組名單</th><td>陳威任 4144W006、陳宏傑 4144W007、賴叔佑 4144W009、李慶寶 4144W010、劉宥伸 4144W013、林柏諭 4144W014。</td></tr>
 <tr><th scope="row">小組組長</th><td>林柏諭（4144W014）。</td></tr></tbody></table></div></details>
@@ -45,7 +48,7 @@ table{width:100%;border-collapse:collapse;table-layout:fixed;font-size:14px}th,t
 <tr><th scope="row">本平台（規劃）</th><td data-label="功能與優點">對話搜尋、日期與價格優先、業者上架。</td><td data-label="限制／分析">依賴商品更新，AI 理解與成效待驗證。</td><td data-label="我們可參考的地方">先做好日期、報價及商品來源。</td></tr></tbody></table><p class="footnote">我們的設計重點：以出發日期與價格找真實業者商品，支援無官網業者上架，並用簡單對話減少操作。Travelstride 已展示 AI 功能，因此不把「有 AI」說成獨有優勢。</p><p class="footnote">官方資料查閱：2026/10/14。限制與參考方向含設計分析，未做操作優劣實測。<a href="https://www.tourradar.com/contact">TourRadar 機票說明</a>；Travelstride 依官方搜尋索引查閱，未實測 AI。</p><p class="footnote">本平台採用三項方向：TourRadar 的一致商品資訊、Travelstride 的旅遊建議，以及 TravelSupermarket 的業者轉接。介面採「聊天輸入 → 商品卡 → 完整詳情 → 聯絡業者」；商品卡先呈現日期、對應價格、天數與旅行社，其他日期、飯店、餐點與費用放詳情。靈感標為旅遊建議，不當作可購買商品；價格與包含項目依業者內文。</p><p class="footnote"><a href="獨立展示/index.html">開啟獨立畫面提案</a> · 正式整合位置待確認。</p></div></details>
 <details id="section-4"><summary><span class="date">11/7</span><span class="title">功能與非功能需求</span><span class="arrow" aria-hidden="true">⌄</span></summary><div class="answers">
 <p class="footnote">以下是作業版的未來需求設計，例子為設計資料；不代表AI、帳號或業者功能已完成。支援功能的開發優先順序另定。</p>
-<h2 style="font-size:18px">3.2 功能性需求（18項）</h2>
+<h2 style="font-size:18px">3.2 功能性需求（19項）</h2>
 <table><thead><tr><th scope="col">功能</th><th scope="col">詳細答案與例子</th></tr></thead><tbody><tr><th scope="row">FR-01 AI／語音搜尋</th><td><p><strong>做法：</strong>旅客不必先登入，可打字或使用麥克風輸入需求。語音先轉文字，外部 AI 整理日期、目的地、天數與預算，後端核對條件後查已發布商品；不清楚的條件先追問。</p><p><strong>例子：</strong>輸入「我想去日本」→ 系統詢問出發日 → 回答「2026/12/23，五天，三萬元內」→ 確認條件 → 顯示符合的旅行社商品卡。AI 失敗時保留文字，提供重試或一般篩選。</p></td></tr>
 <tr><th scope="row">FR-02 修改與還原條件</th><td><p><strong>做法：</strong>旅客可接著修改一個條件，系統保留沒有修改的條件；成功搜尋後記錄上一輪條件，供旅客還原。</p><p><strong>例子：</strong>原條件為12/23、日本、五天、三萬元內 → 輸入「改成四天」→ 只改天數並重新找商品 → 按還原回到五天；查詢失敗不清空原條件。</p></td></tr>
 <tr><th scope="row">FR-03 快捷標籤</th><td><p><strong>做法：</strong>點選目的地、天數或主題標籤，可把需求文字加入輸入框，再由旅客確認送出；不把大量標籤一次攤開。</p><p><strong>例子：</strong>點「日本」和「溫泉」→ 輸入框加入對應文字 → 自己補上日期並搜尋。重複或矛盾條件需提示調整，不能讓畫面與實際查詢不同。</p></td></tr>
@@ -63,7 +66,7 @@ table{width:100%;border-collapse:collapse;table-layout:fixed;font-size:14px}th,t
 <tr><th scope="row">FR-15 商品送審</th><td><p><strong>做法：</strong>業者完成資料後送審，系統檢查必要欄位並記錄狀態、版本與時間；業者可看退回原因，修正後再送。</p><p><strong>例子：</strong>業者送審 → 狀態變待審核 → 管理員退回「請補費用說明」→ 業者補資料並再送。已待審的同一份資料不重複建立送審紀錄。</p></td></tr>
 <tr><th scope="row">FR-16 審核與發布</th><td><p><strong>做法：</strong>管理員核對來源、商品內容、日期、報價與業者窗口，選擇核准發布或附原因退回；發布時商品、梯次及報價要一起完成。</p><p><strong>例子：</strong>管理員核准資料完整的商品 → 平台建立公開商品頁 → 旅客搜尋得到；費用不清楚的商品退回後仍不公開。寫入失敗不能留下半套已發布資料。</p></td></tr>
 <tr><th scope="row">FR-17 管理總覽</th><td><p><strong>做法：</strong>管理員查看待審商品、處理狀態與必要統計，再進入對應項目處理；查看總覽不會自動核准或改價。</p><p><strong>例子：</strong>總覽有兩份待審 → 打開第一份並退回 → 回總覽時該份顯示需修改。查詢失敗顯示重試提示，不能把錯誤當成零筆待審。</p></td></tr>
-<tr><th scope="row">FR-18 旅遊靈感與影片</th><td><p><strong>做法：</strong>旅客目的地未定時，AI提供少量旅遊建議及理由；旅客確認後才改搜尋條件。規劃每5張商品卡搭配1張相關影片卡，影片與可購買商品分開，來源及授權方式仍待確認。</p><p><strong>例子：</strong>旅客說「12月想玩雪，地點不限」→ 看建議後選日本 → 系統查日本商品。影片只補充介紹，不能當作價格或可售證據；沒有可信來源時不編造影片或商品。</p></td></tr></tbody></table>
+<tr><th scope="row">FR-18 旅遊靈感與影片</th><td><p><strong>做法：</strong>旅客目的地未定時，AI提供少量旅遊建議及理由；旅客確認後才改搜尋條件。規劃每5張商品卡搭配1張相關影片卡，影片與可購買商品分開，來源及授權方式仍待確認。</p><p><strong>例子：</strong>旅客說「12月想玩雪，地點不限」→ 看建議後選日本 → 系統查日本商品。影片只補充介紹，不能當作價格或可售證據；沒有可信來源時不編造影片或商品。</p></td></tr><tr><th scope="row">FR-19 個人設定</th><td>從首頁或詳情進入設定頁，選色調、常用出發地、商品類型、排序與通知偏好。例：林柏諭選森林綠、台中出發並儲存，下次首頁沿用。錯誤不寫入，恢復預設前先確認。展示偏好僅存在本機；帳號、寄信與通知發送尚未串接。</td></tr></tbody></table>
 <h2 id="oo-explanation" style="font-size:18px">物件導向（OO）對照</h2>
 <p>上述需求適合用物件導向設計。需求表說明系統要做什麼，再透過類別、資料與方法分配責任；目前已有前端示例，完整平台仍待逐步完成。</p>
 <table><thead><tr><th scope="col">需求</th><th scope="col">對應物件與方法</th></tr></thead><tbody>
@@ -99,11 +102,36 @@ table{width:100%;border-collapse:collapse;table-layout:fixed;font-size:14px}th,t
 <tr><th scope="row">3.3.10 安全問題</th><td>旅客只能看自己的私人資料，旅行社只能修改自己的商品。例如A旅行社不能改B旅行社的價格。密碼不存明文，AI金鑰留在後端，重設密碼連結需限時且只能使用一次。</td></tr>
 <tr><th scope="row">3.3.11 資源與管理</th><td>旅行社更新商品，管理員審核，工程師維護系統並備份資料。AI用量設上限；到上限後暫停新的AI請求，但仍可用一般搜尋找行程。</td></tr></tbody></table>
 </div></details>
-<details id="section-5"><summary><span class="date">11/14</span><span class="title">使用者情境</span><span class="arrow" aria-hidden="true">⌄</span></summary><div class="answers"><table><thead><tr><th scope="col">老師題目</th><th scope="col">我們的答案</th></tr></thead><tbody><tr><th scope="row">3.5.1 Scenarios：功能與真實姓名</th><td>林柏諭使用「對話搜尋旅行社商品」功能。</td></tr>
-<tr><th scope="row">完整使用流程</th><td>林柏諭用鍵盤輸入「2026年12月23日，日本五天，每人三萬元內」並按搜尋；確認條件，點商品卡看完整詳情，再按聯絡旅行社。</td></tr>
-<tr><th scope="row">相關資料：產生、修改、刪除、讀寫</th><td>建立對話及搜尋條件；修改需求時更新條件；讀取商品、梯次、報價及業者窗口。本流程不刪商品、不建立付款紀錄。</td></tr>
-<tr><th scope="row">介面操作與畫面變化</th><td>打字、點搜尋 → 顯示條件與結果；點商品卡 → 獨立詳情頁；點聯絡 → 開啟業者網站或已確認的 LINE 窗口。</td></tr>
-<tr><th scope="row">完整資料例子</th><td>設計例：商品 T001、日本五天；梯次 D001、12/23 出發；每人 NT$29,900。符合三萬元內時顯示；查無結果則說明並詢問是否改條件。</td></tr></tbody></table></div></details>
+<details id="section-5"><summary><span class="date">11/7</span><span class="title">補充：使用者情境</span><span class="arrow" aria-hidden="true">⌄</span></summary><div class="answers">
+<p>3.5.1 Scenarios：用簡單文字描述林柏諭如何使用「對話找行程」。</p><p class="footnote">原作業表列於11/14，此處依老師11/7補充整理。以下是預定功能的情境劇本；四張結果卡是假設例子，目前展示尚未串接AI。</p>
+<ol class="scenario-story">
+<li>林柏諭開啟網站，看到左側的對話框和右側的旅行社行程卡。對話框裡寫著「從這裡輸入文字，告訴我你想怎麼旅行」。</li>
+<li>林柏諭想去日本泡溫泉，又希望價格便宜一些。他用滑鼠點對話框，輸入「日本泡溫泉，便宜一點」，再按「找尋行程」。畫面出現他的訊息，並顯示「正在了解你的需求」。</li>
+<li>系統在對話框詢問：「你想哪一天出發？大約玩幾天？」林柏諭輸入「2026年12月23日出發，五天」並送出。</li>
+<li>畫面顯示「12/23出發、日本、五天、溫泉、價格由低到高」，讓林柏諭核對。他按「確認搜尋」後，旁邊顯示「正在找行程」。</li>
+<li>本例假設有四個符合條件的旅行社商品。搜尋完成後，右側出現四張旅遊卡，價格便宜的排前面；每張卡片顯示行程名稱、出發日期、天數、價格與旅行社名稱。</li>
+<li>林柏諭點選其中一張旅遊卡，網站開啟獨立的詳情頁。他看到每天的行程、溫泉住宿、餐點與費用說明。想再看其他商品時，按「返回商品列表」，原本的搜尋條件和卡片仍保留。</li>
+<li>林柏諭決定進一步詢問，便按「聯絡旅行社」。系統依該業者設定開啟原商品頁或LINE窗口；沒有官網的業者，也可使用平台上的商品頁與聯絡窗口。</li>
+</ol>
+<p><strong>遇到問題時：</strong>沒有符合的商品，就顯示「目前沒有符合的行程」，詢問是否調整條件；連線或AI失敗時保留已輸入文字，提供重試。不編造旅遊卡。</p>
+<table><thead><tr><th scope="col">老師的三項要求</th><th scope="col">這個劇本的說明</th></tr></thead><tbody>
+<tr><th scope="row">1. 情境相關資料</th><td>產生：林柏諭的對話與搜尋條件。讀取：旅行社商品、日期、價格及詳細內容。修改：他補充需求後更新條件與結果。清除：按「清除本次搜尋」並確認後，只移除本頁搜尋暫存，不刪旅行社商品。</td></tr>
+<tr><th scope="row">2. 使用者的操作</th><td>開啟網站 → 點對話框 → 打字 → 按找尋行程 → 回答日期與天數 → 確認搜尋 → 點旅遊卡 → 查看詳情 → 聯絡旅行社。</td></tr>
+<tr><th scope="row">3. 系統的畫面變化</th><td>首頁對話框與卡片 → 顯示輸入訊息與追問 → 顯示條件及搜尋中 → 顯示四張結果卡 → 開啟詳情頁 → 開啟旅行社商品頁或聯絡窗口。</td></tr>
+</tbody></table>
+<details id="settings-story" class="story-gallery"><summary>設定功能：情境演示與正式 UML（六個畫面）</summary>
+<p>劇本用林柏諭的操作演示情境；UML用職稱、介面、控制與資料物件表達正式設計。圖是程式設計依據，不代表自動完成程式。以下是實際前端設定截圖，前面的AI聊天搜尋仍為未來設計。</p>
+<p><a href="獨立展示/01_展示網頁/settings.html">開啟設定頁實際操作 →</a></p>
+<figure><figcaption><strong>1. 開啟設定</strong><p>林柏諭在商品列表右上角點「設定」，網頁開啟 settings.html。系統讀取這台瀏覽器的偏好；沒有資料就使用預設值。</p></figcaption><a href="獨立展示/畫面截圖/設定情境/01_首頁設定入口.jpg" target="_blank" rel="noopener"><img src="獨立展示/畫面截圖/設定情境/01_首頁設定入口.jpg" alt="1. 開啟設定的網頁截圖" loading="lazy"></a></figure>
+<figure><figcaption><strong>2. 閱讀設定頁</strong><p>畫面分為帳號、色調、搜尋偏好、通知與資料。林柏諭不必登入就能修改本機設定；通知與資料的細項先收起，點標題才展開。</p></figcaption><a href="獨立展示/畫面截圖/設定情境/02_設定頁.jpg" target="_blank" rel="noopener"><img src="獨立展示/畫面截圖/設定情境/02_設定頁.jpg" alt="2. 閱讀設定頁的網頁截圖" loading="lazy"></a></figure>
+<figure><figcaption><strong>3. 選擇登入身分</strong><p>林柏諭點「登入 / 建立帳號」，選旅客、旅行社人員或管理員；也可選建立帳號或忘記密碼。關閉視窗即清除輸入。本展示沒有帳號後端，不能真的登入、寄信或取得管理權限；管理員不開放自行註冊。</p></figcaption><a href="獨立展示/畫面截圖/設定情境/03_選擇登入.jpg" target="_blank" rel="noopener"><img src="獨立展示/畫面截圖/設定情境/03_選擇登入.jpg" alt="3. 選擇登入身分的網頁截圖" loading="lazy"></a></figure>
+<figure><figcaption><strong>4. 修改並儲存</strong><p>林柏諭選「森林綠」、常用出發地「台中」，再按「儲存設定」。色調先預覽，儲存成功才顯示已保存。系統產生或更新本機偏好；返回首頁後使用此色調，並把出發地填入需求文字。商品類型與排序也會依已存設定套用。</p></figcaption><a href="獨立展示/畫面截圖/設定情境/04_儲存色調與偏好.jpg" target="_blank" rel="noopener"><img src="獨立展示/畫面截圖/設定情境/04_儲存色調與偏好.jpg" alt="4. 修改並儲存的網頁截圖" loading="lazy"></a></figure>
+<figure><figcaption><strong>5. 處理輸入錯誤</strong><p>林柏諭展開「降價與出清提醒」，把降價幅度填成0後按儲存。系統顯示「請填1～50的整數」、標記錯誤欄位並保留其他輸入；不覆寫原已儲存設定，也不發送通知。</p></figcaption><a href="獨立展示/畫面截圖/設定情境/05_錯誤提示.jpg" target="_blank" rel="noopener"><img src="獨立展示/畫面截圖/設定情境/05_錯誤提示.jpg" alt="5. 處理輸入錯誤的網頁截圖" loading="lazy"></a></figure>
+<figure><figcaption><strong>6. 恢復預設</strong><p>林柏諭展開「隱私與清除設定」並按「恢復預設設定」。畫面先確認；取消就維持原樣，確認才刪除本機專用偏好紀錄並套用預設值。不刪商品、帳號或其他網站資料。</p></figcaption><a href="獨立展示/畫面截圖/設定情境/06_清除前確認.jpg" target="_blank" rel="noopener"><img src="獨立展示/畫面截圖/設定情境/06_清除前確認.jpg" alt="6. 恢復預設的網頁截圖" loading="lazy"></a></figure>
+<p>資料與程式責任：PreferenceStore管理偏好；SettingsView處理表單與訊息；SettingsController檢查輸入、協調儲存及還原。設定不含密碼，不更動旅行社商品。圖片可點開放大。</p>
+<h3>正式 UML：儲存設定的 MVC 循序圖</h3><a href="獨立展示/04_UML圖表/03_MVC循序/SettingsSequence.svg" target="_blank" rel="noopener"><img src="獨立展示/04_UML圖表/03_MVC循序/SettingsSequence.svg" alt="旅客、設定介面、控制、設定資料及本機儲存的MVC循序圖" loading="lazy"></a><p><a href="獨立展示/04_UML圖表/03_MVC循序/設定功能循序圖.puml">可編輯UML原稿</a></p>
+</details>
+</div></details>
 <details id="section-6"><summary><span class="date">11/21</span><span class="title">使用案例與類別分析</span><span class="arrow" aria-hidden="true">⌄</span></summary><div class="answers"><table><thead><tr><th scope="col">老師題目</th><th scope="col">我們的答案</th></tr></thead><tbody><tr><th scope="row">3.5.2 Use case name</th><td>SearchTravelProducts（搜尋旅遊商品）。</td></tr>
 <tr><th scope="row">Participating actors：職稱</th><td>旅客、外部 AI 服務；使用職稱，不使用林柏諭等人名。</td></tr>
 <tr><th scope="row">Entry condition：開始情況</th><td>旅客開啟搜尋介面；系統可讀取業者已發布的商品資料。</td></tr>
@@ -124,12 +152,12 @@ table{width:100%;border-collapse:collapse;table-layout:fixed;font-size:14px}th,t
 <tr><th scope="row">Activity Diagrams：活動圖</th><td>輸入 → AI 整理 → 驗證 → 查候選商品 → 取得相關資料 → 篩選排序 → 顯示結果；無符合商品時進入調整條件分支。</td></tr>
 <tr><th scope="row">Concurrency：並行設計</th><td>取得候選商品 ID 後，並行讀取梯次報價與業者資訊，再匯合、篩選並組卡片。例：同批 T001 同時讀 D001 報價及 A001 窗口資料。</td></tr></tbody></table></div></details>
 <details id="section-8"><summary><span class="date">12/5</span><span class="title">狀態圖與功能導覽</span><span class="arrow" aria-hidden="true">⌄</span></summary><div class="answers"><table><thead><tr><th scope="col">老師題目</th><th scope="col">我們的答案</th></tr></thead><tbody><tr><th scope="row">StateChart Diagram：單一類別狀態</th><td>以商品草稿為例：草稿 → 送審 → 已發布；審核退回 → 修正草稿 → 再送審。業者送審，管理員核准或退回。</td></tr>
-<tr><th scope="row">Navigation Path：樹狀功能選項</th><td>首頁 → 對話搜尋 → 商品詳情 → 聯絡業者；旅客帳號 → 收藏；業者帳號 → 商品草稿／送審；管理員 → 審核。例：業者從登入入口進入自己的商品管理。</td></tr></tbody></table></div></details>
+<tr><th scope="row">Navigation Path：樹狀功能選項</th><td>首頁 → 對話搜尋 → 商品詳情 → 聯絡業者；首頁／詳情 → 設定；旅客帳號 → 收藏；業者帳號 → 商品草稿／送審；管理員 → 審核。例：業者從登入入口進入自己的商品管理。</td></tr></tbody></table></div></details>
 <footer>系統設計簡答；獨立展示已有商品類別圖與部分程式，完整平台及 AI 串接尚未完成。<a href="00_老師作業規定_原文.txt">老師原文</a></footer>
 </main><script>
 // 中文備註：輸入為網址片段或列印事件，輸出只改變週次的開合狀態，不讀寫商品或帳號資料。
 (function(){let saved=[];
-function openSection(){const node=document.getElementById(location.hash.slice(1));if(node&&node.tagName==="DETAILS")node.open=true;}
+function openSection(){const node=document.getElementById(location.hash.slice(1));if(node){let parent=node;while(parent){if(parent.tagName==="DETAILS")parent.open=true;parent=parent.parentElement;}}}
 openSection();window.addEventListener("hashchange",openSection);
 window.addEventListener("beforeprint",function(){saved=Array.from(document.querySelectorAll("details")).map(function(node){const open=node.open;node.open=true;return{node:node,open:open};});});
 window.addEventListener("afterprint",function(){saved.forEach(function(entry){entry.node.open=entry.open;});saved=[];});

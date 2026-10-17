@@ -4,10 +4,10 @@
   <!-- 中文說明：獨立的畫面提案，僅讀取本資料夾範例資料，不連接商品系統或外部 AI。 -->
   <meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
   <title>旅伴｜旅遊媒合畫面提案</title>
-  <link rel="stylesheet" href="../02_前端程式碼/style.css"><script src="../02_前端程式碼/models.js" defer></script><script src="../03_範例資料/sample-tours.js" defer></script><script src="../02_前端程式碼/app.js" defer></script>
+  <link rel="stylesheet" href="../02_前端程式碼/style.css?v=20261017-settings"><script src="../02_前端程式碼/settings.js?v=20261017-settings"></script><script src="../02_前端程式碼/models.js" defer></script><script src="../03_範例資料/sample-tours.js" defer></script><script src="../02_前端程式碼/app.js?v=20261017-settings" defer></script>
 </head>
 <body data-page="catalog">
-  <header class="site-header"><a class="brand" href="index.html"><span class="brand-mark" aria-hidden="true">↗</span>旅伴<span class="brand-sub">AI 旅遊搜尋平台</span></a><span class="demo-badge">畫面提案</span></header>
+  <header class="site-header"><a class="brand" href="index.html"><span class="brand-mark" aria-hidden="true">↗</span>旅伴<span class="brand-sub">AI 旅遊搜尋平台</span></a><nav class="header-actions" aria-label="網站選單"><span class="demo-badge">畫面提案</span><a class="quiet-button" href="settings.html">設定</a></nav></header>
   <main class="workspace">
     <aside class="search-panel" aria-label="需求輸入">
       <p class="eyebrow">從你的假期開始</p>
@@ -26,7 +26,7 @@
     <section class="catalog" aria-labelledby="results-title">
       <div class="catalog-heading"><div><p class="eyebrow">簡單找到適合的行程</p><h2 id="results-title">先看假期，再看價格。</h2></div><span class="tiny-note">示範資料 · 非販售商品</span></div>
       <div class="category-tabs" role="group" aria-label="商品類型"><button type="button" data-category="tour" aria-pressed="true">套裝行程</button><button type="button" data-category="bundle" aria-pressed="false">機加酒</button><button type="button" data-category="flight" aria-pressed="false">機票</button></div>
-      <div class="result-caption"><span id="result-count" role="status"></span><span>依範例出發日價格，由低到高</span></div>
+      <div class="result-caption"><span id="result-count" role="status"></span><span id="sort-caption">依範例出發日價格，由低到高</span></div>
       <div id="product-grid" class="product-grid"></div>
       <!-- 中文說明：每次只增加六張卡片；不把50筆同時塞進畫面。 -->
       <div class="load-more-wrap"><button id="load-more" class="quiet-button" type="button" aria-controls="product-grid">顯示更多行程</button></div>

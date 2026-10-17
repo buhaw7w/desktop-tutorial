@@ -40,10 +40,21 @@ class ProductCardView {
 
 // Controller：分類與價格排序僅用固定資料；輸入框不假裝具備 AI 搜尋能力。
 class CatalogController {
-  constructor() { this.category = "tour"; this.pageSize = 6; this.visibleLimit = this.pageSize; }
+  constructor() {
+    // Model 提供經白名單檢查的偏好；此處不讀取帳號或依選擇角色授權。
+    this.preferences = PreferenceStore.load(); this.category = this.preferences.category;
+    this.pageSize = 6; this.visibleLimit = this.pageSize;
+  }
   render() {
-    const visible = exampleProducts.filter(p => p.category === this.category)
-      .sort((a,b) => (a.selectedQuote.price ?? Infinity) - (b.selectedQuote.price ?? Infinity));
+    const visible = exampleProducts.filter(p => p.category === this.category).sort((a,b) => {
+      // 未提供價格／天數時一律排最後，避免未知資料成為最低價格或最短行程。
+      const byDays = this.preferences.sort === "days-asc";
+      const aValue = byDays ? a.days : a.selectedQuote.price, bValue = byDays ? b.days : b.selectedQuote.price;
+      if (aValue == null) return bValue == null ? 0 : 1;
+      if (bValue == null) return -1;
+      return this.preferences.sort === "price-desc" ? bValue-aValue : aValue-bValue;
+    });
+    document.getElementById("sort-caption").textContent = {"price-asc":"依範例出發日價格，由低到高", "price-desc":"依範例出發日價格，由高到低", "days-asc":"依行程天數，由少到多"}[this.preferences.sort];
     const shown = visible.slice(0,this.visibleLimit);
     const grid = document.getElementById("product-grid");
     // 只補上新卡片，保留原有連結和鍵盤焦點；分類切換時由事件清空列表。
@@ -56,6 +67,10 @@ class CatalogController {
     document.querySelectorAll("[data-category]").forEach(button => button.setAttribute("aria-pressed", String(button.dataset.category === this.category)));
   }
   bind() {
+    // 常用出發地只填入下次需求的文字提示，未開發的搜尋不假裝已按機場篩選。
+    if (this.preferences.airport !== "any") {
+      document.getElementById("request").value += `，從${this.preferences.airport}出發`;
+    }
     document.querySelectorAll("[data-category]").forEach(button => button.addEventListener("click", () => {
       this.category = button.dataset.category; this.visibleLimit = this.pageSize;
       document.getElementById("product-grid").replaceChildren(); this.render();
