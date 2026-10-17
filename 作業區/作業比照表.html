@@ -22,7 +22,7 @@ table{width:100%;border-collapse:collapse;table-layout:fixed;font-size:14px}th,t
 @media(max-width:600px){.comparison,.comparison tbody,.comparison tr,.comparison tbody th,.comparison tbody td{display:block;width:100%}.comparison thead{display:none}.comparison tbody th{background:#eef3ee;border-radius:6px;margin-top:10px}.comparison tbody td{border-top:0;padding:8px 10px}.comparison td:before{content:attr(data-label);display:block;font-weight:700;font-size:12px;color:#65746d}}
 /* 中文教學：截圖按情境順序閱讀，點圖放大；預設收合，不擠占每週答案。 */
 .story-gallery{margin:20px 0;padding:0 14px}.story-gallery>summary{padding:16px 0;font-weight:700}.story-gallery figure{margin:24px 0}.story-gallery img{display:block;width:100%;height:auto;max-height:520px;object-fit:contain;border:1px solid #dce4dd;border-radius:10px;background:#f7f8f5}.story-gallery figcaption p,.story-gallery>p{font-size:14px}.story-gallery h3{font-size:17px}
-.scenario-story{padding-left:26px;font-size:15px}.scenario-story li{padding:7px 0 10px 4px;line-height:1.9}
+.scenario-story{padding-left:26px;font-size:15px}.scenario-story li{padding:7px 0 10px 4px;line-height:1.8}.scenario-story li>strong{display:block;color:#33644f;font-size:14px}.scenario-error{font-size:13px;color:#65746d;padding:12px 0}
 </style></head><body><main><h1>每週作業題目與答案</h1><p class="intro">AI 對話媒合旅行社商品；無官網業者也能上架。</p>
 <details id="section-1"><summary><span class="date">9/19</span><span class="title">分組</span><span class="arrow" aria-hidden="true">⌄</span></summary><div class="answers"><table><thead><tr><th scope="col">老師題目</th><th scope="col">我們的答案</th></tr></thead><tbody><tr><th scope="row">分組名單</th><td>陳威任 4144W006、陳宏傑 4144W007、賴叔佑 4144W009、李慶寶 4144W010、劉宥伸 4144W013、林柏諭 4144W014。</td></tr>
 <tr><th scope="row">小組組長</th><td>林柏諭（4144W014）。</td></tr></tbody></table></div></details>
@@ -102,35 +102,29 @@ table{width:100%;border-collapse:collapse;table-layout:fixed;font-size:14px}th,t
 <tr><th scope="row">3.3.10 安全問題</th><td>旅客只能看自己的私人資料，旅行社只能修改自己的商品。例如A旅行社不能改B旅行社的價格。密碼不存明文，AI金鑰留在後端，重設密碼連結需限時且只能使用一次。</td></tr>
 <tr><th scope="row">3.3.11 資源與管理</th><td>旅行社更新商品，管理員審核，工程師維護系統並備份資料。AI用量設上限；到上限後暫停新的AI請求，但仍可用一般搜尋找行程。</td></tr></tbody></table>
 </div></details>
-<details id="section-5"><summary><span class="date">11/7</span><span class="title">補充：使用者情境</span><span class="arrow" aria-hidden="true">⌄</span></summary><div class="answers">
-<p>3.5.1 Scenarios：用簡單文字描述林柏諭如何使用「對話找行程」。</p><p class="footnote">原作業表列於11/14，此處依老師11/7補充整理。以下是預定功能的情境劇本；四張結果卡是假設例子，目前展示尚未串接AI。</p>
+<details id="section-5"><summary><span class="date">11/7</span><span class="title">使用者情境</span><span class="arrow" aria-hidden="true">⌄</span></summary><div class="answers">
+<p><strong>功能：對話找行程｜使用者：林柏諭</strong></p><p class="footnote">設計劇本，假設找到四筆商品；目前展示尚未串接AI。</p>
 <ol class="scenario-story">
-<li>林柏諭開啟網站，看到左側的對話框和右側的旅行社行程卡。對話框裡寫著「從這裡輸入文字，告訴我你想怎麼旅行」。</li>
-<li>林柏諭想去日本泡溫泉，又希望價格便宜一些。他用滑鼠點對話框，輸入「日本泡溫泉，便宜一點」，再按「找尋行程」。畫面出現他的訊息，並顯示「正在了解你的需求」。</li>
-<li>系統在對話框詢問：「你想哪一天出發？大約玩幾天？」林柏諭輸入「2026年12月23日出發，五天」並送出。</li>
-<li>畫面顯示「12/23出發、日本、五天、溫泉、價格由低到高」，讓林柏諭核對。他按「確認搜尋」後，旁邊顯示「正在找行程」。</li>
-<li>本例假設有四個符合條件的旅行社商品。搜尋完成後，右側出現四張旅遊卡，價格便宜的排前面；每張卡片顯示行程名稱、出發日期、天數、價格與旅行社名稱。</li>
-<li>林柏諭點選其中一張旅遊卡，網站開啟獨立的詳情頁。他看到每天的行程、溫泉住宿、餐點與費用說明。想再看其他商品時，按「返回商品列表」，原本的搜尋條件和卡片仍保留。</li>
-<li>林柏諭決定進一步詢問，便按「聯絡旅行社」。系統依該業者設定開啟原商品頁或LINE窗口；沒有官網的業者，也可使用平台上的商品頁與聯絡窗口。</li>
+<li><strong>開啟網站</strong>林柏諭看到對話框和行程卡，提示文字寫著「從這裡輸入需求，尋找行程」。</li>
+<li><strong>輸入想法</strong>他輸入「日本泡溫泉，便宜一點」，按「找尋行程」。</li>
+<li><strong>補充日期</strong>系統詢問出發日與天數。他回答「2026/12/23，五天」，確認畫面上的搜尋條件。</li>
+<li><strong>挑選行程</strong>搜尋完成後，右側顯示四張符合的旅遊卡，價格由低到高排列，卡上有日期、天數、價格與旅行社。</li>
+<li><strong>查看與聯絡</strong>他點卡片看行程、住宿、餐點和費用；喜歡就按「聯絡旅行社」，開啟業者商品頁或 LINE 窗口。按返回可繼續看原本的卡片。</li>
 </ol>
-<p><strong>遇到問題時：</strong>沒有符合的商品，就顯示「目前沒有符合的行程」，詢問是否調整條件；連線或AI失敗時保留已輸入文字，提供重試。不編造旅遊卡。</p>
-<table><thead><tr><th scope="col">老師的三項要求</th><th scope="col">這個劇本的說明</th></tr></thead><tbody>
-<tr><th scope="row">1. 情境相關資料</th><td>產生：林柏諭的對話與搜尋條件。讀取：旅行社商品、日期、價格及詳細內容。修改：他補充需求後更新條件與結果。清除：按「清除本次搜尋」並確認後，只移除本頁搜尋暫存，不刪旅行社商品。</td></tr>
-<tr><th scope="row">2. 使用者的操作</th><td>開啟網站 → 點對話框 → 打字 → 按找尋行程 → 回答日期與天數 → 確認搜尋 → 點旅遊卡 → 查看詳情 → 聯絡旅行社。</td></tr>
-<tr><th scope="row">3. 系統的畫面變化</th><td>首頁對話框與卡片 → 顯示輸入訊息與追問 → 顯示條件及搜尋中 → 顯示四張結果卡 → 開啟詳情頁 → 開啟旅行社商品頁或聯絡窗口。</td></tr>
-</tbody></table>
-<details id="settings-story" class="story-gallery"><summary>設定功能：情境演示與正式 UML（六個畫面）</summary>
-<p>劇本用林柏諭的操作演示情境；UML用職稱、介面、控制與資料物件表達正式設計。圖是程式設計依據，不代表自動完成程式。以下是實際前端設定截圖，前面的AI聊天搜尋仍為未來設計。</p>
-<p><a href="獨立展示/01_展示網頁/settings.html">開啟設定頁實際操作 →</a></p>
-<figure><figcaption><strong>1. 開啟設定</strong><p>林柏諭在商品列表右上角點「設定」，網頁開啟 settings.html。系統讀取這台瀏覽器的偏好；沒有資料就使用預設值。</p></figcaption><a href="獨立展示/畫面截圖/設定情境/01_首頁設定入口.jpg" target="_blank" rel="noopener"><img src="獨立展示/畫面截圖/設定情境/01_首頁設定入口.jpg" alt="1. 開啟設定的網頁截圖" loading="lazy"></a></figure>
-<figure><figcaption><strong>2. 閱讀設定頁</strong><p>畫面分為帳號、色調、搜尋偏好、通知與資料。林柏諭不必登入就能修改本機設定；通知與資料的細項先收起，點標題才展開。</p></figcaption><a href="獨立展示/畫面截圖/設定情境/02_設定頁.jpg" target="_blank" rel="noopener"><img src="獨立展示/畫面截圖/設定情境/02_設定頁.jpg" alt="2. 閱讀設定頁的網頁截圖" loading="lazy"></a></figure>
-<figure><figcaption><strong>3. 選擇登入身分</strong><p>林柏諭點「登入 / 建立帳號」，選旅客、旅行社人員或管理員；也可選建立帳號或忘記密碼。關閉視窗即清除輸入。本展示沒有帳號後端，不能真的登入、寄信或取得管理權限；管理員不開放自行註冊。</p></figcaption><a href="獨立展示/畫面截圖/設定情境/03_選擇登入.jpg" target="_blank" rel="noopener"><img src="獨立展示/畫面截圖/設定情境/03_選擇登入.jpg" alt="3. 選擇登入身分的網頁截圖" loading="lazy"></a></figure>
-<figure><figcaption><strong>4. 修改並儲存</strong><p>林柏諭選「森林綠」、常用出發地「台中」，再按「儲存設定」。色調先預覽，儲存成功才顯示已保存。系統產生或更新本機偏好；返回首頁後使用此色調，並把出發地填入需求文字。商品類型與排序也會依已存設定套用。</p></figcaption><a href="獨立展示/畫面截圖/設定情境/04_儲存色調與偏好.jpg" target="_blank" rel="noopener"><img src="獨立展示/畫面截圖/設定情境/04_儲存色調與偏好.jpg" alt="4. 修改並儲存的網頁截圖" loading="lazy"></a></figure>
-<figure><figcaption><strong>5. 處理輸入錯誤</strong><p>林柏諭展開「降價與出清提醒」，把降價幅度填成0後按儲存。系統顯示「請填1～50的整數」、標記錯誤欄位並保留其他輸入；不覆寫原已儲存設定，也不發送通知。</p></figcaption><a href="獨立展示/畫面截圖/設定情境/05_錯誤提示.jpg" target="_blank" rel="noopener"><img src="獨立展示/畫面截圖/設定情境/05_錯誤提示.jpg" alt="5. 處理輸入錯誤的網頁截圖" loading="lazy"></a></figure>
-<figure><figcaption><strong>6. 恢復預設</strong><p>林柏諭展開「隱私與清除設定」並按「恢復預設設定」。畫面先確認；取消就維持原樣，確認才刪除本機專用偏好紀錄並套用預設值。不刪商品、帳號或其他網站資料。</p></figcaption><a href="獨立展示/畫面截圖/設定情境/06_清除前確認.jpg" target="_blank" rel="noopener"><img src="獨立展示/畫面截圖/設定情境/06_清除前確認.jpg" alt="6. 恢復預設的網頁截圖" loading="lazy"></a></figure>
-<p>資料與程式責任：PreferenceStore管理偏好；SettingsView處理表單與訊息；SettingsController檢查輸入、協調儲存及還原。設定不含密碼，不更動旅行社商品。圖片可點開放大。</p>
-<h3>正式 UML：儲存設定的 MVC 循序圖</h3><a href="獨立展示/04_UML圖表/03_MVC循序/SettingsSequence.svg" target="_blank" rel="noopener"><img src="獨立展示/04_UML圖表/03_MVC循序/SettingsSequence.svg" alt="旅客、設定介面、控制、設定資料及本機儲存的MVC循序圖" loading="lazy"></a><p><a href="獨立展示/04_UML圖表/03_MVC循序/設定功能循序圖.puml">可編輯UML原稿</a></p>
+<table><thead><tr><th scope="col">老師要求</th><th scope="col">對應說明</th></tr></thead><tbody>
+<tr><th scope="row">1. 資料</th><td>產生對話與條件；讀取業者商品、日期和報價；補充需求時更新條件；確認清除後移除本頁搜尋暫存，不刪商品。</td></tr>
+<tr><th scope="row">2. 操作</th><td>用鍵盤打字、滑鼠點按搜尋、確認、旅遊卡與聯絡按鈕。</td></tr>
+<tr><th scope="row">3. 畫面</th><td>對話框 → 追問與條件摘要 → 搜尋中 → 四張卡片 → 商品詳情 → 業者窗口。</td></tr>
+</tbody></table><p class="scenario-error"><strong>遇到問題：</strong>查無結果時詢問是否調整條件；服務失敗保留輸入，提供重試。</p>
+<details id="settings-story" class="story-gallery"><summary>看設定功能的操作圖片（6張）</summary><p><a href="獨立展示/01_展示網頁/settings.html">開啟設定頁 →</a></p>
+<figure><figcaption><strong>1. 開啟設定</strong><p>林柏諭點首頁右上角的「設定」。</p></figcaption><a href="獨立展示/畫面截圖/設定情境/01_首頁設定入口.jpg" target="_blank" rel="noopener"><img src="獨立展示/畫面截圖/設定情境/01_首頁設定入口.jpg" alt="開啟設定的網頁截圖" loading="lazy"></a></figure>
+<figure><figcaption><strong>2. 閱讀設定</strong><p>畫面分成帳號、色調、搜尋偏好與通知四區。</p></figcaption><a href="獨立展示/畫面截圖/設定情境/02_設定頁.jpg" target="_blank" rel="noopener"><img src="獨立展示/畫面截圖/設定情境/02_設定頁.jpg" alt="閱讀設定的網頁截圖" loading="lazy"></a></figure>
+<figure><figcaption><strong>3. 選擇登入</strong><p>他選擇身分或註冊、忘記密碼；目前是介面展示，尚未連接帳號服務。</p></figcaption><a href="獨立展示/畫面截圖/設定情境/03_選擇登入.jpg" target="_blank" rel="noopener"><img src="獨立展示/畫面截圖/設定情境/03_選擇登入.jpg" alt="選擇登入的網頁截圖" loading="lazy"></a></figure>
+<figure><figcaption><strong>4. 儲存偏好</strong><p>他選森林綠、台中出發，按儲存後顯示「已儲存在這台瀏覽器」。</p></figcaption><a href="獨立展示/畫面截圖/設定情境/04_儲存色調與偏好.jpg" target="_blank" rel="noopener"><img src="獨立展示/畫面截圖/設定情境/04_儲存色調與偏好.jpg" alt="儲存偏好的網頁截圖" loading="lazy"></a></figure>
+<figure><figcaption><strong>5. 輸入錯誤</strong><p>降價幅度填0時，畫面提示填1～50，不覆寫原設定。</p></figcaption><a href="獨立展示/畫面截圖/設定情境/05_錯誤提示.jpg" target="_blank" rel="noopener"><img src="獨立展示/畫面截圖/設定情境/05_錯誤提示.jpg" alt="輸入錯誤的網頁截圖" loading="lazy"></a></figure>
+<figure><figcaption><strong>6. 恢復預設</strong><p>按恢復預設會先詢問；取消保留原設定，確認才清除本機偏好。</p></figcaption><a href="獨立展示/畫面截圖/設定情境/06_清除前確認.jpg" target="_blank" rel="noopener"><img src="獨立展示/畫面截圖/設定情境/06_清除前確認.jpg" alt="恢復預設的網頁截圖" loading="lazy"></a></figure>
 </details>
+<details id="settings-uml" class="story-gallery"><summary>看設定功能的UML與程式分工</summary><p>劇本說明怎麼操作；UML說明正式流程與物件責任。這張圖對應設定儲存，不是對話搜尋。</p><ul><li>View：SettingsView，顯示設定畫面。</li><li>Controller：SettingsController，檢查及協調儲存。</li><li>Model：PreferenceStore，讀寫本機偏好。</li></ul><a href="獨立展示/04_UML圖表/03_MVC循序/SettingsSequence.svg" target="_blank" rel="noopener"><img src="獨立展示/04_UML圖表/03_MVC循序/SettingsSequence.svg" alt="設定功能MVC循序圖" loading="lazy"></a><p><a href="獨立展示/04_UML圖表/03_MVC循序/設定功能循序圖.puml">可編輯UML原稿</a></p></details>
 </div></details>
 <details id="section-6"><summary><span class="date">11/21</span><span class="title">使用案例與類別分析</span><span class="arrow" aria-hidden="true">⌄</span></summary><div class="answers"><table><thead><tr><th scope="col">老師題目</th><th scope="col">我們的答案</th></tr></thead><tbody><tr><th scope="row">3.5.2 Use case name</th><td>SearchTravelProducts（搜尋旅遊商品）。</td></tr>
 <tr><th scope="row">Participating actors：職稱</th><td>旅客、外部 AI 服務；使用職稱，不使用林柏諭等人名。</td></tr>
