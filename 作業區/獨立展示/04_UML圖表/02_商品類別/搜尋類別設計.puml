@@ -52,23 +52,31 @@ class "報價\nPriceQuote" as Quote {
   + feeText : String
   + isWithinBudget(limit) : Boolean
 }
-class "套裝行程\nPackageTour" as Tour
-class "機加酒\nFlightHotelPackage" as Bundle
-class "機票\nFlightTicket" as Flight
+class "套裝行程\nPackageTour" as Tour {
+  + getSummary() : String
+}
+class "機加酒\nFlightHotelPackage" as Bundle {
+  + getSummary() : String
+}
+class "機票\nFlightTicket" as Flight {
+  + getSummary() : String
+}
 Catalog ..> Criteria : 讀取條件
 Catalog ..> Product : 找已發布商品
 Catalog ..> Departure : 核對出發日
 Catalog ..> Quote : 核對預算並排序
-Agency "1" o-- "0..*" Product : 依productId管理商品
+Agency [productId : String] --> "0..1" Product : 依商品編號查找
 Product "1" o-- "1..*" Departure : 擁有出發梯次
 Departure "1" *-- "1" Quote : 擁有對應報價
 Product <|-- Tour
 Product <|-- Bundle
 Product <|-- Flight
 note bottom of Agency
-  Qualification限定鍵示例（以註記表達）：
+  Qualification限定鍵示例：
+  小方框productId : String屬於這條關聯。
   在Agency A001的商品集合，用productId=T001
-  查得0或1件商品；不是只憑編號就可跨旅行社取用。
+  查得0或1件商品；同一業者內的商品編號不可重複。
+  不給key時，業者可擁有多件商品。
 end note
 note bottom of Criteria
   日本、溫泉、2026/12/23、5天、價格由低到高。

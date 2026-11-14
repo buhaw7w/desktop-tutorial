@@ -25,6 +25,7 @@ table{width:100%;border-collapse:collapse;table-layout:fixed;font-size:14px}th,t
 .scenario-story{padding-left:26px;font-size:15px}.scenario-story li{padding:7px 0 10px 4px;line-height:1.8}.scenario-story li>strong{display:block;color:#33644f;font-size:14px}.scenario-error{font-size:13px;color:#65746d;padding:12px 0}
 .teacher-requirement{background:#eef3ed;border-left:3px solid #46735b;padding:12px 14px;font-size:14px;line-height:1.8}
 </style></head><body><main><h1>每週作業題目與答案</h1><p class="intro">AI 對話媒合旅行社商品；無官網業者也能上架。</p>
+<p class="footnote"><strong>作業核對原則：</strong>11/21起依老師原題與講義頁碼逐項核對；已對應項目附例子與圖，未完成或不適用者說明原因，不為湊項目虛構類別、功能或成果。</p>
 <details id="section-1"><summary><span class="date">9/19</span><span class="title">分組</span><span class="arrow" aria-hidden="true">⌄</span></summary><div class="answers"><table><thead><tr><th scope="col">老師題目</th><th scope="col">我們的答案</th></tr></thead><tbody><tr><th scope="row">分組名單</th><td>陳威任 4144W006、陳宏傑 4144W007、賴叔佑 4144W009、李慶寶 4144W010、劉宥伸 4144W013、林柏諭 4144W014。</td></tr>
 <tr><th scope="row">小組組長</th><td>林柏諭（4144W014）。</td></tr></tbody></table></div></details>
 <details id="section-2"><summary><span class="date">10/3</span><span class="title">專題題目與 UML 工具</span><span class="arrow" aria-hidden="true">⌄</span></summary><div class="answers"><table><thead><tr><th scope="col">老師題目</th><th scope="col">我們的答案</th></tr></thead><tbody><tr><th scope="row">專題題目</th><td>AI 旅遊搜尋平台：以 AI 對話媒合旅行社的套裝行程、機加酒與機票。平台沒有自有商品，無官網業者也能上架。</td></tr>
@@ -169,21 +170,24 @@ table{width:100%;border-collapse:collapse;table-layout:fixed;font-size:14px}th,t
 </tbody></table>
 </details>
 <details class="story-gallery"><summary>查看使用案例圖</summary><a href="獨立展示/04_UML圖表/02_商品類別/SearchUseCase.svg" target="_blank" rel="noopener"><img src="獨立展示/04_UML圖表/02_商品類別/SearchUseCase.svg" alt="對話找行程的使用案例圖" loading="lazy"></a><p><a href="獨立展示/04_UML圖表/02_商品類別/搜尋使用案例.puml">可編輯UML原稿</a></p></details>
-<details class="story-gallery" id="search-text-analysis"><summary>3.5.3 文字分析與資料字典</summary><p><strong>老師要求：名詞（資料）→候選class；動詞（計算）→受詞所屬的function；形容詞→類別資料（變數或物件）。</strong></p><p>先找候選，再確認責任，不把每個名詞都硬做成類別。本例的旅客是Actor；帳號資料由其他功能處理。</p><h3>① 名詞 → 類別</h3><table><thead><tr><th scope="col">名詞</th><th scope="col">候選類別</th><th scope="col">責任</th></tr></thead><tbody>
-<tr><th scope="row">搜尋條件</th><td>SearchCriteria</td><td>保存目的地、主題、日期、天數、預算與排序。</td></tr>
-<tr><th scope="row">商品目錄</th><td>ProductCatalog</td><td>依條件找出商品與對應梯次的配對。</td></tr>
-<tr><th scope="row">旅行社</th><td>Agency</td><td>保存業者資料及所屬商品集合。</td></tr>
-<tr><th scope="row">旅遊商品</th><td>TravelProduct</td><td>保存名稱、主題與發布狀態。</td></tr>
-<tr><th scope="row">出發梯次</th><td>Departure</td><td>保存同商品某次出發及回程日期。</td></tr>
-<tr><th scope="row">報價</th><td>PriceQuote</td><td>保存該梯次金額、幣別及費用說明。</td></tr>
-</tbody></table>
+<details class="story-gallery" id="search-text-analysis"><summary>3.5.3 文字分析與資料字典</summary><p><strong>老師要求：名詞（資料）→候選class；動詞（計算）→受詞所屬的function；形容詞→類別資料（變數或物件）。</strong></p><p>先找候選，再確認責任，不把每個名詞都硬做成類別。本例的旅客是Actor；帳號資料由其他功能處理。</p><h3>① 名詞 → 類別（9個逐一說明）</h3><table><thead><tr><th scope="col">類別（中文／英文）</th><th scope="col">對應操作、資料、方法與例子</th></tr></thead><tbody>
+<tr><th scope="row">搜尋條件 SearchCriteria</th><td>對應步驟1～3：保存日本、溫泉、12/23、5天與低價排序；validate()驗證，updateDays(4)只改天數。它是搜尋條件，不需硬加識別編號。</td></tr>
+<tr><th scope="row">商品目錄 ProductCatalog</th><td>對應步驟3：findProducts(criteria)讀取條件，找出已發布商品及符合日期的梯次；本圖把它設計成查詢類別，不另存一份商品資料。</td></tr>
+<tr><th scope="row">旅行社 Agency</th><td>對應步驟4～5：提供業者名稱及自己的商品集合；agencyId=A001識別業者，findProduct(T001)在該集合中找商品，找不到就回空值。</td></tr>
+<tr><th scope="row">旅遊商品 TravelProduct</th><td>對應步驟3～5：保存T001、名稱、天數、發布狀態與主題；getSummary()提供商品摘要。它是三種商品共同的父類別。</td></tr>
+<tr><th scope="row">出發梯次 Departure</th><td>對應步驟3～5：D001保存12/23出發、12/27返回；matchesDate()核對日期。同一商品另一天出發要用另一個梯次，不能共用日期或價格。</td></tr>
+<tr><th scope="row">報價 PriceQuote</th><td>對應步驟3～4：保存該梯次的29900元、TWD與費用說明；有預算上限時，isWithinBudget(limit)才核對。未知金額用null，不是0元。</td></tr>
+<tr><th scope="row">套裝行程 PackageTour</th><td>對應本例的四張行程卡：是一種TravelProduct，繼承名稱、天數、梯次等共同資料；覆寫getSummary()回傳套裝行程摘要。例：日本溫泉五天團。</td></tr>
+<tr><th scope="row">機加酒 FlightHotelPackage</th><td>對應商品分類：也是TravelProduct，繼承共同資料，覆寫getSummary()回傳機加酒摘要。例：東京機票加四晚住宿；它不一定出現在本次溫泉套裝團搜尋。</td></tr>
+<tr><th scope="row">機票 FlightTicket</th><td>對應商品分類：也是TravelProduct，繼承共同資料，覆寫getSummary()回傳機票摘要。例：桃園往返東京；不把它當成有飯店與餐點的套裝行程。</td></tr></tbody></table><p class="footnote">本例的四張結果卡是套裝行程；另兩種子類別用來說明商品分類，不代表本次查詢一定返回三種商品。旅客與外部AI是Actor；其他功能的User、Conversation等類別不強行塞入本圖。</p>
 <h3>② 動詞 → 受詞的方法</h3><table><thead><tr><th scope="col">動詞與受詞</th><th scope="col">所屬類別的方法</th><th scope="col">作用</th></tr></thead><tbody>
 <tr><th scope="row">驗證「搜尋條件」</th><td>SearchCriteria.validate()</td><td>檢查日期、天數、預算等條件。</td></tr>
 <tr><th scope="row">修改「搜尋條件的天數」</th><td>SearchCriteria.updateDays(4)</td><td>只改成4天，保留其他條件。</td></tr>
 <tr><th scope="row">查詢「商品目錄」</th><td>ProductCatalog.findProducts(criteria)</td><td>取得符合條件的商品與梯次。</td></tr>
 <tr><th scope="row">核對「梯次日期」</th><td>Departure.matchesDate(date)</td><td>判斷這個梯次是否符合指定日期。</td></tr>
 <tr><th scope="row">檢查「報價」是否在預算內</th><td>PriceQuote.isWithinBudget(limit)</td><td>有預算上限才判斷；未知價格不能當作0元。</td></tr>
-</tbody></table>
+<tr><th scope="row">查找「旅行社內的商品」</th><td>Agency.findProduct(productId)</td><td>在指定業者集合用T001查到0或1件商品。</td></tr>
+<tr><th scope="row">取得「旅遊商品的摘要」</th><td>TravelProduct.getSummary()與子類別覆寫</td><td>同一呼叫依套裝、機加酒、機票回傳各自摘要。</td></tr></tbody></table>
 <h3>③ 形容詞 → 資料</h3><table><thead><tr><th scope="col">描述</th><th scope="col">所屬欄位</th><th scope="col">例子</th></tr></thead><tbody>
 <tr><th scope="row">已發布的商品</th><td>TravelProduct.publicationStatus</td><td>published，讓旅客能查詢。</td></tr>
 <tr><th scope="row">便宜一點的行程</th><td>SearchCriteria.sortOrder</td><td>price-asc，只表示價格由低到高，不產生預算上限。</td></tr>
@@ -217,13 +221,39 @@ table{width:100%;border-collapse:collapse;table-layout:fixed;font-size:14px}th,t
 <tr><th scope="row">擁有：裡面包含</th><td>一個商品擁有多個出發梯次，一個梯次擁有一份對應報價。例：T001有12/23的D001和另一日期的D002，兩者價格各自保存。</td></tr>
 <tr><th scope="row">Qualification：用key找資料</th><td>先選旅行社，再用productId查它的商品集合，得到0或1筆。例：Agency A001以T001找到日本五天；找不到就回傳空值，不能取其他業者的商品代替。</td></tr>
 </tbody></table>
-<a href="獨立展示/04_UML圖表/02_商品類別/SearchClasses.svg" target="_blank" rel="noopener"><img src="獨立展示/04_UML圖表/02_商品類別/SearchClasses.svg" alt="搜尋類別的責任、繼承、擁有及限定鍵設計" loading="lazy"></a><p class="footnote">限定鍵在圖上用註記說明；欄位與搜尋方法是設計命名，不等於現有程式。</p><p><a href="獨立展示/04_UML圖表/02_商品類別/搜尋類別設計.puml">可編輯UML原稿</a> · <a href="獨立展示/04_UML圖表/02_商品類別/objects.html">既有商品物件與程式範例</a></p></details>
+<a href="獨立展示/04_UML圖表/02_商品類別/SearchClasses.svg" target="_blank" rel="noopener"><img src="獨立展示/04_UML圖表/02_商品類別/SearchClasses.svg" alt="搜尋類別的責任、繼承、擁有及限定鍵設計" loading="lazy"></a><p class="footnote">限定鍵已畫在旅行社端的小方框 productId : String；商品端的0..1表示指定編號最多找到一件。例：先選A001，再用T001找商品。搜尋方法仍是設計，不等於已實作程式。</p><p><a href="獨立展示/04_UML圖表/02_商品類別/搜尋類別設計.puml">可編輯UML原稿</a> · <a href="獨立展示/04_UML圖表/02_商品類別/objects.html">既有商品物件與程式範例</a></p></details>
 </div></details>
-<details id="section-7"><summary><span class="date">11/28</span><span class="title">動態模型</span><span class="arrow" aria-hidden="true">⌄</span></summary><div class="answers"><table><thead><tr><th scope="col">老師題目</th><th scope="col">我們的答案</th></tr></thead><tbody><tr><th scope="row">3.5.5 Sequence diagrams：MVC 循序圖</th><td><a href="獨立展示/04_UML圖表/03_MVC循序/sequence.html">換日期看報價</a>：旅客 → ProductDetailView → ProductDetailController → TravelProduct → 顯示該梯次日期與價格。例：選 12/24，顯示 NT$29,100（虛構資料）；對話搜尋的循序圖仍待補。</td></tr>
+<details id="section-7"><summary><span class="date">11/28</span><span class="title">動態模型</span><span class="arrow" aria-hidden="true">⌄</span></summary><div class="answers"><details class="story-gallery"><summary>老師原題與講義頁碼</summary><pre style="white-space:pre-wrap;overflow-wrap:anywhere;font:inherit;font-size:13px;line-height:1.8;tab-size:2">11/28 
+	3.5.5 Dynamic models 
+		L3_p38 L3_p39 L13_p19 
+		Sequence diagrams 
+		MVC  物件建議分成三種: 
+			Model, View, Controller (MVC) 
+				Model   &lt;-&gt; 資料(資料庫) Entity Object 
+				View  &lt;-&gt; 使用者視窗介面 Boundary Object 
+				Controller  &lt;-&gt; 系統的計算 Control Object 
+		Sequence diagrams 必須包括三種 MVC 物件, 依照順序為:
+		Actor 	View(介面) 	Control(計算) Model(資料庫) 
+ 
+--------------------------------------------------- 
+11/28 
+		Activity Diagrams L3P43 
+			depict the workflow in a system 
+		必須包括 Concurrency 設計 L3P44 L3P45 
+---------------------------------------------------</pre></details><p class="footnote"><strong>目前狀態：</strong>目前已有前端MVC循序圖範例；完整搜尋／資料庫版本仍待補。活動圖與並行設計目前只有文字，尚未繪成正式圖，因此不標為完成。</p>
+<table><thead><tr><th scope="col">老師題目</th><th scope="col">我們的答案</th></tr></thead><tbody><tr><th scope="row">3.5.5 Sequence diagrams：MVC 循序圖</th><td><a href="獨立展示/04_UML圖表/03_MVC循序/sequence.html">換日期看報價</a>：旅客 → ProductDetailView → ProductDetailController → TravelProduct → 顯示該梯次日期與價格。例：選 12/24，顯示 NT$29,100（虛構資料）；對話搜尋的循序圖仍待補。</td></tr>
 <tr><th scope="row">MVC 三種物件</th><td>本例 View 接收選單操作與顯示結果；Controller 取得選項並找梯次；Model 保存商品、梯次及報價。目前資料位於瀏覽器記憶體，尚未接資料庫。</td></tr>
 <tr><th scope="row">Activity Diagrams：活動圖</th><td>輸入 → AI 整理 → 驗證 → 查候選商品 → 取得相關資料 → 篩選排序 → 顯示結果；無符合商品時進入調整條件分支。</td></tr>
 <tr><th scope="row">Concurrency：並行設計</th><td>取得候選商品 ID 後，並行讀取梯次報價與業者資訊，再匯合、篩選並組卡片。例：同批 T001 同時讀 D001 報價及 A001 窗口資料。</td></tr></tbody></table></div></details>
-<details id="section-8"><summary><span class="date">12/5</span><span class="title">狀態圖與功能導覽</span><span class="arrow" aria-hidden="true">⌄</span></summary><div class="answers"><table><thead><tr><th scope="col">老師題目</th><th scope="col">我們的答案</th></tr></thead><tbody><tr><th scope="row">StateChart Diagram：單一類別狀態</th><td>以商品草稿為例：草稿 → 送審 → 已發布；審核退回 → 修正草稿 → 再送審。業者送審，管理員核准或退回。</td></tr>
+<details id="section-8"><summary><span class="date">12/5</span><span class="title">狀態圖與功能導覽</span><span class="arrow" aria-hidden="true">⌄</span></summary><div class="answers"><details class="story-gallery"><summary>老師原題與講義頁碼</summary><pre style="white-space:pre-wrap;overflow-wrap:anywhere;font:inherit;font-size:13px;line-height:1.8;tab-size:2">12/5 
+StateChart Diagram 
+			relates events and states for one class/system 
+		L13P32 
+------------------------------
+12/5 
+Navigation Path 	L13P36 
+樹狀結構 =&gt; 代表系統功能選項.</pre></details><p class="footnote"><strong>目前狀態：</strong>目前已有狀態轉換與導覽路徑的文字例子；StateChart與樹狀Navigation Path尚未繪圖，仍待補，並非不適用。</p>
+<table><thead><tr><th scope="col">老師題目</th><th scope="col">我們的答案</th></tr></thead><tbody><tr><th scope="row">StateChart Diagram：單一類別狀態</th><td>以商品草稿為例：草稿 → 送審 → 已發布；審核退回 → 修正草稿 → 再送審。業者送審，管理員核准或退回。</td></tr>
 <tr><th scope="row">Navigation Path：樹狀功能選項</th><td>首頁 → 對話搜尋 → 商品詳情 → 聯絡業者；首頁／詳情 → 設定；旅客帳號 → 收藏；業者帳號 → 商品草稿／送審；管理員 → 審核。例：業者從登入入口進入自己的商品管理。</td></tr></tbody></table></div></details>
 <footer>系統設計簡答；獨立展示已有商品類別圖與部分程式，完整平台及 AI 串接尚未完成。<a href="00_老師作業規定_原文.txt">老師原文</a></footer>
 </main><script>
@@ -235,4 +265,3 @@ window.addEventListener("beforeprint",function(){saved=Array.from(document.query
 window.addEventListener("afterprint",function(){saved.forEach(function(entry){entry.node.open=entry.open;});saved=[];});
 })();
 </script></body></html>
-
