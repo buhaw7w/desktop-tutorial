@@ -104,7 +104,7 @@ table{width:100%;border-collapse:collapse;table-layout:fixed;font-size:14px}th,t
 <tr><th scope="row">3.3.10 安全問題</th><td>旅客只能看自己的私人資料，旅行社只能修改自己的商品。例如A旅行社不能改B旅行社的價格。密碼不存明文，AI金鑰留在後端，重設密碼連結需限時且只能使用一次。</td></tr>
 <tr><th scope="row">3.3.11 資源與管理</th><td>旅行社更新商品，管理員審核，工程師維護系統並備份資料。AI用量設上限；到上限後暫停新的AI請求，但仍可用一般搜尋找行程。</td></tr></tbody></table>
 </div></details>
-<details id="section-5"><summary><span class="date">11/7</span><span class="title">使用者情境</span><span class="arrow" aria-hidden="true">⌄</span></summary><div class="answers">
+<details id="section-5"><summary><span class="date">11/14</span><span class="title">使用者情境</span><span class="arrow" aria-hidden="true">⌄</span></summary><div class="answers">
 <p class="teacher-requirement"><strong>老師補充要求</strong><br>選擇系統的一個功能，用真實姓名寫出完整使用劇本，明確定義情境中的資料、使用者操作與畫面變化，讓使用者能照著操作，避免後續功能修改及與客戶的紛爭。</p>
 <p><strong>功能：對話找行程｜使用者：林柏諭</strong></p><p class="footnote">設計劇本，假設找到四筆商品；目前展示尚未串接AI。</p>
 <ol class="scenario-story">
@@ -130,7 +130,7 @@ table{width:100%;border-collapse:collapse;table-layout:fixed;font-size:14px}th,t
 <details id="settings-uml" class="story-gallery"><summary>看設定功能的UML與程式分工</summary><p>劇本說明怎麼操作；UML說明正式流程與物件責任。這張圖對應設定儲存，不是對話搜尋。</p><ul><li>View：SettingsView，顯示設定畫面。</li><li>Controller：SettingsController，檢查及協調儲存。</li><li>Model：PreferenceStore，讀寫本機偏好。</li></ul><a href="獨立展示/04_UML圖表/03_MVC循序/SettingsSequence.svg" target="_blank" rel="noopener"><img src="獨立展示/04_UML圖表/03_MVC循序/SettingsSequence.svg" alt="設定功能MVC循序圖" loading="lazy"></a><p><a href="獨立展示/04_UML圖表/03_MVC循序/設定功能循序圖.puml">可編輯UML原稿</a></p></details>
 </div></details>
 <details id="section-6"><summary><span class="date">11/21</span><span class="title">使用案例與類別分析</span><span class="arrow" aria-hidden="true">⌄</span></summary><div class="answers">
-<p class="teacher-requirement">老師要求：選定UML工具；使用案例要有動詞＋名詞的名稱、參與職稱與外部系統、開始情境、正常事件流程、結束結果、例外及相關非功能性需求。流程以主動句寫出使用者操作與系統回應。</p><p class="footnote">沿用11/7的「日本泡溫泉、便宜一點」情境。UML工具採PlantUML，保留可編輯原稿；以下是未來搜尋功能的正式設計，不代表AI與後端已完成。</p><details class="story-gallery" id="teacher-1121-original"><summary>老師原題與講義頁碼（3.5.3）</summary><pre style="white-space:pre-wrap;overflow-wrap:anywhere;font:inherit;font-size:13px;line-height:1.8;tab-size:2">11/21	3.5.3 Class identification from use case models
+<p class="teacher-requirement">老師要求：選定UML工具；使用案例要有動詞＋名詞的名稱、參與職稱與外部系統、開始情境、正常事件流程、結束結果、例外及相關非功能性需求。流程以主動句寫出使用者操作與系統回應。</p><p class="footnote">沿用11/14的「日本泡溫泉、便宜一點」情境。UML工具採PlantUML，保留可編輯原稿；以下是未來搜尋功能的正式設計，不代表AI與後端已完成。</p><details class="story-gallery" id="teacher-1121-original"><summary>老師原題與講義頁碼（3.5.3）</summary><pre style="white-space:pre-wrap;overflow-wrap:anywhere;font:inherit;font-size:13px;line-height:1.8;tab-size:2">11/21	3.5.3 Class identification from use case models
 		L12_p19 L12_p20
 		1) 文字分析
 		使用一個使用案例 使用文字分析找出對應的 類別圖(用UML Tool製作)
@@ -244,7 +244,13 @@ table{width:100%;border-collapse:collapse;table-layout:fixed;font-size:14px}th,t
 <table><thead><tr><th scope="col">老師題目</th><th scope="col">我們的答案</th></tr></thead><tbody><tr><th scope="row">3.5.5 Sequence diagrams：MVC 循序圖</th><td><a href="獨立展示/04_UML圖表/03_MVC循序/sequence.html">換日期看報價</a>：旅客 → ProductDetailView → ProductDetailController → TravelProduct → 顯示該梯次日期與價格。例：選 12/24，顯示 NT$29,100（虛構資料）；對話搜尋的循序圖仍待補。</td></tr>
 <tr><th scope="row">MVC 三種物件</th><td>本例 View 接收選單操作與顯示結果；Controller 取得選項並找梯次；Model 保存商品、梯次及報價。目前資料位於瀏覽器記憶體，尚未接資料庫。</td></tr>
 <tr><th scope="row">Activity Diagrams：活動圖</th><td>輸入 → AI 整理 → 驗證 → 查候選商品 → 取得相關資料 → 篩選排序 → 顯示結果；無符合商品時進入調整條件分支。</td></tr>
-<tr><th scope="row">Concurrency：並行設計</th><td>取得候選商品 ID 後，並行讀取梯次報價與業者資訊，再匯合、篩選並組卡片。例：同批 T001 同時讀 D001 報價及 A001 窗口資料。</td></tr></tbody></table></div></details>
+<tr><th scope="row">Concurrency：並行設計</th><td>取得候選商品 ID 後，並行讀取梯次報價與業者資訊，再匯合、篩選並組卡片。例：同批 T001 同時讀 D001 報價及 A001 窗口資料。</td></tr></tbody></table><details class="story-gallery" id="product-mvc-sequence"><summary>3.5.5 商品MVC循序圖（換日期看報價）</summary>
+<figure><a href="獨立展示/04_UML圖表/03_MVC循序/ProductMvcSequence.svg" target="_blank" rel="noopener"><img src="獨立展示/04_UML圖表/03_MVC循序/ProductMvcSequence.svg" alt="商品MVC循序圖：旅客選日期，View通知Controller，Controller向Model取得梯次及報價，再更新畫面" loading="lazy"></a></figure>
+<p><strong>程式對應：</strong>View是ProductDetailView；Controller是ProductDetailController；Model是TravelProduct、Departure與PriceQuote。目前資料存在瀏覽器記憶體，尚未串接資料庫與外部AI。</p>
+<p><strong>上台說法：</strong>「畫面接收操作，控制器協調流程，資料物件提供該日期的報價，最後由畫面顯示結果。」</p>
+<p><a href="獨立展示/04_UML圖表/03_MVC循序/商品MVC循序圖.puml">可編輯PlantUML原稿</a> · <a href="獨立展示/04_UML圖表/03_MVC循序/sequence.html">完整程式對照</a></p>
+</details>
+</div></details>
 <details id="section-8"><summary><span class="date">12/5</span><span class="title">狀態圖與功能導覽</span><span class="arrow" aria-hidden="true">⌄</span></summary><div class="answers"><details class="story-gallery"><summary>老師原題與講義頁碼</summary><pre style="white-space:pre-wrap;overflow-wrap:anywhere;font:inherit;font-size:13px;line-height:1.8;tab-size:2">12/5 
 StateChart Diagram 
 			relates events and states for one class/system 

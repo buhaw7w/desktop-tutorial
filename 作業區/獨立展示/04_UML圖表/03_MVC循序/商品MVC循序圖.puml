@@ -1,0 +1,28 @@
+@startuml ProductMvcSequence
+' 中文說明：簡化目前商品詳情的MVC合作流程；資料仍位於瀏覽器記憶體。
+' View接收日期選擇並顯示結果；Controller協調；Model提供所選梯次及報價。
+' 本圖不是AI對話搜尋，也沒有資料庫或付款流程。
+title 商品MVC循序圖：換日期看報價
+skinparam defaultFontName Microsoft JhengHei
+skinparam defaultFontSize 15
+skinparam shadowing false
+skinparam backgroundColor #FBF7F1
+skinparam sequenceArrowColor #315F51
+skinparam sequenceLifeLineBorderColor #A6B7AD
+skinparam sequenceParticipantBackgroundColor #EEF4EE
+skinparam sequenceParticipantBorderColor #315F51
+skinparam sequenceParticipantFontColor #173B37
+skinparam sequenceActorBorderColor #315F51
+skinparam sequenceActorFontColor #173B37
+hide footbox
+actor "旅客" as user
+boundary "View 商品詳情畫面\nProductDetailView" as view
+control "Controller 商品詳情控制器\nProductDetailController" as controller
+entity "Model 商品、梯次與報價\nTravelProduct / Departure / PriceQuote" as model
+user -> view : ① 選擇12月24日出發
+view -> controller : ② 通知日期已變更
+controller -> model : ③ 取得所選日期的梯次\nquoteAt(index)
+model --> controller : ④ 回傳該梯次的日期、價格及費用
+controller -> view : ⑤ 更新畫面\nshowQuote(departure)
+view --> user : ⑥ 顯示12月24日的對應價格
+@enduml
