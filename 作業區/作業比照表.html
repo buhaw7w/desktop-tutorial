@@ -240,15 +240,29 @@ table{width:100%;border-collapse:collapse;table-layout:fixed;font-size:14px}th,t
 		Activity Diagrams L3P43 
 			depict the workflow in a system 
 		必須包括 Concurrency 設計 L3P44 L3P45 
----------------------------------------------------</pre></details><p class="footnote"><strong>目前狀態：</strong>目前已有前端MVC循序圖範例；完整搜尋／資料庫版本仍待補。活動圖與並行設計目前只有文字，尚未繪成正式圖，因此不標為完成。</p>
+---------------------------------------------------</pre></details><p class="footnote"><strong>目前狀態：</strong>已有商品MVC循序圖及全系統活動圖（含並行設計）。完整AI搜尋／資料庫循序圖仍待補；圖表說明流程設計，不代表完整平台已實作。</p>
 <table><thead><tr><th scope="col">老師題目</th><th scope="col">我們的答案</th></tr></thead><tbody><tr><th scope="row">3.5.5 Sequence diagrams：MVC 循序圖</th><td><a href="獨立展示/04_UML圖表/03_MVC循序/sequence.html">換日期看報價</a>：旅客 → ProductDetailView → ProductDetailController → TravelProduct → 顯示該梯次日期與價格。例：選 12/24，顯示 NT$29,100（虛構資料）；對話搜尋的循序圖仍待補。</td></tr>
 <tr><th scope="row">MVC 三種物件</th><td>本例 View 接收選單操作與顯示結果；Controller 取得選項並找梯次；Model 保存商品、梯次及報價。目前資料位於瀏覽器記憶體，尚未接資料庫。</td></tr>
-<tr><th scope="row">Activity Diagrams：活動圖</th><td>輸入 → AI 整理 → 驗證 → 查候選商品 → 取得相關資料 → 篩選排序 → 顯示結果；無符合商品時進入調整條件分支。</td></tr>
+<tr><th scope="row">Activity Diagrams：活動圖</th><td>使用PlantUML繪製全系統操作：旅客搜尋／帳號／設定、旅行社草稿與送審、管理員審核與發布。圖內含條件判斷、錯誤處理、並行讀取及返回入口。</td></tr>
 <tr><th scope="row">Concurrency：並行設計</th><td>取得候選商品 ID 後，並行讀取梯次報價與業者資訊，再匯合、篩選並組卡片。例：同批 T001 同時讀 D001 報價及 A001 窗口資料。</td></tr></tbody></table><details class="story-gallery" id="product-mvc-sequence"><summary>3.5.5 商品MVC循序圖（換日期看報價）</summary>
 <figure><a href="獨立展示/04_UML圖表/03_MVC循序/ProductMvcSequence.svg" target="_blank" rel="noopener"><img src="獨立展示/04_UML圖表/03_MVC循序/ProductMvcSequence.svg" alt="商品MVC循序圖：旅客選日期，View通知Controller，Controller向Model取得梯次及報價，再更新畫面" loading="lazy"></a></figure>
 <p><strong>程式對應：</strong>View是ProductDetailView；Controller是ProductDetailController；Model是TravelProduct、Departure與PriceQuote。目前資料存在瀏覽器記憶體，尚未串接資料庫與外部AI。</p>
 <p><strong>上台說法：</strong>「畫面接收操作，控制器協調流程，資料物件提供該日期的報價，最後由畫面顯示結果。」</p>
 <p><a href="獨立展示/04_UML圖表/03_MVC循序/商品MVC循序圖.puml">可編輯PlantUML原稿</a> · <a href="獨立展示/04_UML圖表/03_MVC循序/sequence.html">完整程式對照</a></p>
+</details>
+<details class="story-gallery" id="system-activity"><summary>全系統活動圖（旅客／旅行社／管理員）</summary>
+<p><strong>老師原題位置：</strong>11/28，Activity Diagrams（L3 P.43）；必須包括Concurrency並行設計（L3 P.44～45）。<a href="00_老師作業規定_原文.txt">查看老師原文</a></p>
+<p>工具：PlantUML。這是未來平台的操作總覽，與11/14情境及11/21使用案例銜接；不代表完整AI、帳號或後端已完成。</p>
+<figure><a href="獨立展示/04_UML圖表/04_活動圖/SystemActivity.svg" target="_blank" rel="noopener"><img src="獨立展示/04_UML圖表/04_活動圖/SystemActivity.svg" alt="全系統活動圖：旅客搜尋、帳號與設定；旅行社建立商品並送審；管理員審核發布；搜尋含並行讀取及失敗分支" loading="lazy"></a><figcaption>全系統操作總覽，點圖可開啟大圖。</figcaption></figure>
+<table><thead><tr><th scope="col">操作範圍</th><th scope="col">對應功能</th></tr></thead><tbody>
+<tr><th scope="row">旅客找商品</th><td>文字／語音、標籤、修改條件、篩選排序、商品卡、詳情、比較與靈感建議。</td></tr>
+<tr><th scope="row">旅客帳號與設定</th><td>Email註冊驗證、登入登出、忘記密碼、收藏追蹤、價格紀錄、降價／出清通知及個人設定。</td></tr>
+<tr><th scope="row">旅行社</th><td>驗證權限 → 建立／修改自己的商品草稿 → 檢查資料 → 送審 → 查看結果與修正。</td></tr>
+<tr><th scope="row">管理員</th><td>驗證權限 → 查看總覽 → 審核商品 → 通過發布／附原因退回。</td></tr>
+</tbody></table>
+<p><strong>看圖方式：</strong>圓角框是操作，菱形是條件判斷；兩條粗橫線之間的「梯次報價」和「業者資訊」同時讀取，兩項都完成後才繼續，對應Concurrency。選擇入口不會取得權限；業者與管理員仍由後端檢查。</p>
+<p><strong>上台說法：</strong>「這張活動圖呈現三種角色如何操作平台，以及查詢資料時的並行處理。業者送審、管理員發布成功後，旅客才能搜尋到商品。」</p>
+<p><a href="獨立展示/04_UML圖表/04_活動圖/全系統活動圖.puml">可編輯PlantUML原稿</a> · <a href="獨立展示/04_UML圖表/04_活動圖/SystemActivity.svg" target="_blank" rel="noopener">開啟完整大圖</a></p>
 </details>
 </div></details>
 <details id="section-8"><summary><span class="date">12/5</span><span class="title">狀態圖與功能導覽</span><span class="arrow" aria-hidden="true">⌄</span></summary><div class="answers"><details class="story-gallery"><summary>老師原題與講義頁碼</summary><pre style="white-space:pre-wrap;overflow-wrap:anywhere;font:inherit;font-size:13px;line-height:1.8;tab-size:2">12/5 

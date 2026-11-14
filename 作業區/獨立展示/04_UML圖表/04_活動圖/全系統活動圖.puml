@@ -1,0 +1,115 @@
+@startuml SystemActivity
+' 中文說明：全系統操作總覽，對應FR-01至FR-19；這是未來平台設計。
+' 三個分支是不同角色的操作入口；選入口不會授予權限，後端仍須驗證。
+' 兩條粗線表示fork與join：同時讀取梯次報價和業者資料，完成後才篩選。
+title 全系統活動圖（未來平台設計）\n11/28 Activity Diagrams：L3 P.43；Concurrency：P.44～45
+skinparam defaultFontName Microsoft JhengHei
+skinparam defaultFontSize 15
+skinparam shadowing false
+skinparam backgroundColor #FBF7F1
+skinparam activityBackgroundColor #EEF4EE
+skinparam activityBorderColor #315F51
+skinparam activityFontColor #173B37
+skinparam ArrowColor #315F51
+skinparam noteBackgroundColor #FFF0E9
+skinparam noteBorderColor #C85638
+start
+repeat
+:開啟平台，選擇操作入口;
+switch (進入哪個入口？)
+case (旅客)
+  partition "旅客：搜尋與媒合" {
+    switch (旅客選擇的功能？)
+    case (找商品)
+    :文字／語音輸入需求，或點選標籤;
+    :AI整理條件，旅客核對並確認;
+    note right
+      條件不完整或無效：保留資料，請旅客修正。
+      AI無法使用：保留輸入，改用一般篩選。
+      修改或還原條件後，重新查詢。
+    end note
+    :後端查詢已發布的候選商品;
+    if (候選查詢成功？) then (是)
+      fork
+        :讀取候選商品的\n出發梯次與報價;
+      fork again
+        :讀取候選商品的\n業者名稱與聯絡窗口;
+      end fork
+      if (兩項資料皆讀取成功？) then (是)
+        :核對日期、目的地、天數及預算\n篩選並依旅客偏好排序;
+        if (有符合商品？) then (是)
+          :顯示商品卡；需要時提供旅遊靈感與影片;
+          :查看詳情、切換日期與報價\n可選擇比較商品;
+          if (要收藏或追蹤？) then (是)
+          :訪客可存本機收藏；會員先登入\n再保存追蹤與通知偏好;
+          note right
+            訪客收藏限同一裝置；登入後可合併。
+            影片來源與授權仍待確認。
+            有效新報價達門檻才通知；出清需業者標示。
+            LINE通知需完成串接與綁定。
+          end note
+          endif
+          if (選擇聯絡業者？) then (是)
+            :前往業者商品頁或LINE窗口;
+          else (否)
+            :保留結果，繼續瀏覽;
+          endif
+        else (否)
+          :顯示查無結果\n旅客可調整條件後重新搜尋;
+        endif
+      else (否)
+        :保留條件並顯示讀取失敗\n旅客可重試，不當作零筆結果;
+      endif
+    else (否)
+      :保留條件並顯示查詢失敗\n旅客可重試，不當作零筆結果;
+    endif
+    case (帳號與收藏)
+      :Email註冊驗證、登入／登出\n或申請重設密碼;
+      :登入後查看自己的收藏、追蹤與價格紀錄\n管理降價／出清通知;
+    case (個人設定)
+      :調整色調、出發地、商品類型、排序與通知\n檢查有效後儲存；錯誤則保留原設定;
+    endswitch
+  }
+case (旅行社)
+  partition "旅行社：商品上架" {
+    :登入，後端驗證旅行社身分與權限;
+    if (有業者操作權限？) then (是)
+      :建立／修改自己的商品草稿\n填寫梯次、價格、內容與聯絡窗口;
+      note right
+        商品可為套裝行程、機加酒或機票。
+        有官網可填商品連結；無官網可用平台商品頁。
+        業者只能修改自己的資料。
+      end note
+      if (必要資料完整且有效？) then (是)
+        :送出審核\n保存版本，狀態改為待審核;
+        :查看審核結果\n退回時修正草稿，再次送審;
+      else (否)
+        :指出錯誤並保留草稿\n業者修正後再送出;
+      endif
+    else (否)
+      :拒絕受保護操作，顯示權限說明;
+    endif
+  }
+case (管理員)
+  partition "管理員：審核與管理" {
+    :登入，後端驗證管理員身分與權限;
+    if (有管理員操作權限？) then (是)
+      :查看管理總覽，選擇待審商品;
+      :核對來源、內容、梯次、報價與業者窗口;
+      if (審核通過？) then (是)
+        :將商品、梯次、報價一起發布\n成功後才讓旅客搜尋得到;
+        note right
+          發布寫入失敗時保留待審狀態並提示重試，
+          不留下只有部分資料的已發布商品。
+        end note
+      else (否)
+        :附原因退回業者\n修正後可再次送審;
+      endif
+    else (否)
+      :拒絕受保護操作，顯示權限說明;
+    endif
+  }
+endswitch
+repeat while (繼續使用平台？) is (是) not (否)
+stop
+@enduml
